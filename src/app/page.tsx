@@ -3,8 +3,8 @@ import { Session } from "@/types/defentions";
 
 export default async function Home() {
   async function fetchSessions() {
-    const respone = await fetch("https://api.f1-dashboard.app/sessions", {
-      next: { revalidate: 600 },
+    const respone = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sessions`, {
+      next: { revalidate: 1 },
     });
     const data = await respone.json();
     return data;
