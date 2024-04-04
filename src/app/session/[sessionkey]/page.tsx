@@ -3,7 +3,7 @@ import GP from "@/components/Gp";
 import { useEffect, useState } from "react";
 import { SessionGp } from "@/types/defentions";
 import LeaderBoard from "@/components/LeaderBoard";
-import Circiut from "@/components/Circuit";
+import Map from "@/components/Map";
 
 function Page({ params }: { params: { sessionkey: string } }) {
   const [sessionInfo, setSessionInfo] = useState<SessionGp>({} as SessionGp);
@@ -11,7 +11,7 @@ function Page({ params }: { params: { sessionkey: string } }) {
   useEffect(() => {
     async function getSessionInfo() {
       const response = await fetch(
-        `http://localhost:4000/session/${params.sessionkey}`,
+        `https://api.f1-dashboard.app/session/${params.sessionkey}`,
       );
       const data: SessionGp = await response.json();
       setSessionInfo(data);
@@ -29,9 +29,9 @@ function Page({ params }: { params: { sessionkey: string } }) {
           type={sessionInfo.type}
         />
       )}
-      <main className="col-span-2 grid h-[calc(100dvh-36px)] grid-cols-[auto_1fr] items-start gap-4">
+      <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-4">
         {!loading && <LeaderBoard drivers={sessionInfo.drivers} />}
-        {!loading && <Circiut />}
+        {/* {!loading && <Map circuitInfo={sessionInfo.circuit} />} */}
       </main>
     </>
   );
