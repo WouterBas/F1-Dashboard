@@ -19,15 +19,14 @@ export type Country = {
 export type Circuit = [
   {
     _id: string;
-    location: string;
-    country: string;
-    imageUrl: string;
-    imageHeight: number;
-    imageWidth: number;
-    offset: number;
-    scale: number;
-    minX: number;
-    minY: number;
+    name: string;
+    imageURL?: string;
+    imageHeight?: number;
+    imageWidth?: number;
+    offset?: number;
+    scale?: number;
+    minX?: number;
+    minY?: number;
   },
 ];
 
@@ -44,5 +43,6 @@ export type SessionGp = {
   gmtOffset: string;
   country: Country;
   drivers: driverList[];
-  circuit: Circuit;
+  circuit: string;
+  circuitInfo: Circuit;
 };

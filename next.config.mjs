@@ -8,6 +8,12 @@ const nextConfig = {
         port: "4000",
         pathname: "/static/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "api.f1-dashboard.app",
+        port: "",
+        pathname: "/static/images/**",
+      },
     ],
   },
 };
