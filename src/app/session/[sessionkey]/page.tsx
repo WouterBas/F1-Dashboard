@@ -29,9 +29,11 @@ function Page({ params }: { params: { sessionkey: string } }) {
           type={sessionInfo.type}
         />
       )}
-      <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-4">
+      <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-2 sm:gap-3 md:gap-4 ">
         {!loading && <LeaderBoard drivers={sessionInfo.drivers} />}
-        {!loading && <Map circuitInfo={sessionInfo.circuitInfo} />}
+        {!loading && (
+          <Map sessionInfo={sessionInfo} drivers={sessionInfo.drivers} />
+        )}
       </main>
     </>
   );

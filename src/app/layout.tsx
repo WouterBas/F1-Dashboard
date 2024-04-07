@@ -9,6 +9,9 @@ const sans = Noto_Sans({ weight: ["400", "700"], subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "F1 Dashboard",
   description: "A Dashboard to view historic data from F1",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

@@ -25,8 +25,9 @@ export type Circuit = [
     imageWidth?: number;
     offset?: number;
     scale?: number;
-    minX?: number;
-    minY?: number;
+    minX: number;
+    minY: number;
+    maxY: number;
   },
 ];
 
@@ -45,4 +46,24 @@ export type SessionGp = {
   drivers: driverList[];
   circuit: string;
   circuitInfo: Circuit;
+};
+
+export type Position = {
+  _id: string;
+  timestamp: Date;
+  entries: { [key: string]: Entry };
+  sessionKey: number;
+};
+
+export type Entry = {
+  Status: "OnTrack";
+  X: number;
+  Y: number;
+  Z: number;
+};
+
+export type driverPosition = Required<driverList> & {
+  x: number;
+  y: number;
+  z: number;
 };
