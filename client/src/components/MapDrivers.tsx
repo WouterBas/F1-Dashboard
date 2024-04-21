@@ -23,7 +23,7 @@ const MapDrivers = ({
   useEffect(() => {
     (async () => {
       const respone = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/position/${sessionInfo.sessionKey}?time=${sessionInfo.startDate}`,
+        `http://localhost:4000/position/${sessionInfo.sessionKey}?time=${sessionInfo.startDate}`,
       );
       const data: Position[] = await respone.json();
       setPostions(data);

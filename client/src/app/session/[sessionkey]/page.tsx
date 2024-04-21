@@ -11,7 +11,7 @@ function Page({ params }: { params: { sessionkey: string } }) {
   useEffect(() => {
     async function getSessionInfo() {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/session/${params.sessionkey}`,
+        `http://localhost:4000/session/${params.sessionkey}`,
       );
       const data: SessionGp = await response.json();
       setSessionInfo(data);

@@ -1,0 +1,13 @@
+FROM oven/bun:1-alpine AS base
+
+RUN mkdir -p /app/server/node_modules && chown -R bun:bun /app/server
+
+WORKDIR /app/server
+
+COPY ./package*.json ./
+RUN bun install
+
+
+USER bun
+EXPOSE 3000/tcp
+ENTRYPOINT [ "bun", "run", "dev" ]
