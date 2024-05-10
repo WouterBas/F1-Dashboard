@@ -1,4 +1,4 @@
-import { client } from "../server/src/db";
+import { client } from "../../server/src/db";
 
 async function getLocations() {
   const schedule = await client

@@ -1,7 +1,7 @@
-import { Driver, Session } from "../server/src/types/models";
+import { Driver, Session } from "../../server/src/types/models";
 import { MongoClient } from "mongodb";
-import { NewDriver, NewSession } from "../server/src/types/models";
-import { client } from "../server/src/db";
+import { NewDriver, NewSession } from "../../server/src/types/models";
+import { client } from "../../server/src/db";
 
 async function getSchedule() {
   const schedule = await client

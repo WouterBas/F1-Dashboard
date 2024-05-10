@@ -11,14 +11,18 @@ const MapDrivers = ({
   drivers,
   size,
   sessionInfo,
+  time,
 }: {
   drivers: driverList[];
   size: { width: number; height: number };
   sessionInfo: SessionGp;
+  time: Date;
 }) => {
   const [{ minX, minY, maxY }] = sessionInfo.circuitInfo;
   const [postions, setPostions] = useState<Position[]>([]);
   const [driversPostions, setDriversPostions] = useState<driverPosition[]>([]);
+  const [currentPosition, setCurrentPosition] = useState<Position>(postions[0]);
+  const [delay, setDelay] = useState(270);
 
   useEffect(() => {
     (async () => {
@@ -31,27 +35,50 @@ const MapDrivers = ({
   }, [sessionInfo]);
 
   useEffect(() => {
-    setDriversPostions(
-      drivers.map((driver) => {
-        return {
-          ...driver,
-          x: remap(
-            size.height,
-            postions[200]?.entries[driver.racingNumber]?.X,
-            minX,
-            maxY,
-          ),
-          y: remap(
-            size.height,
-            postions[200]?.entries[driver.racingNumber]?.Y,
-            minY,
-            maxY,
-          ),
-          z: postions[200]?.entries[driver.racingNumber]?.Z,
-        };
-      }),
-    );
-  }, [postions, drivers, size, minX, minY, maxY]);
+    if (postions.length != 0) {
+      const goal = time.getTime();
+      const output: Position = postions.reduce((prev, curr) =>
+        Math.abs(new Date(curr.timestamp).getTime() - time.getTime()) <
+        Math.abs(new Date(prev.timestamp).getTime() - time.getTime())
+          ? curr
+          : prev,
+      );
+      if (currentPosition != output) {
+        const diff =
+          new Date(output?.timestamp).getTime() -
+          new Date(currentPosition?.timestamp).getTime();
+        setCurrentPosition(output);
+        setDelay(diff);
+      }
+    }
+  }, [time]);
+
+  console.log(currentPosition);
+
+  useEffect(() => {
+    if (postions.length != 0) {
+      setDriversPostions(
+        drivers.map((driver) => {
+          return {
+            ...driver,
+            x: remap(
+              size.height,
+              currentPosition?.entries[driver.racingNumber]?.X,
+              minX,
+              maxY,
+            ),
+            y: remap(
+              size.height,
+              currentPosition?.entries[driver.racingNumber]?.Y,
+              minY,
+              maxY,
+            ),
+            z: currentPosition?.entries[driver.racingNumber]?.Z,
+          };
+        }),
+      );
+    }
+  }, [postions, drivers, size, minX, minY, maxY, currentPosition]);
 
   return (
     <>
@@ -60,15 +87,16 @@ const MapDrivers = ({
           {driversPostions.map((driver) => (
             <li
               key={driver.racingNumber}
-              className="absolute left-0  top-0 grid font-mono font-semibold tracking-wider transition-transform duration-[270ms] ease-linear"
+              className="absolute left-[-10px] top-[-10px] grid transform-gpu font-mono font-semibold tracking-wider ease-linear"
               style={{
                 transform: `translate(${driver.x}px, ${driver.y}px)`,
                 // zIndex: driver.pos,
                 display: driver.z ? "block" : "none",
+                transition: `transform ${delay}ms linear`,
               }}
             >
               <div
-                className="ml-[-4px] mt-[-4px] h-2 w-2 rounded-full bg-white/50 sm:ml-[-6px] sm:mt-[-6px] sm:h-3 sm:w-3 md:ml-[-8px] md:mt-[-8px] md:h-4 md:w-4"
+                className="h-2 w-2 rounded-full bg-white/50 "
                 style={{
                   backgroundColor: `${"#" + driver.teamColor}`,
                   // zIndex: driver.pos,
@@ -76,7 +104,7 @@ const MapDrivers = ({
               ></div>
 
               <span
-                className="absolute top-[-19px] rounded-sm bg-neutral-800/50 px-1 text-[10px] backdrop-blur-[1px] sm:top-[-22px] sm:text-xs md:top-[-28px] md:text-sm"
+                className=" absolute top-[-25px] rounded-sm bg-neutral-800/50 px-1 backdrop-blur-[1px] "
                 // style={{ zIndex: driver.pos + 20 }}
               >
                 {driver.abbreviation}

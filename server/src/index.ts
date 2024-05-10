@@ -24,8 +24,8 @@ async function main() {
     const result = await getSession(id);
     return c.json(result);
   });
-  app.get("/position/:id", async (c) => {
-    const id: number = parseInt(c.req.param("id"));
+  app.get("/position/:timestap", async (c) => {
+    const id: number = parseInt(c.req.param("timestap"));
 
     const query: string = c.req.query("time")!;
     const time: Date = new Date(query);

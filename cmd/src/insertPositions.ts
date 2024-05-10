@@ -1,6 +1,6 @@
-import { client } from "../server/src/db";
+import { client } from "./dbConnection";
 import zlib from "zlib";
-import { Session } from "../server/src/types/models";
+import type { Entrie, Session_ } from "./types";
 
 async function getSchedule() {
   console.log("Fetching schedule...");
@@ -41,7 +41,7 @@ async function main() {
           console.log(`${url}Index.json`);
           continue;
         }
-        const session: Session = await sessionFetch.json();
+        const session: Session_ = await sessionFetch.json();
         const respone = await fetch(`${url}Position.z.jsonStream`);
         const data = await respone.text();
 
@@ -60,7 +60,7 @@ async function main() {
           const jsonData = JSON.parse(decompressedData.toString("utf-8"));
           const positions = jsonData.Position;
           const newPositions = positions.map(
-            (p: { Timestamp: number; Entries: number }) => ({
+            (p: { Timestamp: number; Entries: Entrie[] }) => ({
               timestamp: new Date(p.Timestamp),
               entries: p.Entries,
               sessionKey: session.Key,

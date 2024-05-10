@@ -1,4 +1,4 @@
-import { Session_ } from "../server/src/types/models";
+import { Session_ } from "../../server/src/types/models";
 import { MongoClient } from "mongodb";
 // import { client } from "./db";
 // const years = ["2023", "2022", "2021"];

@@ -68,18 +68,19 @@ export async function getSession(id: number) {
 }
 
 export async function getPosition(id: number, time: Date) {
-  let session;
-
-  session = await client
+  const session = await client
     .db("f1dashboard")
     .collection("positions")
-    .find({
-      sessionKey: id,
-      timestamp: {
-        $gte: time,
-        $lt: new Date(time.getTime() + 1000 * 60),
+    .find(
+      {
+        sessionKey: id,
+        timestamp: {
+          $gte: time,
+          $lt: new Date(time.getTime() + 5000 * 60),
+        },
       },
-    })
+      { projection: { _id: 0, sessionKey: 0 } }
+    )
     .toArray();
   return session;
 }
