@@ -7,7 +7,7 @@
     "npm": ">=10"
   },
   "scripts": {
-    "start": "docker compose up -d && cd client && npm run dev",
+    "start": "docker compose up -d && cd client && bun --bun run dev",
     "stop": "docker compose down"
   },
   "author": "",

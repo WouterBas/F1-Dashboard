@@ -67,3 +67,18 @@ export type driverPosition = Required<driverList> & {
   y: number;
   z: number;
 };
+
+export type CircuitPointsApi = {
+  date: string;
+  driver_number: number;
+  meeting_key: number;
+  session_key: number;
+  x: number;
+  y: number;
+  z: number;
+};
+
+export type CircuitPoints = {
+  x: number;
+  y: number;
+};

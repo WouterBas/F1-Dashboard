@@ -51,7 +51,7 @@ const MapDrivers = ({
         setDelay(diff);
       }
     }
-  }, [time]);
+  }, [currentPosition, postions, time]);
 
   console.log(currentPosition);
 
