@@ -22,3 +22,22 @@ export const patchCircuit = async (c: Context) => {
     .updateOne({ _id: new ObjectId(id) }, { $set: { cicuitPoints: points } });
   return c.json(result);
 };
+
+export const getAllCircuits = async (c: Context) => {
+  const result = await client
+    .db("f1dashboard")
+    .collection("circuits")
+    .find(
+      {},
+      {
+        projection: {
+          _id: 0,
+          name: 1,
+        },
+      }
+    )
+    .toArray();
+
+  const circuitNames = result.map((circuit) => circuit.name);
+  return c.json(circuitNames);
+};
