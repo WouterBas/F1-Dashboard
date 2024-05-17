@@ -28,8 +28,6 @@ export const getPositionOneDriver = async (c: Context) => {
   const starttime: Date = new Date(c.req.query("starttime") as string);
   const duration = Number(c.req.query("duration"));
 
-  console.log(duration);
-
   const result = (await client
     .db("f1dashboard")
     .collection("positions")

@@ -84,7 +84,7 @@ const Form = ({ sessions }: { sessions: Session[] }) => {
               ),
             )}
           </select>
-          <FaChevronDown className="absolute right-2 top-2.5" />
+          <FaChevronDown className="pointer-events-none absolute right-2 top-2.5" />
         </div>
       </div>
       <div className="w-64 ">
@@ -106,7 +106,7 @@ const Form = ({ sessions }: { sessions: Session[] }) => {
               ),
             )}
           </select>
-          <FaChevronDown className="absolute right-2 top-2.5" />
+          <FaChevronDown className="pointer-events-none absolute right-2 top-2.5" />
         </div>
       </div>
       <div>
@@ -126,7 +126,7 @@ const Form = ({ sessions }: { sessions: Session[] }) => {
               </option>
             ))}
           </select>
-          <FaChevronDown className="absolute right-2 top-2.5" />
+          <FaChevronDown className="pointer-events-none absolute right-2 top-2.5" />
         </div>
       </div>
       <button

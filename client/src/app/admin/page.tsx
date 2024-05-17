@@ -15,58 +15,51 @@ import {
   FaRegSquare,
   FaRegSquareCheck,
 } from "react-icons/fa6";
+import { useQuery } from "@tanstack/react-query";
 
 const Admin = () => {
-  const [circuitPoints, setCircuitPoints] = useState<CircuitPoints[]>([]);
   const ref: RefObject<HTMLCanvasElement> = useRef<HTMLCanvasElement>(null);
   const [close, setClose] = useState<boolean>(false);
   const [drawPoints, setDrawPoints] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [startTime, setStartTime] = useState<Date>(
-    new Date("2024-03-24T04:05:00.000Z"),
-  );
+  const [startTime, setStartTime] = useState<Date>();
   const [duration, setDuration] = useState<number>(60000);
-  const [circuitList, setCircuitList] = useState<string[]>([]);
-  const [driverList, setDriverList] = useState<driverList[]>([]);
   const [selectedDriver, setSelectedDriver] = useState<number>();
 
-  useEffect(() => {
-    async function getCircuits() {
+  const circuitList = useQuery({
+    queryKey: ["circuitList"],
+    queryFn: async () => {
       const response = await apiService.get("circuit/all");
       const data: string[] = await response.json();
-      setCircuitList(data);
-    }
-    getCircuits();
-  }, []);
+      return data;
+    },
+  });
 
-  useEffect(() => {
-    async function getDrivers() {
+  const sessionInfo = useQuery({
+    queryKey: ["driverList"],
+    queryFn: async () => {
       const response = await apiService.get("session/9488");
       const data: SessionGp = await response.json();
-      setDriverList(data.drivers);
       setSelectedDriver(data.drivers[0].racingNumber);
-    }
-    getDrivers();
-  }, []);
+      setStartTime(new Date(data.startDate));
+      return data;
+    },
+  });
+
+  const circuitPoints = useQuery({
+    queryKey: ["circuitPoints", startTime, duration, selectedDriver],
+    queryFn: async () => {
+      const response = await apiService.get(
+        `position/${selectedDriver}/9488?starttime=${startTime?.toISOString()}&duration=${duration}`,
+      );
+      const data: CircuitPoints[] = await response.json();
+      return data;
+    },
+    enabled: !!startTime,
+  });
 
   useEffect(() => {
-    async function getTrackData() {
-      setLoading(true);
-      if (selectedDriver) {
-        const response = await apiService.get(
-          `position/${selectedDriver}/9488?starttime=${startTime.toISOString()}&duration=${duration}`,
-        );
-        const data: CircuitPoints[] = await response.json();
-        setCircuitPoints(data);
-        setLoading(false);
-      }
-    }
-    getTrackData();
-  }, [startTime, duration, selectedDriver]);
-
-  useEffect(() => {
-    if (circuitPoints.length !== 0) {
-      drawCircuit(ref, circuitPoints, close, drawPoints);
+    if (circuitPoints.isSuccess) {
+      drawCircuit(ref, circuitPoints.data, close, drawPoints);
     }
   }, [circuitPoints, close, drawPoints]);
 
@@ -82,59 +75,83 @@ const Admin = () => {
   return (
     <>
       <div className="flex flex-wrap items-center gap-2">
-        <div className="flex items-center gap-2 rounded-md bg-neutral-800 px-2 py-1">
+        <div className="flex items-center gap-2 rounded-md bg-neutral-800 px-1.5 py-1.5">
           <label htmlFor="circuit">Circuit:</label>
-          <div className="relative">
-            <select
-              id="circuit"
-              className="block w-full appearance-none rounded-md border-2 border-neutral-700 bg-neutral-700 px-2 py-1 pr-8 font-sans tracking-wider outline-none focus:border-neutral-500 "
-            >
-              {circuitList.map((circuit) => (
-                <option key={circuit} value={circuit}>
-                  {circuit}
-                </option>
-              ))}
-            </select>
-            <FaChevronDown className="absolute right-2 top-2.5" />
+
+          <div
+            className={`${circuitList.isLoading && "animate-pulse rounded bg-neutral-600 "} relative h-7 w-52`}
+          >
+            {circuitList.data && (
+              <>
+                <select
+                  id="circuit"
+                  className="block w-full appearance-none rounded border-2 border-neutral-700 bg-neutral-700 px-2  pr-8 font-sans tracking-wider outline-none focus:border-neutral-500 "
+                >
+                  {circuitList.data.map((circuit) => (
+                    <option key={circuit} value={circuit}>
+                      {circuit}
+                    </option>
+                  ))}
+                </select>
+                <FaChevronDown className="pointer-events-none absolute right-2 top-1.5" />
+              </>
+            )}
           </div>
         </div>
-        <div className="flex items-center gap-2 rounded-md bg-neutral-800 px-2 py-1">
+        <div className="flex items-center gap-2 rounded-md bg-neutral-800 px-1.5 py-1.5">
           <label htmlFor="driver">Driver:</label>
-          <div className="relative">
-            <select
-              id="driver"
-              onChange={(e) => {
-                setSelectedDriver(parseInt(e.target.value));
-              }}
-              className="block w-full appearance-none rounded-md border-2 border-neutral-700 bg-neutral-700 px-2 py-1 pr-8 font-sans tracking-wider outline-none focus:border-neutral-500 "
-            >
-              {driverList.map((driver) => (
-                <option key={driver.racingNumber} value={driver.racingNumber}>
-                  {driver.abbreviation}
-                </option>
-              ))}
-            </select>
-            <FaChevronDown className="absolute right-2 top-2.5" />
+          <div
+            className={`${sessionInfo.isLoading && "animate-pulse rounded bg-neutral-600 "} relative h-7 w-20`}
+          >
+            {sessionInfo.data && (
+              <>
+                <select
+                  id="driver"
+                  onChange={(e) => {
+                    setSelectedDriver(parseInt(e.target.value));
+                  }}
+                  className="block w-full appearance-none rounded border-2 border-neutral-700 bg-neutral-700 px-2  pr-8 font-sans tracking-wider outline-none focus:border-neutral-500 "
+                >
+                  {sessionInfo.data.drivers.map((driver) => (
+                    <option
+                      key={driver.racingNumber}
+                      value={driver.racingNumber}
+                    >
+                      {driver.abbreviation}
+                    </option>
+                  ))}
+                </select>
+                <FaChevronDown className="pointer-events-none absolute right-2 top-1.5" />
+              </>
+            )}
           </div>
         </div>
-        <div className=" rounded-md bg-neutral-800 px-2 py-1">
+        <div className="flex h-10 items-center rounded-md bg-neutral-800 px-1.5">
           <label htmlFor="startTime">Start Time:</label>
-          <input
-            className="w-[5.5rem] bg-neutral-800 text-center text-white"
-            id="startTime"
-            type="time"
-            step="1"
-            name="startTime"
-            defaultValue={startTime.toTimeString().split(" ")[0]}
-            onChange={(e) => {
-              setStartTime(new Date("2024-03-24T" + e.target.value + ".000"));
-            }}
-          />
+          {!sessionInfo.isSuccess ? (
+            <div className="h-[30px] w-[91px] animate-pulse rounded-md bg-neutral-600"></div>
+          ) : (
+            <input
+              className="rounded border-2 border-neutral-800 bg-neutral-800 px-0.5 text-center text-white focus:border-neutral-500 focus:outline-none"
+              id="startTime"
+              type="time"
+              step="1"
+              name="startTime"
+              defaultValue={
+                new Date(sessionInfo.data.startDate)
+                  .toTimeString()
+                  .split(" ")[0]
+              }
+              onChange={(e) => {
+                setStartTime(new Date("2024-03-24T" + e.target.value + ".000"));
+              }}
+            />
+          )}
         </div>
-        <div className="rounded-md bg-neutral-800 px-2 py-1">
+        <div className="flex h-10 items-center rounded-md bg-neutral-800 px-1.5">
           <label htmlFor="duration">Duration:</label>
           <input
-            className="w-14 bg-neutral-800 text-center text-white"
+            className="rounded border-2 border-neutral-800 bg-neutral-800 px-0.5 text-center text-white focus:border-neutral-500 focus:outline-none"
             id="duration"
             type="time"
             name="duration"
@@ -149,7 +166,7 @@ const Admin = () => {
             }}
           />
         </div>
-        <div className="rounded-md bg-neutral-800 px-2 py-1">
+        <div className="flex h-10 items-center rounded-md bg-neutral-800 px-1.5">
           <label htmlFor="close" className="flex items-center gap-2">
             {close ? (
               <FaRegSquareCheck className="text-lg" />
@@ -167,7 +184,7 @@ const Admin = () => {
             onChange={() => setClose(!close)}
           />
         </div>
-        <div className=" rounded-md bg-neutral-800 px-2 py-1">
+        <div className="flex h-10 items-center rounded-md bg-neutral-800 px-1.5">
           <label htmlFor="points" className="flex items-center gap-2">
             {drawPoints ? (
               <FaRegSquareCheck className="text-lg" />
@@ -186,19 +203,19 @@ const Admin = () => {
           />
         </div>
         <button
-          className=" ml-auto rounded-md border-2 bg-neutral-800 px-2 py-1"
+          className="ml-auto flex h-10 items-center rounded-md border-2 bg-neutral-800 px-3"
           onClick={() => save()}
         >
           Save
         </button>
       </div>
       <main className="relative rounded-lg bg-neutral-800  p-2  sm:p-3 md:p-4">
-        {loading && (
-          <FaSpinner className="absolute left-1/2 top-4 animate-spin text-2xl" />
+        {!circuitPoints.isSuccess && (
+          <FaSpinner className="absolute left-4 top-4 animate-spin text-2xl" />
         )}
         <div className="relative mx-auto w-fit ">
           <canvas
-            className=" mx-auto max-h-[calc(100dvh-162px)] w-full"
+            className="mx-auto max-h-[calc(100dvh-170px)] w-full"
             ref={ref}
           ></canvas>
         </div>
