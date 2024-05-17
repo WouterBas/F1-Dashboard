@@ -5,7 +5,7 @@ import {
   SessionGp,
 } from "@/types/defentions";
 import { useState, useEffect } from "react";
-import { remap } from "@/app/helpers/helpers";
+import { remap } from "@/app/utils/helpers";
 
 const MapDrivers = ({
   drivers,

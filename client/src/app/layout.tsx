@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Noto_Sans_Mono, Noto_Sans } from "next/font/google";
 import Header from "@/components/Header";
+import ReactQueryProvider from "./utils/ReactQueryProvider";
 
 const mono = Noto_Sans_Mono({ subsets: ["latin"] });
 const sans = Noto_Sans({ weight: ["400", "700"], subsets: ["latin"] });
@@ -24,7 +25,7 @@ export default function RootLayout({
       <body className={`${mono.className} h-dvh bg-neutral-900 text-white`}>
         <div className="m-auto grid max-w-[1920px] gap-x-2 gap-y-1 p-2 sm:gap-x-3  sm:gap-y-2 sm:p-3 md:gap-x-4 md:gap-y-3 md:p-4">
           <Header />
-          {children}
+          <ReactQueryProvider>{children}</ReactQueryProvider>
         </div>
       </body>
     </html>

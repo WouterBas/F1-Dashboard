@@ -54,12 +54,24 @@ export const drawCircuit = (
   ctx.stroke();
 
   if (drawPoints) {
-    points.forEach((point) => {
+    points.forEach((point, i, arr) => {
       ctx.beginPath();
       ctx.arc(point.x, point.y, 16, 0, 2 * Math.PI, false);
-      ctx.fillStyle = "rgba(255, 0, 0, 0.25)";
-      ctx.strokeStyle = "red";
-      ctx.lineWidth = 2;
+      // first point green
+      if (i === 0) {
+        ctx.fillStyle = "rgba(52, 211, 153, 0.25)";
+        ctx.strokeStyle = "rgb(52, 211, 153)";
+        // last point red
+      } else if (i === arr.length - 1) {
+        ctx.fillStyle = "rgba(239, 68, 68, 0.25)";
+        ctx.strokeStyle = "rgb(239, 68, 68)";
+        // middle points blue
+      } else {
+        ctx.fillStyle = "rgba(96, 165, 250, 0.25)";
+        ctx.strokeStyle = "rgb(96, 165, 250)";
+      }
+
+      ctx.lineWidth = 3;
       ctx.fill();
       ctx.stroke();
     });
