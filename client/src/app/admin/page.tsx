@@ -1,13 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { drawCircuit } from "@/app/utils/drawCircuit";
-import { apiService } from "@/services/api.service";
-import {
-  Circuit,
-  CircuitPoints,
-  SessionGp,
-  driverList,
-} from "@/types/defentions";
+import { CircuitInfo, CircuitList, CircuitPoints } from "@/types/defentions";
 import { RefObject, useEffect, useRef, useState } from "react";
 import {
   FaChevronDown,
@@ -15,7 +9,10 @@ import {
   FaRegSquare,
   FaRegSquareCheck,
 } from "react-icons/fa6";
-import { useQuery } from "@tanstack/react-query";
+import useSWR from "swr";
+import fetcher from "@/app/utils/fetcher";
+import useSWRMutation from "swr/mutation";
+import { apiService } from "@/services/api.service";
 
 const Admin = () => {
   const ref: RefObject<HTMLCanvasElement> = useRef<HTMLCanvasElement>(null);
@@ -24,53 +21,89 @@ const Admin = () => {
   const [startTime, setStartTime] = useState<Date>();
   const [duration, setDuration] = useState<number>(60000);
   const [selectedDriver, setSelectedDriver] = useState<number>();
+  const [selectedCircuit, setSelectedCircuit] = useState<string>();
+  const [circuitSaved, setCircuitSaved] = useState<boolean>(true);
 
-  const circuitList = useQuery({
-    queryKey: ["circuitList"],
-    queryFn: async () => {
-      const response = await apiService.get("circuit/all");
-      const data: string[] = await response.json();
-      return data;
-    },
-  });
+  // load circuit list
+  const {
+    data: circuitList,
+    error: circuitListError,
+    isLoading: circuitListLoading,
+  } = useSWR<CircuitList[], Error>("circuit/all", fetcher);
 
-  const sessionInfo = useQuery({
-    queryKey: ["driverList"],
-    queryFn: async () => {
-      const response = await apiService.get("session/9488");
-      const data: SessionGp = await response.json();
-      setSelectedDriver(data.drivers[0].racingNumber);
-      setStartTime(new Date(data.startDate));
-      return data;
-    },
-  });
-
-  const circuitPoints = useQuery({
-    queryKey: ["circuitPoints", startTime, duration, selectedDriver],
-    queryFn: async () => {
-      const response = await apiService.get(
-        `position/${selectedDriver}/9488?starttime=${startTime?.toISOString()}&duration=${duration}`,
-      );
-      const data: CircuitPoints[] = await response.json();
-      return data;
-    },
-    enabled: !!startTime,
-  });
-
+  // set default circuit
   useEffect(() => {
-    if (circuitPoints.isSuccess) {
-      drawCircuit(ref, circuitPoints.data, close, drawPoints);
+    if (circuitList) {
+      setSelectedCircuit(circuitList[0]._id);
+    }
+  }, [circuitList]);
+
+  // load circuit info
+  const {
+    data: circuitInfo,
+    error: circuitInfoError,
+    isLoading: circuitInfoLoading,
+  } = useSWR<CircuitInfo, Error>(
+    selectedCircuit ? `circuit/info/${selectedCircuit}` : null,
+    fetcher,
+  );
+
+  // set default driver, start time and duration
+  useEffect(() => {
+    if (circuitInfo) {
+      setSelectedDriver(
+        circuitInfo.selectedDriver
+          ? circuitInfo.selectedDriver
+          : circuitInfo.sessionInfo.drivers[0].racingNumber,
+      );
+      setStartTime(
+        circuitInfo.startTime
+          ? new Date(circuitInfo.startTime)
+          : new Date(circuitInfo.sessionInfo.startDate),
+      );
+      setDuration(circuitInfo.duration ? circuitInfo.duration : 60000);
+    }
+  }, [circuitInfo]);
+
+  // load circuit points
+  const {
+    data: circuitPoints,
+    error: circuitPointsError,
+    isLoading: circuitPointsLoading,
+  } = useSWR<CircuitPoints[], Error>(
+    selectedCircuit && startTime && duration && selectedDriver
+      ? `position/${selectedDriver}/${circuitInfo?.sessionInfo.sessionKey}?starttime=${startTime?.toISOString()}&duration=${duration}`
+      : null,
+    fetcher,
+  );
+
+  // draw circuit
+  useEffect(() => {
+    if (circuitPoints && circuitPoints?.length > 0) {
+      drawCircuit(ref, circuitPoints, close, drawPoints);
     }
   }, [circuitPoints, close, drawPoints]);
 
-  const save = async () => {
-    const response = await apiService.patch(
-      "circuit/660eb9aded09750f5669d884",
-      {
-        json: circuitPoints,
-      },
-    );
-  };
+  // save circuit
+  const { trigger } = useSWRMutation(`circuit/${circuitInfo?._id}`, (url) => {
+    apiService
+      .patch(url, {
+        json: {
+          circuitPoints,
+          selectedDriver,
+          startTime,
+          duration,
+        },
+      })
+      .then((res) => res.ok && setCircuitSaved(true));
+  });
+
+  // get formatted time
+  function getFormattedTime(duration: number): string {
+    const minutes = Math.floor(duration / 60 / 1000);
+    const remainingSeconds = (duration % (60 * 1000)) / 1000;
+    return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
+  }
 
   return (
     <>
@@ -79,17 +112,21 @@ const Admin = () => {
           <label htmlFor="circuit">Circuit:</label>
 
           <div
-            className={`${circuitList.isLoading && "animate-pulse rounded bg-neutral-600 "} relative h-7 w-52`}
+            className={`${(!circuitList || circuitListLoading) && "animate-pulse rounded bg-neutral-600 "} relative h-7 w-52`}
           >
-            {circuitList.data && (
+            {circuitList && (
               <>
                 <select
                   id="circuit"
+                  value={selectedCircuit}
+                  onChange={(e) => {
+                    setSelectedCircuit(e.target.value);
+                  }}
                   className="block w-full appearance-none rounded border-2 border-neutral-700 bg-neutral-700 px-2  pr-8 font-sans tracking-wider outline-none focus:border-neutral-500 "
                 >
-                  {circuitList.data.map((circuit) => (
-                    <option key={circuit} value={circuit}>
-                      {circuit}
+                  {circuitList.map((circuit) => (
+                    <option key={circuit._id} value={circuit._id}>
+                      {circuit.name}
                     </option>
                   ))}
                 </select>
@@ -101,18 +138,20 @@ const Admin = () => {
         <div className="flex items-center gap-2 rounded-md bg-neutral-800 px-1.5 py-1.5">
           <label htmlFor="driver">Driver:</label>
           <div
-            className={`${sessionInfo.isLoading && "animate-pulse rounded bg-neutral-600 "} relative h-7 w-20`}
+            className={`${(!circuitInfo || circuitInfoLoading) && "animate-pulse rounded bg-neutral-600 "} relative h-7 w-20`}
           >
-            {sessionInfo.data && (
+            {circuitInfo && (
               <>
                 <select
                   id="driver"
+                  value={selectedDriver}
                   onChange={(e) => {
+                    setCircuitSaved(false);
                     setSelectedDriver(parseInt(e.target.value));
                   }}
                   className="block w-full appearance-none rounded border-2 border-neutral-700 bg-neutral-700 px-2  pr-8 font-sans tracking-wider outline-none focus:border-neutral-500 "
                 >
-                  {sessionInfo.data.drivers.map((driver) => (
+                  {circuitInfo.sessionInfo.drivers.map((driver) => (
                     <option
                       key={driver.racingNumber}
                       value={driver.racingNumber}
@@ -128,7 +167,7 @@ const Admin = () => {
         </div>
         <div className="flex h-10 items-center rounded-md bg-neutral-800 px-1.5">
           <label htmlFor="startTime">Start Time:</label>
-          {!sessionInfo.isSuccess ? (
+          {!startTime || circuitInfoLoading ? (
             <div className="h-[30px] w-[91px] animate-pulse rounded-md bg-neutral-600"></div>
           ) : (
             <input
@@ -137,34 +176,37 @@ const Admin = () => {
               type="time"
               step="1"
               name="startTime"
-              defaultValue={
-                new Date(sessionInfo.data.startDate)
-                  .toTimeString()
-                  .split(" ")[0]
-              }
+              value={new Date(startTime).toTimeString().split(" ")[0]}
               onChange={(e) => {
-                setStartTime(new Date("2024-03-24T" + e.target.value + ".000"));
+                setCircuitSaved(false);
+                const day = new Date(startTime).toISOString().split("T")[0];
+                setStartTime(new Date(`${day}T${e.target.value}.000`));
               }}
             />
           )}
         </div>
         <div className="flex h-10 items-center rounded-md bg-neutral-800 px-1.5">
           <label htmlFor="duration">Duration:</label>
-          <input
-            className="rounded border-2 border-neutral-800 bg-neutral-800 px-0.5 text-center text-white focus:border-neutral-500 focus:outline-none"
-            id="duration"
-            type="time"
-            name="duration"
-            defaultValue="01:00"
-            onChange={(e) => {
-              const milliSeconds: number =
-                e.target.value.split(":").reduce((a, b) => a * 60 + +b, 0) *
-                1000;
-              if (milliSeconds < 180000) {
-                setDuration(milliSeconds);
-              }
-            }}
-          />
+          {!startTime || circuitInfoLoading ? (
+            <div className="h-[30px] w-[60px] animate-pulse rounded-md bg-neutral-600"></div>
+          ) : (
+            <input
+              className="rounded border-2 border-neutral-800 bg-neutral-800 px-0.5 text-center text-white focus:border-neutral-500 focus:outline-none"
+              id="duration"
+              type="time"
+              name="duration"
+              value={getFormattedTime(duration)}
+              onChange={(e) => {
+                setCircuitSaved(false);
+                const milliSeconds: number =
+                  e.target.value.split(":").reduce((a, b) => a * 60 + +b, 0) *
+                  1000;
+                if (milliSeconds < 180000) {
+                  setDuration(milliSeconds);
+                }
+              }}
+            />
+          )}
         </div>
         <div className="flex h-10 items-center rounded-md bg-neutral-800 px-1.5">
           <label htmlFor="close" className="flex items-center gap-2">
@@ -203,22 +245,27 @@ const Admin = () => {
           />
         </div>
         <button
-          className="ml-auto flex h-10 items-center rounded-md border-2 bg-neutral-800 px-3"
-          onClick={() => save()}
+          className={` ml-auto flex h-10 items-center rounded-md border-2 bg-neutral-800 px-3 disabled:opacity-50`}
+          disabled={circuitSaved}
+          onClick={() => trigger()}
         >
-          Save
+          {circuitSaved ? "Saved" : "Save"}
         </button>
       </div>
       <main className="relative rounded-lg bg-neutral-800  p-2  sm:p-3 md:p-4">
-        {!circuitPoints.isSuccess && (
+        {(!circuitPoints || circuitPointsLoading) && (
           <FaSpinner className="absolute left-4 top-4 animate-spin text-2xl" />
         )}
-        <div className="relative mx-auto w-fit ">
-          <canvas
-            className="mx-auto max-h-[calc(100dvh-170px)] w-full"
-            ref={ref}
-          ></canvas>
-        </div>
+        {circuitPoints && circuitPoints.length === 0 ? (
+          <p>No circuit data found</p>
+        ) : (
+          <div className="relative mx-auto w-fit">
+            <canvas
+              className="mx-auto max-h-[calc(100dvh-170px)] w-full"
+              ref={ref}
+            ></canvas>
+          </div>
+        )}
       </main>
     </>
   );

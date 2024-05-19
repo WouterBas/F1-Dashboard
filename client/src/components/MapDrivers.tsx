@@ -18,7 +18,7 @@ const MapDrivers = ({
   sessionInfo: SessionGp;
   time: Date;
 }) => {
-  const [{ minX, minY, maxY }] = sessionInfo.circuitInfo;
+  const { minX, minY, maxY } = sessionInfo.circuitInfo;
   const [postions, setPostions] = useState<Position[]>([]);
   const [driversPostions, setDriversPostions] = useState<driverPosition[]>([]);
   const [currentPosition, setCurrentPosition] = useState<Position>(postions[0]);

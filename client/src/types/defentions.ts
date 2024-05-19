@@ -16,20 +16,18 @@ export type Country = {
   name: string;
 };
 
-export type Circuit = [
-  {
-    _id: string;
-    name: string;
-    imageURL?: string;
-    imageHeight?: number;
-    imageWidth?: number;
-    offset?: number;
-    scale?: number;
-    minX: number;
-    minY: number;
-    maxY: number;
-  },
-];
+export type Circuit = {
+  _id: string;
+  name: string;
+  cicuitPoints?: { x: number; y: number }[];
+  duration?: number;
+  selectedDriver?: number;
+  startTime?: Date;
+  maxX: number;
+  maxY: number;
+  minX: number;
+  minY: number;
+};
 
 export type SessionGp = {
   _id: string;
@@ -68,17 +66,31 @@ export type driverPosition = Required<driverList> & {
   z: number;
 };
 
-export type CircuitPointsApi = {
-  date: string;
-  driver_number: number;
-  meeting_key: number;
-  session_key: number;
-  x: number;
-  y: number;
-  z: number;
-};
-
 export type CircuitPoints = {
   x: number;
   y: number;
+};
+
+export type DriverCircuitPoints = {
+  racingNumber: number;
+  abbreviation: string;
+};
+
+export type CircuitList = {
+  _id: string;
+  name: string;
+  latestSession: number;
+};
+
+export type CircuitInfo = {
+  _id: string;
+  name: string;
+  duration?: number;
+  selectedDriver?: number;
+  startTime?: string;
+  sessionInfo: {
+    sessionKey: number;
+    startDate: string;
+    drivers: { racingNumber: number; abbreviation: string }[];
+  };
 };
