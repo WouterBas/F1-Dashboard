@@ -1,10 +1,3 @@
-export type Session = {
-  sessionKey: string;
-  name: string;
-  type: string;
-  year: number;
-};
-
 export type driverList = {
   racingNumber: number;
   abbreviation: string;
@@ -69,11 +62,6 @@ export type driverPosition = Required<driverList> & {
 export type CircuitPoints = {
   x: number;
   y: number;
-};
-
-export type DriverCircuitPoints = {
-  racingNumber: number;
-  abbreviation: string;
 };
 
 export type CircuitList = {

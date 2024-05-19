@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Noto_Sans_Mono, Noto_Sans } from "next/font/google";
+import { Noto_Sans_Mono } from "next/font/google";
 import Header from "@/components/Header";
 
 const mono = Noto_Sans_Mono({ subsets: ["latin"] });
-const sans = Noto_Sans({ weight: ["400", "700"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "F1 Dashboard",

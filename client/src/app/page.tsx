@@ -1,6 +1,6 @@
 import Form from "@/components/Form";
 import { apiService } from "@/services/api.service";
-import { Session } from "@/types/defentions";
+import { Session } from "@/types";
 import Link from "next/link";
 
 export default async function Home() {

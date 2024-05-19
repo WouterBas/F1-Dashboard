@@ -1,9 +1,4 @@
-import {
-  driverList,
-  Position,
-  driverPosition,
-  SessionGp,
-} from "@/types/defentions";
+import { driverList, Position, driverPosition, SessionGp } from "@/types";
 import { useState, useEffect } from "react";
 import { remap } from "@/app/utils/helpers";
 
@@ -36,7 +31,6 @@ const MapDrivers = ({
 
   useEffect(() => {
     if (postions.length != 0) {
-      const goal = time.getTime();
       const output: Position = postions.reduce((prev, curr) =>
         Math.abs(new Date(curr.timestamp).getTime() - time.getTime()) <
         Math.abs(new Date(prev.timestamp).getTime() - time.getTime())

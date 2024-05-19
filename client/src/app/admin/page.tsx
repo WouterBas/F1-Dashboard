@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { drawCircuit } from "@/app/utils/drawCircuit";
-import { CircuitInfo, CircuitList, CircuitPoints } from "@/types/defentions";
+import { CircuitInfo, CircuitList, CircuitPoints } from "@/types";
 import { RefObject, useEffect, useRef, useState } from "react";
 import {
   FaChevronDown,
@@ -25,11 +24,10 @@ const Admin = () => {
   const [circuitSaved, setCircuitSaved] = useState<boolean>(true);
 
   // load circuit list
-  const {
-    data: circuitList,
-    error: circuitListError,
-    isLoading: circuitListLoading,
-  } = useSWR<CircuitList[], Error>("circuit/all", fetcher);
+  const { data: circuitList, isLoading: circuitListLoading } = useSWR<
+    CircuitList[],
+    Error
+  >("circuit/all", fetcher);
 
   // set default circuit
   useEffect(() => {
@@ -39,14 +37,10 @@ const Admin = () => {
   }, [circuitList]);
 
   // load circuit info
-  const {
-    data: circuitInfo,
-    error: circuitInfoError,
-    isLoading: circuitInfoLoading,
-  } = useSWR<CircuitInfo, Error>(
-    selectedCircuit ? `circuit/info/${selectedCircuit}` : null,
-    fetcher,
-  );
+  const { data: circuitInfo, isLoading: circuitInfoLoading } = useSWR<
+    CircuitInfo,
+    Error
+  >(selectedCircuit ? `circuit/info/${selectedCircuit}` : null, fetcher);
 
   // set default driver, start time and duration
   useEffect(() => {
@@ -66,11 +60,10 @@ const Admin = () => {
   }, [circuitInfo]);
 
   // load circuit points
-  const {
-    data: circuitPoints,
-    error: circuitPointsError,
-    isLoading: circuitPointsLoading,
-  } = useSWR<CircuitPoints[], Error>(
+  const { data: circuitPoints, isLoading: circuitPointsLoading } = useSWR<
+    CircuitPoints[],
+    Error
+  >(
     selectedCircuit && startTime && duration && selectedDriver
       ? `position/${selectedDriver}/${circuitInfo?.sessionInfo.sessionKey}?starttime=${startTime?.toISOString()}&duration=${duration}`
       : null,

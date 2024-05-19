@@ -1,4 +1,4 @@
-import { SessionGp, driverList } from "@/types/defentions";
+import { SessionGp, driverList } from "@/types";
 import { RefObject, useEffect, useRef } from "react";
 
 const Map = ({
@@ -14,13 +14,13 @@ const Map = ({
 
   useEffect(() => {}, []);
 
-  const draw = () => {
-    const canvas = ref.current as HTMLCanvasElement;
-    const context = canvas.getContext("2d") as CanvasRenderingContext2D;
-    context.beginPath();
-    context.arc(50, 50, 50, 0, 2 * Math.PI);
-    context.fill();
-  };
+  // const draw = () => {
+  //   const canvas = ref.current as HTMLCanvasElement;
+  //   const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+  //   context.beginPath();
+  //   context.arc(50, 50, 50, 0, 2 * Math.PI);
+  //   context.fill();
+  // };
 
   return (
     <div className="relative max-h-[calc(100dvh-100px)] rounded-lg bg-neutral-800  p-2  sm:p-3 md:p-4">

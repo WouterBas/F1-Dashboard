@@ -1,4 +1,4 @@
-import { CircuitPoints } from "@/types/defentions";
+import { CircuitPoints } from "@/types";
 import { RefObject } from "react";
 
 export const drawCircuit = (

@@ -1,7 +1,7 @@
 "use client";
 import GP from "@/components/Gp";
 import { useEffect, useState } from "react";
-import { SessionGp } from "@/types/defentions";
+import { SessionGp } from "@/types";
 import LeaderBoard from "@/components/LeaderBoard";
 import Map from "@/components/Map";
 

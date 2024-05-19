@@ -16,3 +16,10 @@ export type Entry = {
   Y: number;
   Z: number;
 };
+
+export type PatchCircuit = {
+  circuitPoints: circuitPoints[];
+  selectedDriver: number;
+  startTime: Date;
+  duration: number;
+};

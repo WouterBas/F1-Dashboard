@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { driverList } from "@/types/defentions";
+import { driverList } from "@/types";
 
 const LeaderBoard = ({ drivers }: { drivers: driverList[] }) => {
   return (
