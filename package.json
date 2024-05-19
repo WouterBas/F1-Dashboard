@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "docker compose up -d && cd client && bun --bun run dev",
-    "stop": "docker compose down"
+    "stop": "docker compose down",
+    "cmd": "docker exec -it F1-Dashboard-Server sh"
   },
   "author": "",
   "license": "ISC"
