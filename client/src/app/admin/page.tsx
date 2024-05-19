@@ -25,8 +25,7 @@ const Admin = () => {
 
   // load circuit list
   const { data: circuitList, isLoading: circuitListLoading } = useSWR<
-    CircuitList[],
-    Error
+    CircuitList[]
   >("circuit/all", fetcher);
 
   // set default circuit
@@ -37,10 +36,11 @@ const Admin = () => {
   }, [circuitList]);
 
   // load circuit info
-  const { data: circuitInfo, isLoading: circuitInfoLoading } = useSWR<
-    CircuitInfo,
-    Error
-  >(selectedCircuit ? `circuit/info/${selectedCircuit}` : null, fetcher);
+  const { data: circuitInfo, isLoading: circuitInfoLoading } =
+    useSWR<CircuitInfo>(
+      selectedCircuit ? `circuit/info/${selectedCircuit}` : null,
+      fetcher,
+    );
 
   // set default driver, start time and duration
   useEffect(() => {
@@ -61,8 +61,7 @@ const Admin = () => {
 
   // load circuit points
   const { data: circuitPoints, isLoading: circuitPointsLoading } = useSWR<
-    CircuitPoints[],
-    Error
+    CircuitPoints[]
   >(
     selectedCircuit && startTime && duration && selectedDriver
       ? `position/${selectedDriver}/${circuitInfo?.sessionInfo.sessionKey}?starttime=${startTime?.toISOString()}&duration=${duration}`
