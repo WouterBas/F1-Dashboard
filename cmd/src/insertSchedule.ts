@@ -1,14 +1,14 @@
-import { Session_ } from "../../server/src/types/models";
+import type { schedule } from "./types";
 import { MongoClient } from "mongodb";
 // import { client } from "./db";
 // const years = ["2023", "2022", "2021"];
-const years = ["2024/3"];
+const years = ["2024"];
 
 async function main(y: string) {
   const response = await fetch(`https://ergast.com/api/f1/${y}.json`);
   const data = await response.json();
 
-  const schedule: Session_[] = data.MRData.RaceTable.Races;
+  const schedule: schedule[] = data.MRData.RaceTable.Races;
   const sessions = schedule.map((session) => {
     return {
       name: session.raceName,
@@ -32,7 +32,7 @@ async function main(y: string) {
   const client = new MongoClient(uri);
 
   try {
-    const database = client.db("f1dashboard");
+    const database = client.db("temp");
     const collection = database.collection("schedules");
     const result = await collection.insertMany(sessions);
     console.log(`${result.insertedCount} documents were inserted`);

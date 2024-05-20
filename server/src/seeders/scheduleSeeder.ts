@@ -4,8 +4,9 @@ import schedules from "./schedules.json";
 
 async function seeder() {
   await client.connect();
+  console.log("inserting schedule...");
   const result = await client
-    .db("test")
+    .db("temp")
     .collection("schedules")
     .insertMany(schedules);
   console.log(`${result.insertedCount} documents were inserted`);
@@ -14,10 +15,10 @@ async function seeder() {
 
 seeder()
   .then(() => {
-    console.log("Seeding completed");
+    console.log("Schedule seeding completed");
     process.exit(0);
   })
   .catch((err) => {
-    console.error("Seeding error:", err);
+    console.error("Schedule seeding error:", err);
     process.exit(1);
   });

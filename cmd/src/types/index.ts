@@ -50,7 +50,7 @@ export type Driver = {
   NameFormat?: string;
 };
 
-export type Session_ = {
+export type schedule = {
   Key: number;
   season: string;
   round: string;
