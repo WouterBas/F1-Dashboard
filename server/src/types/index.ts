@@ -46,7 +46,7 @@ export type Schedule = {
   sessions: Session[];
 };
 
-export type Meeting = {
+export type F1Meeting = {
   Meeting: {
     Key: number;
     Name: string;
@@ -72,13 +72,16 @@ export type Meeting = {
   Path: string;
 };
 
-export type ConvertedMeeting = {
+export type Meeting = {
   name: string;
   sessionKey: number;
   type: string;
   startDate: Date;
   endDate: Date;
   gmtOffset: string;
+  url: string;
+  circuitKey: number;
+  circuitName: string;
 };
 
 export type F1DriverObject = {
@@ -98,4 +101,27 @@ export type F1Driver = {
   HeadshotUrl?: string;
   CountryCode: string;
   NameFormat?: string;
+};
+
+export type F1Entries = {
+  [key: string]: {
+    Status: string;
+    X: number;
+    Y: number;
+    Z: number;
+  };
+};
+
+export type Entrie = {
+  [key: string]: {
+    X: number;
+    Y: number;
+  };
+};
+
+export type F1Position = {
+  [x: string]: any;
+  position: any;
+  Timestamp: string;
+  Entries: F1Entries;
 };

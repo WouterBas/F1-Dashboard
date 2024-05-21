@@ -1,17 +1,8 @@
 import client from "../shared/dbConnection";
 import { F1Driver, F1DriverObject } from "../types";
-import { getF1DataWithUrl } from "./fetchF1Data";
+import { getF1DataWithUrl } from "./utils/fetchF1Data";
+import { getMeetings } from "./utils/helpers";
 
-// get schedule from database
-const getMeetings = async () => {
-  const result = await client
-    .db("temp")
-    .collection("sessions")
-    .find()
-    .toArray();
-  return result;
-};
-console.log("fetching sessions...");
 const meetings = await getMeetings();
 
 async function seeder() {
@@ -33,7 +24,10 @@ async function seeder() {
       const result = await client
         .db("temp")
         .collection("sessions")
-        .updateOne({ _id: meeting._id }, { $set: { drivers: driverList } })
+        .updateOne(
+          { sessionKey: meeting.sessionKey },
+          { $set: { drivers: driverList } }
+        )
         .then(() => {
           count++;
         });

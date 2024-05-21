@@ -1,4 +1,4 @@
-import { Schedule, Session } from "../types";
+import { Schedule, Session } from "../../types";
 
 // get session info from f1
 async function getF1Data(schedule: Schedule, session: Session, type: string) {
@@ -19,11 +19,22 @@ async function getF1Data(schedule: Schedule, session: Session, type: string) {
   }
 }
 
-export async function getF1DataWithUrl(url: string, type: string) {
-  const fullUrl = `https://livetiming.formula1.com/static/${url}${type}.json`;
+export async function getF1DataWithUrl(url: string, feed: string) {
+  const fullUrl = `https://livetiming.formula1.com/static/${url}${feed}.json`;
   try {
     const response = await fetch(fullUrl);
     const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", fullUrl, error);
+    process.exit(1);
+  }
+}
+export async function getF1StreamData(url: string, feed: string) {
+  const fullUrl = `https://livetiming.formula1.com/static/${url}${feed}.jsonStream`;
+  try {
+    const response = await fetch(fullUrl);
+    const data = await response.text();
     return data;
   } catch (error) {
     console.error("Error fetching data:", fullUrl, error);

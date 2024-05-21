@@ -1,6 +1,6 @@
 import client from "../shared/dbConnection";
-import { ConvertedMeeting, F1Meeting, Schedule } from "../types/index";
-import getF1Data from "./fetchF1Data";
+import { Meeting, F1Meeting, Schedule } from "../types/index";
+import getF1Data from "./utils/fetchF1Data";
 
 // get schedule from database
 const getSchedule = async () => {
@@ -19,7 +19,7 @@ const schedules = await getSchedule();
 // insert session info into database
 async function seeder() {
   await client.connect();
-  const meetings: ConvertedMeeting[] = [];
+  const meetings: Meeting[] = [];
 
   // fetch sessions
   console.log("fetching sessions...");
@@ -32,7 +32,7 @@ async function seeder() {
             session,
             "SessionInfo"
           )) as F1Meeting;
-          const convertedData: ConvertedMeeting = convertData(data);
+          const convertedData: Meeting = convertData(data);
           meetings.push(convertedData);
         })
       );
@@ -59,6 +59,8 @@ function convertData(data: F1Meeting) {
     endDate: new Date(data.EndDate),
     gmtOffset: data.GmtOffset,
     url: data.Path,
+    circuitKey: data.Meeting.Circuit.Key,
+    circuitName: data.Meeting.Circuit.ShortName,
   };
 }
 
