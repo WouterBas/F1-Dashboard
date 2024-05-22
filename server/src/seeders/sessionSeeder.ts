@@ -7,9 +7,14 @@ const getSchedule = async () => {
   const schedule = (await client
     .db("temp")
     .collection("schedules")
-    .find({
-      date: { $lt: new Date().toISOString().split("T")[0] },
-    })
+    .find(
+      {
+        date: { $lt: new Date().toISOString().split("T")[0] },
+      },
+      {
+        sort: { date: 1 },
+      }
+    )
     .toArray()) as Schedule[];
   return schedule;
 };
@@ -23,28 +28,27 @@ async function seeder() {
 
   // fetch sessions
   console.log("fetching sessions...");
-  await Promise.all(
-    schedules.map(async (schedule) => {
-      await Promise.all(
-        schedule.sessions.map(async (session) => {
-          const data = (await getF1Data(
-            schedule,
-            session,
-            "SessionInfo"
-          )) as F1Meeting;
-          const convertedData: Meeting = convertData(data);
-          meetings.push(convertedData);
-        })
-      );
-    })
-  );
-  // insert sessions
+
+  for (const schedule of schedules) {
+    console.log(`fetching ${schedule.year} ${schedule.name}`);
+    for (const session of schedule.sessions) {
+      const data = (await getF1Data(
+        schedule,
+        session,
+        "SessionInfo"
+      )) as F1Meeting;
+      const convertedData: Meeting = convertData(data);
+      meetings.push(convertedData);
+    }
+  }
+
+  //insert sessions
   console.log("inserting sessions...");
   const result = await client
     .db("temp")
     .collection("sessions")
     .insertMany(meetings);
-  console.log(`${result.insertedCount} documents were inserted`);
+  console.log(`${result.insertedCount} sessions were inserted`);
 
   await client.close();
 }

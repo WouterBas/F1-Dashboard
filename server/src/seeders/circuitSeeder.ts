@@ -22,7 +22,7 @@ async function seeder() {
     .db("temp")
     .collection("circuits")
     .insertMany(convertCircuit);
-  console.log(`${result.insertedCount} documents were inserted`);
+  console.log(`${result.insertedCount} circuits were inserted`);
 
   await client.close();
 }

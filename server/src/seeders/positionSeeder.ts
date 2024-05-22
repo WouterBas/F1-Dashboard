@@ -11,26 +11,34 @@ async function seeder() {
   await client.connect();
 
   console.log("fetching positions...");
-  await Promise.all(
-    meetings.map(async (meeting) => {
-      const positions = await getF1StreamData(meeting.url, "Position.z");
+  for (const { url, name, sessionKey, type, startDate } of meetings) {
+    const positions = await getF1StreamData(url, "Position.z");
+    const positionsArr: string[] = positions
+      .split("\n")
+      .map((str) => str.substring(13, str.length - 2));
 
-      const positionsArr: string[] = positions
-        .split("\n")
-        .map((str) => str.substring(13, str.length - 2));
+    const decodedPositions = decode(positionsArr);
+    const convertedPositions = convertPosition(decodedPositions, sessionKey);
 
-      const decodedPositions = decode(positionsArr);
-      const convertedPositions = convertPosition(
-        decodedPositions,
-        meeting.sessionKey
+    if (!convertedPositions.length) {
+      console.log(
+        `${startDate.getFullYear()} - ${name} - ${type} - no positions were inserted`
       );
-
-      await client
+      continue;
+    } else {
+      const result = await client
         .db("temp")
         .collection("positions")
         .insertMany(convertedPositions);
-    })
-  );
+
+      console.log(
+        `${startDate.getFullYear()} - ${name} - ${type} - #${
+          result.insertedCount
+        } positions were inserted`
+      );
+    }
+  }
+
   await client.close();
 }
 
