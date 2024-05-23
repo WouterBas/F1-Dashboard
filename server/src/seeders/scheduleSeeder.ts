@@ -6,7 +6,7 @@ async function seeder() {
   await client.connect();
   console.log("inserting schedule...");
   const result = await client
-    .db("temp")
+    .db("f1dashboard")
     .collection("schedules")
     .insertMany(schedules);
   console.log(`${result.insertedCount} documents were inserted`);

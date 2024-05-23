@@ -39,6 +39,13 @@ export type SessionGp = {
   circuitInfo: Circuit;
 };
 
+export type SessionList = {
+  name: string;
+  sessionKey: number;
+  type: "Race" | "Practice 1" | "Practice 2" | "Qualifying" | "Sprint" | "Sprint Qualifying" | "Sprint Shootout";
+  year: number; 
+}
+
 export type Position = {
   _id: string;
   timestamp: Date;

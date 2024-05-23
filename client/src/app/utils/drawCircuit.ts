@@ -56,17 +56,20 @@ export const drawCircuit = (
   if (drawPoints) {
     points.forEach((point, i, arr) => {
       ctx.beginPath();
-      ctx.arc(point.x, point.y, 16, 0, 2 * Math.PI, false);
+
       // first point green
       if (i === 0) {
+        ctx.arc(point.x, point.y, 20, 0, 2 * Math.PI, false);
         ctx.fillStyle = "rgba(52, 211, 153, 0.25)";
         ctx.strokeStyle = "rgb(52, 211, 153)";
         // last point red
       } else if (i === arr.length - 1) {
+        ctx.arc(point.x, point.y, 20, 0, 2 * Math.PI, false);
         ctx.fillStyle = "rgba(239, 68, 68, 0.25)";
         ctx.strokeStyle = "rgb(239, 68, 68)";
         // middle points blue
       } else {
+        ctx.arc(point.x, point.y, 16, 0, 2 * Math.PI, false);
         ctx.fillStyle = "rgba(96, 165, 250, 0.25)";
         ctx.strokeStyle = "rgb(96, 165, 250)";
       }

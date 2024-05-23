@@ -21,7 +21,7 @@ async function seeder() {
     );
 
     const result = await client
-      .db("temp")
+      .db("f1dashboard")
       .collection("sessions")
       .updateOne({ sessionKey }, { $set: { drivers: driverList } });
 

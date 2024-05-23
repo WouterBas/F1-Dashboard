@@ -126,7 +126,7 @@ export type F1Position = {
 };
 
 export type Position = {
-  timestamp: string;
+  timestamp: Date;
   entries: Entrie;
   sessionKey: number;
 };

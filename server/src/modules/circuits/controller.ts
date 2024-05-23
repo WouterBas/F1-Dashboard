@@ -26,10 +26,10 @@ export const getCircuitInfoById = async (c: Context) => {
       {
         $lookup: {
           from: "sessions",
-          let: { circuitId: "$_id" },
+          let: { key: "$circuitKey" },
           pipeline: [
             {
-              $match: { $expr: { $eq: ["$circuit", "$$circuitId"] } },
+              $match: { $expr: { $eq: ["$circuitKey", "$$key"] } },
             },
             {
               $sort: { startDate: -1 },
@@ -90,10 +90,10 @@ export const getAllCircuits = async (c: Context) => {
       {
         $lookup: {
           from: "sessions",
-          let: { circuitId: "$_id" },
+          let: { key: "$circuitKey" },
           pipeline: [
             {
-              $match: { $expr: { $eq: ["$circuit", "$$circuitId"] } },
+              $match: { $expr: { $eq: ["$circuitKey", "$$key"] } },
             },
             {
               $sort: { startDate: -1 },
@@ -108,6 +108,7 @@ export const getAllCircuits = async (c: Context) => {
           as: "latestSession",
         },
       },
+      { $sort: { name: 1 } },
       {
         $project: {
           _id: 1,

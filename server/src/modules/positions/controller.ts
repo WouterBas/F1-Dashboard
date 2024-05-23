@@ -2,7 +2,6 @@ import { Context } from "hono";
 import client from "../../shared/dbConnection";
 
 import { Position } from "../../types";
-import { WithId } from "mongodb";
 
 export const getPositionByKey = async (c: Context) => {
   const key: number = Number(c.req.param("key"));

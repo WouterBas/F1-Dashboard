@@ -5,7 +5,7 @@ import getF1Data from "./utils/fetchF1Data";
 // get schedule from database
 const getSchedule = async () => {
   const schedule = (await client
-    .db("temp")
+    .db("f1dashboard")
     .collection("schedules")
     .find(
       {
@@ -45,7 +45,7 @@ async function seeder() {
   //insert sessions
   console.log("inserting sessions...");
   const result = await client
-    .db("temp")
+    .db("f1dashboard")
     .collection("sessions")
     .insertMany(meetings);
   console.log(`${result.insertedCount} sessions were inserted`);
@@ -55,12 +55,16 @@ async function seeder() {
 
 // convert session info from f1 to the format of the database
 function convertData(data: F1Meeting) {
+  const offset =
+    data.GmtOffset[0] !== "-"
+      ? (data.GmtOffset = "+" + data.GmtOffset.slice(0, -3))
+      : (data.GmtOffset = data.GmtOffset.slice(0, -3));
   return {
     name: data.Meeting.Name,
     sessionKey: data.Key,
     type: data.Name,
-    startDate: new Date(data.StartDate),
-    endDate: new Date(data.EndDate),
+    startDate: new Date(data.StartDate + offset),
+    endDate: new Date(data.EndDate + offset),
     gmtOffset: data.GmtOffset,
     url: data.Path,
     circuitKey: data.Meeting.Circuit.Key,

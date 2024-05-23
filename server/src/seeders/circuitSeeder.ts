@@ -19,7 +19,7 @@ const convertCircuit = uniqueCircuits.map((circuit) => {
 async function seeder() {
   await client.connect();
   const result = await client
-    .db("temp")
+    .db("f1dashboard")
     .collection("circuits")
     .insertMany(convertCircuit);
   console.log(`${result.insertedCount} circuits were inserted`);

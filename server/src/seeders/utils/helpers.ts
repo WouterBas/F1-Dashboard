@@ -4,7 +4,7 @@ import { Meeting } from "../../types";
 // get schedule from database
 export const getMeetings = async () => {
   const result = (await client
-    .db("temp")
+    .db("f1dashboard")
     .collection("sessions")
     .find({
       //find all the meetings with a startdate in 2024

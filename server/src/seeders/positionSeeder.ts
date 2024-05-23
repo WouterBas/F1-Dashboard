@@ -18,7 +18,7 @@ async function seeder() {
   await client.connect();
 
   console.log("fetching positions...");
-  for (const { url, name, sessionKey, type, startDate } of meetings) {
+  for (const { url, name, sessionKey, type, startDate, endDate } of meetings) {
     const positions = await getF1StreamData(url, "Position.z");
     const positionsArr: string[] = positions
       .split("\n")
@@ -27,17 +27,22 @@ async function seeder() {
     const decodedPositions = decode(positionsArr);
     const convertedPositions = convertPosition(decodedPositions, sessionKey);
     const noEmptyPositions = removeEmptyPositions(convertedPositions);
+    const positionsBetween = removePostionsBetween(
+      noEmptyPositions,
+      startDate,
+      endDate
+    );
 
-    if (!noEmptyPositions.length) {
+    if (!positionsBetween.length) {
       console.log(
         `${startDate.getFullYear()} - ${name} - ${type} - no positions were inserted`
       );
       continue;
     } else {
       const result = await client
-        .db("temp")
+        .db("f1dashboard")
         .collection("positions")
-        .insertMany(noEmptyPositions);
+        .insertMany(positionsBetween);
 
       console.log(
         `${startDate.getFullYear()} - ${name} - ${type} - #${
@@ -65,7 +70,7 @@ function decode(positionsArr: string[]) {
 
 function convertPosition(positions: F1Position[], sessionKey: number) {
   return positions.map((position: F1Position) => ({
-    timestamp: position.Timestamp,
+    timestamp: new Date(position.Timestamp),
     entries: convertEntries(position.Entries),
     sessionKey,
   }));
@@ -88,6 +93,17 @@ function removeEmptyPositions(positions: Position[]) {
     return entries.some((entry) => {
       return entry.X !== 0 && entry.Y !== 0;
     });
+  });
+}
+
+function removePostionsBetween(
+  positions: Position[],
+  startDate: Date,
+  endDate: Date
+) {
+  return positions.filter((position) => {
+    const timestamp = new Date(position.timestamp);
+    return timestamp >= startDate && timestamp <= endDate;
   });
 }
 
