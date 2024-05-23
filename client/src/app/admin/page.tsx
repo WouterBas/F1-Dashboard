@@ -163,7 +163,7 @@ const Admin = () => {
             <div className="h-[30px] w-[91px] animate-pulse rounded-md bg-neutral-600"></div>
           ) : (
             <input
-              className="rounded border-2 border-neutral-800 bg-neutral-800 px-0.5 text-center text-white focus:border-neutral-500 focus:outline-none"
+              className="rounded border-2 border-neutral-800 bg-neutral-800 px-0.5 text-center -indent-[1px] text-white focus:border-neutral-500 focus:outline-none"
               id="startTime"
               type="time"
               step="1"
@@ -183,7 +183,7 @@ const Admin = () => {
             <div className="h-[30px] w-[60px] animate-pulse rounded-md bg-neutral-600"></div>
           ) : (
             <input
-              className="rounded border-2 border-neutral-800 bg-neutral-800 px-0.5 text-center text-white focus:border-neutral-500 focus:outline-none"
+              className="rounded border-2 border-neutral-800 bg-neutral-800 px-0.5 text-center -indent-[1px] text-white focus:border-neutral-500 focus:outline-none"
               id="duration"
               type="time"
               name="duration"

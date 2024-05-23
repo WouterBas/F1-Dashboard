@@ -75,7 +75,6 @@ export const patchCircuit = async (c: Context) => {
           selectedDriver,
           startTime,
           duration,
-          updatedAt: new Date(),
         },
       }
     );
