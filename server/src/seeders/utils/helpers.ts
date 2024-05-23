@@ -8,10 +8,10 @@ export const getMeetings = async () => {
     .collection("sessions")
     .find({
       //find all the meetings with a startdate in 2024
-      startDate: {
-        $gte: new Date("2024-01-01"),
-        $lt: new Date("2025-01-01"),
-      },
+      // startDate: {
+      //   $gte: new Date("2024-02-29"),
+      //   $lt: new Date("2024-02-30"),
+      // },
     })
     .toArray()) as unknown as Meeting[];
   console.log("fetching sessions...");

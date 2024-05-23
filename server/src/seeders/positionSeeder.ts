@@ -1,5 +1,12 @@
 import client from "../shared/dbConnection";
-import { Entrie, Entry, F1Entries, F1Position, Meeting } from "../types";
+import {
+  Entrie,
+  Entry,
+  F1Entries,
+  F1Position,
+  Meeting,
+  Position,
+} from "../types";
 import { getF1StreamData } from "./utils/fetchF1Data";
 import zlib from "zlib";
 
@@ -19,8 +26,9 @@ async function seeder() {
 
     const decodedPositions = decode(positionsArr);
     const convertedPositions = convertPosition(decodedPositions, sessionKey);
+    const noEmptyPositions = removeEmptyPositions(convertedPositions);
 
-    if (!convertedPositions.length) {
+    if (!noEmptyPositions.length) {
       console.log(
         `${startDate.getFullYear()} - ${name} - ${type} - no positions were inserted`
       );
@@ -29,7 +37,7 @@ async function seeder() {
       const result = await client
         .db("temp")
         .collection("positions")
-        .insertMany(convertedPositions);
+        .insertMany(noEmptyPositions);
 
       console.log(
         `${startDate.getFullYear()} - ${name} - ${type} - #${
@@ -72,6 +80,15 @@ function convertEntries(entries: F1Entries): Entrie {
     };
   });
   return convertedEntries;
+}
+
+function removeEmptyPositions(positions: Position[]) {
+  return positions.filter((position) => {
+    const entries = Object.values(position.entries);
+    return entries.some((entry) => {
+      return entry.X !== 0 && entry.Y !== 0;
+    });
+  });
 }
 
 seeder()

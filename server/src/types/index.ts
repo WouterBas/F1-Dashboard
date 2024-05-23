@@ -5,12 +5,12 @@ export type circuitPoints = {
   y: number;
 };
 
-export type Position = {
-  _id: string;
-  timestamp: Date;
-  entries: { [key: string]: Entry };
-  sessionKey: number;
-};
+// export type Position = {
+//   _id: string;
+//   timestamp: Date;
+//   entries: { [key: string]: Entry };
+//   sessionKey: number;
+// };
 
 export type Entry = {
   Status: string;
@@ -120,8 +120,13 @@ export type Entrie = {
 };
 
 export type F1Position = {
-  [x: string]: any;
-  position: any;
+  [key: string]: any;
   Timestamp: string;
   Entries: F1Entries;
+};
+
+export type Position = {
+  timestamp: string;
+  entries: Entrie;
+  sessionKey: number;
 };
