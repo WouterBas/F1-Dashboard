@@ -13,6 +13,10 @@ const app = new Hono().basePath("/api/v1");
 app.use(logger());
 app.use(cors());
 
+app.get("/", async (c) => {
+  return c.text("server is running");
+});
+
 app.route("/circuit", circuitRouter);
 app.route("/position", positionRouter);
 app.route("/session", sessionRouter);
