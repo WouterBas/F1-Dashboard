@@ -1,10 +1,10 @@
 "use client";
 import { FaChevronDown } from "react-icons/fa6";
-import { Session } from "@/types";
+import { SessionList } from "@/types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const Form = ({ sessions }: { sessions: Session[] }) => {
+const Form = ({ sessions }: { sessions: SessionList[] }) => {
   const router = useRouter();
   const [selectedYear, setSelectedYear] = useState(sessions[0].year);
   const [selectedGp, setSelectedGp] = useState(sessions[0].name);
@@ -47,7 +47,16 @@ const Form = ({ sessions }: { sessions: Session[] }) => {
     setSelecedType(filterType[0].type);
   };
   const handleOnChangeType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelecedType(e.target.value);
+    setSelecedType(
+      e.target.value as
+        | "Race"
+        | "Practice 1"
+        | "Practice 2"
+        | "Qualifying"
+        | "Sprint"
+        | "Sprint Qualifying"
+        | "Sprint Shootout",
+    );
   };
 
   return (

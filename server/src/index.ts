@@ -13,7 +13,7 @@ const app = new Hono().basePath("/api/v1");
 app.use(logger());
 app.use(cors());
 
-app.get("/", async (c) => {
+app.get("/status", async (c) => {
   return c.text("server is running");
 });
 
