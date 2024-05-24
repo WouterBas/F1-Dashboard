@@ -14,7 +14,7 @@ const LeaderBoard = ({ drivers }: { drivers: driverList[] }) => {
             </span>
             <div
               className="h-4/5 w-1 bg-white/50"
-              style={{ backgroundColor: "#" + driver.teamColor }}
+              style={{ backgroundColor: driver.teamColor }}
             ></div>
             <span className=" pl-1 md:pl-1.5 lg:pl-2">
               {driver.abbreviation}

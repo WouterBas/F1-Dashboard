@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import {
-  getCircuitById,
+  getCircuitPoints,
   patchCircuit,
   getAllCircuits,
   getCircuitInfoById,
@@ -9,7 +9,7 @@ import {
 const circuitRouter = new Hono();
 
 circuitRouter.get("/all", getAllCircuits);
-circuitRouter.get("/:id", getCircuitById);
+circuitRouter.get("/points/:key", getCircuitPoints);
 circuitRouter.get("/info/:id", getCircuitInfoById);
 circuitRouter.patch("/:id", patchCircuit);
 

@@ -3,13 +3,13 @@ import client from "../../shared/dbConnection";
 import { Context } from "hono";
 import { PatchCircuit } from "../../types";
 
-export const getCircuitById = async (c: Context) => {
-  const id: string = c.req.param("id");
+export const getCircuitPoints = async (c: Context) => {
+  const key: number = Number(c.req.param("key"));
   const result = await client
     .db("f1dashboard")
     .collection("circuits")
-    .findOne({ _id: new ObjectId(id) });
-  return c.json(result);
+    .findOne({ circuitKey: key }, { projection: { _id: 0, circuitPoints: 1 } });
+  return c.json(result?.circuitPoints);
 };
 
 export const getCircuitInfoById = async (c: Context) => {

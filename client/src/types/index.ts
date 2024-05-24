@@ -33,18 +33,25 @@ export type SessionGp = {
   startDate: Date;
   endDate: Date;
   gmtOffset: string;
-  country: Country;
+  url: string;
+  circuitKey: number;
+  circuitName: string;
   drivers: driverList[];
-  circuit: string;
-  circuitInfo: Circuit;
 };
 
 export type SessionList = {
   name: string;
   sessionKey: number;
-  type: "Race" | "Practice 1" | "Practice 2" | "Qualifying" | "Sprint" | "Sprint Qualifying" | "Sprint Shootout";
-  year: number; 
-}
+  type:
+    | "Race"
+    | "Practice 1"
+    | "Practice 2"
+    | "Qualifying"
+    | "Sprint"
+    | "Sprint Qualifying"
+    | "Sprint Shootout";
+  year: number;
+};
 
 export type Position = {
   _id: string;
