@@ -4,7 +4,7 @@ import { SessionGp } from "@/types";
 import LeaderBoard from "@/components/LeaderBoard";
 import Map from "@/components/Map";
 import useSWR from "swr";
-import fetcher from "@/app/utils/fetcher";
+import fetcher from "@/utils/fetcher";
 
 function Page({ params }: { params: { sessionkey: string } }) {
   const { data: sessionInfo } = useSWR<SessionGp>(

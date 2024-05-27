@@ -1,5 +1,5 @@
-import { drawCircuit } from "@/app/utils/drawCircuit";
-import fetcher from "@/app/utils/fetcher";
+import { drawCircuit } from "@/utils/drawCircuit";
+import fetcher from "@/utils/fetcher";
 import { CircuitPoints, SessionGp } from "@/types";
 import { RefObject, useEffect, useRef } from "react";
 import useSWR from "swr";
@@ -22,10 +22,12 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   return (
     <div className="relative rounded-lg bg-neutral-800  p-2  sm:p-3 md:p-4">
       <div className="relative mx-auto w-fit">
-        <canvas
-          className="mx-auto max-h-[calc(100dvh-170px)] w-full"
-          ref={ref}
-        ></canvas>
+        {circuitPoints && (
+          <canvas
+            className="mx-auto max-h-[calc(100dvh-170px)] max-w-full"
+            ref={ref}
+          ></canvas>
+        )}
       </div>
     </div>
   );

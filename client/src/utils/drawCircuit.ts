@@ -1,12 +1,12 @@
 import { CircuitPoints } from "@/types";
 import { RefObject } from "react";
 
-export const drawCircuit = (
+export function drawCircuit(
   ref: RefObject<HTMLCanvasElement>,
   circuitPoints: CircuitPoints[],
   close = true,
   drawPoints = false,
-) => {
+) {
   const minX = Math.min(...circuitPoints.map((loc) => loc.x));
   const minY = Math.min(...circuitPoints.map((loc) => loc.y));
   const maxX = Math.max(...circuitPoints.map((loc) => loc.x)) + Math.abs(minX);
@@ -79,4 +79,4 @@ export const drawCircuit = (
       ctx.stroke();
     });
   }
-};
+}

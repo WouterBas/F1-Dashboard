@@ -1,5 +1,5 @@
 "use client";
-import { drawCircuit } from "@/app/utils/drawCircuit";
+import { drawCircuit } from "@/utils/drawCircuit";
 import { CircuitInfo, CircuitList, CircuitPoints } from "@/types";
 import { RefObject, useEffect, useRef, useState } from "react";
 import {
@@ -9,7 +9,7 @@ import {
   FaRegSquareCheck,
 } from "react-icons/fa6";
 import useSWR from "swr";
-import fetcher from "@/app/utils/fetcher";
+import fetcher from "@/utils/fetcher";
 import useSWRMutation from "swr/mutation";
 import { apiService } from "@/services/api.service";
 
