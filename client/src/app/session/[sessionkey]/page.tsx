@@ -11,7 +11,6 @@ function Page({ params }: { params: { sessionkey: string } }) {
     `session/${params.sessionkey}`,
     fetcher,
   );
-  console.log(sessionInfo);
 
   return (
     <>
