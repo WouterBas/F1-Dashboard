@@ -3,6 +3,7 @@ import fetcher from "@/utils/fetcher";
 import { CircuitPoints, SessionGp } from "@/types";
 import { RefObject, useEffect, useRef } from "react";
 import useSWR from "swr";
+import MediaControls from "./MediaControls";
 
 const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   const ref: RefObject<HTMLCanvasElement> = useRef<HTMLCanvasElement>(null);
@@ -29,6 +30,7 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
           ></canvas>
         )}
       </div>
+      <MediaControls />
     </div>
   );
 };
