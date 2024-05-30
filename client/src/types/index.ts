@@ -61,16 +61,13 @@ export type Position = {
 };
 
 export type Entry = {
-  Status: "OnTrack";
   X: number;
   Y: number;
-  Z: number;
 };
 
-export type driverPosition = Required<driverList> & {
-  x: number;
-  y: number;
-  z: number;
+export type DriverPosition = {
+  timestamp: Date;
+  entries: { [key: string]: { X: number; Y: number } };
 };
 
 export type CircuitPoints = {

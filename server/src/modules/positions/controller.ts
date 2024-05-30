@@ -10,13 +10,16 @@ export const getPositionByKey = async (c: Context) => {
   const result = await client
     .db("f1dashboard")
     .collection("positions")
-    .find({
-      sessionKey: key,
-      timestamp: {
-        $gte: timestamp,
-        $lt: new Date(timestamp.getTime() + 1000 * 60),
+    .find(
+      {
+        sessionKey: key,
+        timestamp: {
+          $gte: timestamp,
+          $lt: new Date(timestamp.getTime() + 1000 * 60),
+        },
       },
-    })
+      { projection: { _id: 0, timestamp: 1, entries: 1 } }
+    )
     .toArray();
   return c.json(result);
 };
