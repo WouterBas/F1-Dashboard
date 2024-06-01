@@ -7,7 +7,6 @@ import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { store } from "@/store";
 import { useEffect } from "react";
-import Animation from "@/components/Animation";
 
 function Page({ params }: { params: { sessionkey: string } }) {
   const { setTime } = store();

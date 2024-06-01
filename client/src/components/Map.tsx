@@ -24,21 +24,33 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   useEffect(() => {
     if (circuitPoints && circuitPoints.length > 0 && driverPositoins) {
       let animationFrameId: number;
+      const startTime = new Date();
       let index = 0;
+      let frameCount = 0;
 
-      // find position closet to current time
-      if (driverPositoins.length > 0) {
+      const render = () => {
+        const timeDifference =
+          new Date().getTime() - new Date(startTime).getTime();
+
+        const newTime = new Date(new Date(time).getTime() + timeDifference);
+
+        setTime(newTime);
+
+        // find position closet to current time
+
         const closestPosition = driverPositoins.reduce((a, b) => {
           return Math.abs(
-            new Date(time).getTime() - new Date(a.timestamp).getTime(),
+            new Date(newTime).getTime() - new Date(a.timestamp).getTime(),
           ) <
-            Math.abs(new Date(time).getTime() - new Date(b.timestamp).getTime())
+            Math.abs(
+              new Date(newTime).getTime() - new Date(b.timestamp).getTime(),
+            )
             ? a
             : b;
         });
         index = driverPositoins.indexOf(closestPosition);
-      }
-      const render = () => {
+
+        frameCount++;
         drawCircuit(
           ref,
           circuitPoints,
@@ -46,10 +58,9 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
           false,
           driverPositoins[index].entries,
           sessionInfo.drivers,
-          index,
+          frameCount,
         );
         animationFrameId = window.requestAnimationFrame(render);
-        setTime(new Date());
       };
 
       if (isPlaying) {
@@ -60,7 +71,8 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
         window.cancelAnimationFrame(animationFrameId);
       };
     }
-  }, [circuitPoints, driverPositoins, sessionInfo, isPlaying, time]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying]);
 
   return (
     <div className="relative rounded-lg bg-neutral-800  p-2  sm:p-3 md:p-4">
@@ -72,7 +84,7 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
           ></canvas>
         )}
       </div>
-      <MediaControls />
+      <MediaControls sessionInfo={sessionInfo} />
     </div>
   );
 };
