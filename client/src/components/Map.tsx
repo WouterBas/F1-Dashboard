@@ -7,7 +7,7 @@ import MediaControls from "./MediaControls";
 import { store } from "@/store";
 
 const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
-  const { isPlaying, time, setTime } = store();
+  const { time, setTime, isPlaying } = store();
   const ref: RefObject<HTMLCanvasElement> = useRef<HTMLCanvasElement>(null);
 
   const { data: circuitPoints } = useSWR<CircuitPoints[]>(
@@ -49,15 +49,18 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
           index,
         );
         animationFrameId = window.requestAnimationFrame(render);
+        setTime(new Date());
       };
 
-      render();
+      if (isPlaying) {
+        render();
+      }
 
       return () => {
         window.cancelAnimationFrame(animationFrameId);
       };
     }
-  }, [circuitPoints, driverPositoins, sessionInfo, time]);
+  }, [circuitPoints, driverPositoins, sessionInfo, isPlaying, time]);
 
   return (
     <div className="relative rounded-lg bg-neutral-800  p-2  sm:p-3 md:p-4">

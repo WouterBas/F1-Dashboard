@@ -5,15 +5,14 @@ import { FaPlay, FaPause } from "react-icons/fa6";
 const MediaControls = () => {
   const { isPlaying, time, setTime, setIsPlaying, setNotPlaying } = store();
 
-  // increase time by 10ms
-  useEffect(() => {
-    if (isPlaying) {
-      const interval = setInterval(() => {
-        setTime(new Date(time.getTime() + 10));
-      }, 10);
-      return () => clearInterval(interval);
-    }
-  }, [isPlaying, time, setTime]);
+  // useEffect(() => {
+  //   if (isPlaying) {
+  //     const interval = setInterval(() => {
+  //       setTime(new Date(time.getTime() + 1));
+  //     }, 1);
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [isPlaying, time, setTime]);
 
   return (
     <div className="absolute bottom-2 flex w-full items-center gap-2 ">
