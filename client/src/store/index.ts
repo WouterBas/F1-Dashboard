@@ -1,13 +1,20 @@
 import { create } from "zustand";
 
-interface MediaState {
+type State = {
   isPlaying: boolean;
+  time: Date;
+  setTime: (time: Date) => void;
+
   setIsPlaying: () => void;
   setNotPlaying: () => void;
-}
+};
 
-export const useMediaStore = create<MediaState>((set) => ({
+export const store = create<State>((set) => ({
   isPlaying: false,
+  time: new Date(),
+
+  setTime: (time: Date) => set({ time }),
+
   setIsPlaying: () => set({ isPlaying: true }),
   setNotPlaying: () => set({ isPlaying: false }),
 }));

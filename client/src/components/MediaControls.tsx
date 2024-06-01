@@ -1,27 +1,38 @@
-import { useMediaStore } from "@/store/mediaStore";
-import { FaPlay, FaPause, FaForward } from "react-icons/fa6";
+import { store } from "@/store/";
+import { useEffect } from "react";
+import { FaPlay, FaPause } from "react-icons/fa6";
 
 const MediaControls = () => {
-  const { isPlaying, setIsPlaying, setNotPlaying } = useMediaStore();
+  const { isPlaying, time, setTime, setIsPlaying, setNotPlaying } = store();
+
+  // increase time by 10ms
+  useEffect(() => {
+    if (isPlaying) {
+      const interval = setInterval(() => {
+        setTime(new Date(time.getTime() + 10));
+      }, 10);
+      return () => clearInterval(interval);
+    }
+  }, [isPlaying, time, setTime]);
+
   return (
-    <div className="flex w-full items-end justify-between">
+    <div className="absolute bottom-2 flex w-full items-center gap-2 ">
       <div className="flex items-center gap-1">
-        <button className="rounded-full bg-neutral-700 p-2 text-sm">
+        {/* <button className="rounded-full bg-neutral-700 p-2 text-sm">
           <FaForward className="rotate-180" />
-        </button>
+        </button> */}
         <button
           className="rounded-full bg-neutral-700 p-2 text-sm"
           onClick={() => (isPlaying ? setNotPlaying() : setIsPlaying())}
         >
-          {!isPlaying ? <FaPause /> : <FaPlay />}
+          {isPlaying ? <FaPause /> : <FaPlay className="translate-x-0.5" />}
         </button>
-        <button className="rounded-full bg-neutral-700 p-2 text-sm">
+        {/* <button className="rounded-full bg-neutral-700 p-2 text-sm">
           <FaForward />
-        </button>
-        <p className="text-sm">x1</p>
+        </button> */}
       </div>
 
-      <p>00:00:00</p>
+      <p className="text-sm">{`${time.toLocaleTimeString()}:${time.getMilliseconds()}`}</p>
     </div>
   );
 };

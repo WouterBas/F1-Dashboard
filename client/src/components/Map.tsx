@@ -4,8 +4,10 @@ import { CircuitPoints, DriverPosition, SessionGp } from "@/types";
 import { RefObject, useEffect, useRef } from "react";
 import useSWR from "swr";
 import MediaControls from "./MediaControls";
+import { store } from "@/store";
 
 const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
+  const { isPlaying, time, setTime } = store();
   const ref: RefObject<HTMLCanvasElement> = useRef<HTMLCanvasElement>(null);
 
   const { data: circuitPoints } = useSWR<CircuitPoints[]>(
@@ -18,23 +20,44 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     fetcher,
   );
 
-  if (driverPositoins) {
-    console.log(driverPositoins[200].entries);
-  }
-
   // draw circuit
   useEffect(() => {
     if (circuitPoints && circuitPoints.length > 0 && driverPositoins) {
-      drawCircuit(
-        ref,
-        circuitPoints,
-        true,
-        false,
-        driverPositoins[200].entries,
-        sessionInfo.drivers,
-      );
+      let animationFrameId: number;
+      let index = 0;
+
+      // find position closet to current time
+      if (driverPositoins.length > 0) {
+        const closestPosition = driverPositoins.reduce((a, b) => {
+          return Math.abs(
+            new Date(time).getTime() - new Date(a.timestamp).getTime(),
+          ) <
+            Math.abs(new Date(time).getTime() - new Date(b.timestamp).getTime())
+            ? a
+            : b;
+        });
+        index = driverPositoins.indexOf(closestPosition);
+      }
+      const render = () => {
+        drawCircuit(
+          ref,
+          circuitPoints,
+          true,
+          false,
+          driverPositoins[index].entries,
+          sessionInfo.drivers,
+          index,
+        );
+        animationFrameId = window.requestAnimationFrame(render);
+      };
+
+      render();
+
+      return () => {
+        window.cancelAnimationFrame(animationFrameId);
+      };
     }
-  }, [circuitPoints, driverPositoins, sessionInfo]);
+  }, [circuitPoints, driverPositoins, sessionInfo, time]);
 
   return (
     <div className="relative rounded-lg bg-neutral-800  p-2  sm:p-3 md:p-4">

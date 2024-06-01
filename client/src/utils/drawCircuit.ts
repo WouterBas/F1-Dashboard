@@ -8,6 +8,7 @@ export function drawCircuit(
   drawPoints: boolean,
   positions: { [key: string]: { X: number; Y: number } } = {},
   drivers: driverList[] = [],
+  frameCount: number = 0,
 ) {
   const minX = Math.min(...circuitPoints.map((loc) => loc.x));
   const minY = Math.min(...circuitPoints.map((loc) => loc.y));
@@ -26,16 +27,31 @@ export function drawCircuit(
   });
 
   // scale driver positions
-  Object.keys(positions).forEach((key) => {
-    positions[key].X = (positions[key].X + Math.abs(minX)) / scale + 50;
-    positions[key].Y = (positions[key].Y + Math.abs(minY)) / scale + 50;
-  });
+  const driverPositions: { [key: string]: { X: number; Y: number } } =
+    Object.keys(positions).length > 0
+      ? Object.keys(positions).reduce((acc, key) => {
+          return {
+            ...acc,
+            [key]: {
+              X: (positions[key].X + Math.abs(minX)) / scale + 50,
+              Y: (positions[key].Y + Math.abs(minY)) / scale + 50,
+            },
+          };
+        }, {})
+      : {};
 
   const canvas = ref.current as HTMLCanvasElement;
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
   ctx.canvas.height = 2048;
   ctx.canvas.width = 2048 * aspectRatio + 100;
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+  ctx.beginPath();
+  ctx.fillStyle = "whitesmoke";
+  ctx.arc(50, 50, 20 * Math.sin(frameCount * 0.05) ** 2, 0, 2 * Math.PI);
+  ctx.fill();
 
   // move to the first point
   ctx.moveTo(points[0].x, points[0].y);
@@ -63,19 +79,32 @@ export function drawCircuit(
   ctx.stroke();
 
   // draw driver positions with team colors and label with abbreviation
-  if (positions) {
-    Object.keys(positions).forEach((key) => {
+  if (driverPositions) {
+    Object.keys(driverPositions).forEach((key) => {
       ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
       ctx.shadowBlur = 10;
 
       ctx.beginPath();
-      ctx.arc(positions[key].X, positions[key].Y, 25, 0, 2 * Math.PI, false);
+      ctx.arc(
+        driverPositions[key].X,
+        driverPositions[key].Y,
+        25,
+        0,
+        2 * Math.PI,
+        false,
+      );
       ctx.fillStyle = `${drivers.find((driver) => driver.racingNumber === parseInt(key))?.teamColor}`;
       ctx.fill();
 
       // label background
       ctx.beginPath();
-      ctx.roundRect(positions[key].X, positions[key].Y - 80, 110, 55, 10);
+      ctx.roundRect(
+        driverPositions[key].X,
+        driverPositions[key].Y - 80,
+        110,
+        55,
+        10,
+      );
       ctx.fillStyle = "rgba(50, 50, 50, 0.85)";
       ctx.fill();
 
@@ -89,8 +118,8 @@ export function drawCircuit(
       ctx.fillText(
         drivers.find((driver) => driver.racingNumber === parseInt(key))
           ?.abbreviation ?? "", // Provide a default value if abbreviation is undefined
-        positions[key].X + 10,
-        positions[key].Y - 35,
+        driverPositions[key].X + 10,
+        driverPositions[key].Y - 35,
       );
     });
   }
