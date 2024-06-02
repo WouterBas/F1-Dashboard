@@ -3,9 +3,12 @@ import client from "../../shared/dbConnection";
 
 import { Position } from "../../types";
 
-export const getPositionByKey = async (c: Context) => {
+export const getPositionByMinute = async (c: Context) => {
   const key: number = Number(c.req.param("key"));
-  const timestamp: Date = new Date(c.req.query("time") as string);
+  const minute: number = Number(c.req.query("minute"));
+  const startTime: Date = new Date(c.req.query("starttime") as string);
+
+  console.log(key, minute, startTime);
 
   const result = await client
     .db("f1dashboard")
@@ -14,8 +17,8 @@ export const getPositionByKey = async (c: Context) => {
       {
         sessionKey: key,
         timestamp: {
-          $gte: timestamp,
-          $lt: new Date(timestamp.getTime() + 1000 * 60),
+          $gte: new Date(startTime.getTime() + 1000 * 60 * minute),
+          $lt: new Date(startTime.getTime() + 1000 * 60 * (minute + 1)),
         },
       },
       { projection: { _id: 0, timestamp: 1, entries: 1 } }

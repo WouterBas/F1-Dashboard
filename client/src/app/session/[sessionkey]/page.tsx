@@ -33,8 +33,6 @@ function Page({ params }: { params: { sessionkey: string } }) {
       <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-2 sm:gap-3 md:gap-4 ">
         {sessionInfo && <LeaderBoard drivers={sessionInfo.drivers} />}
         {sessionInfo && <Map sessionInfo={sessionInfo} />}
-
-        {/* <Animation /> */}
       </main>
     </>
   );

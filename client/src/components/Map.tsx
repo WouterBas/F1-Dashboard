@@ -5,6 +5,7 @@ import { RefObject, useEffect, useRef } from "react";
 import useSWR from "swr";
 import MediaControls from "./MediaControls";
 import { store } from "@/store";
+import useSWRInfinite from "swr/infinite";
 
 const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   const { time, setTime, isPlaying } = store();
@@ -15,15 +16,15 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     fetcher,
   );
 
-  console.log(time);
-
-  const { data: driverPositoins } = useSWR<DriverPosition[]>(
-    `position/${sessionInfo.sessionKey}?time=${sessionInfo.startDate}`,
+  const { data, size, setSize } = useSWRInfinite<DriverPosition[]>(
+    (index) =>
+      `position/${sessionInfo.sessionKey}?minute=${index}&starttime=${sessionInfo.startDate}`,
     fetcher,
   );
 
   // draw circuit
   useEffect(() => {
+    const driverPositoins = data?.flat();
     if (circuitPoints && circuitPoints.length > 0 && driverPositoins) {
       let animationFrameId: number = 0;
       const startTime = performance.now();
@@ -32,26 +33,36 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
       let prevTime: number;
       let numberOfPositions = 1;
       let elapsedTime = 15;
+      let armed = false;
 
       const render = (now: number) => {
         const timeDifference =
           performance.now() - new Date(startTime).getTime();
 
         const newTime = new Date(new Date(time).getTime() + timeDifference);
+        if (newTime.getSeconds() === 57 && !armed) {
+          armed = true;
+          setSize(size + 1);
+        }
+        if (newTime.getSeconds() === 0 && armed) {
+          armed = false;
+        }
 
         setTime(newTime);
 
         // find the position that is closest to newTime but also before it
-        const closestPosition = driverPositoins.reduce((acc, current) => {
-          const currentTime = new Date(current.timestamp).getTime();
-          if (
-            currentTime < newTime.getTime() &&
-            currentTime > new Date(acc.timestamp).getTime()
-          ) {
-            return current;
-          }
-          return acc;
-        });
+        const closestPosition = driverPositoins
+          .flat()
+          .reduce((acc, current) => {
+            const currentTime = new Date(current.timestamp).getTime();
+            if (
+              currentTime < newTime.getTime() &&
+              currentTime > new Date(acc.timestamp).getTime()
+            ) {
+              return current;
+            }
+            return acc;
+          });
         index = driverPositoins.indexOf(closestPosition);
 
         // duration is the ms between the last position and the next
@@ -121,7 +132,7 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying, circuitPoints, driverPositoins]);
+  }, [isPlaying, circuitPoints, data]);
 
   return (
     <div className="relative rounded-lg bg-neutral-800  p-2  sm:p-3 md:p-4">
@@ -133,6 +144,7 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
           ></canvas>
         )}
       </div>
+      {/* <button onClick={() => setSize(size + 1)}>Load More</button> */}
       <MediaControls sessionInfo={sessionInfo} />
     </div>
   );
