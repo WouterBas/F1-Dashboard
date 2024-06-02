@@ -7,7 +7,7 @@
     "npm": ">=10"
   },
   "scripts": {
-    "start": "docker compose up -d && cd client && bun --bun run dev",
+    "start": "docker compose up -d && cd client && bun run dev",
     "stop": "docker compose down",
     "cmd": "docker exec -it F1-Dashboard-Server sh"
   },

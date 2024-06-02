@@ -9,6 +9,7 @@ export function drawCircuit(
   positions: { [key: string]: { X: number; Y: number } } = {},
   drivers: driverList[] = [],
   frameCount: number = 0,
+  progress: number = 0,
 ) {
   const minX = Math.min(...circuitPoints.map((loc) => loc.x));
   const minY = Math.min(...circuitPoints.map((loc) => loc.y));
@@ -48,10 +49,21 @@ export function drawCircuit(
 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
+  // test circle
   ctx.beginPath();
   ctx.fillStyle = "whitesmoke";
   ctx.arc(50, 50, 20 * Math.sin(frameCount * 0.05) ** 2, 0, 2 * Math.PI);
   ctx.fill();
+
+  // test bar progress with border
+
+  ctx.fillStyle = "whitesmoke";
+  ctx.fillRect(100, 40, progress * 500, 20);
+  ctx.fill();
+  ctx.closePath();
+
+  ctx.strokeStyle = "whitesmoke";
+  ctx.strokeRect(100, 40, 500, 20);
 
   // move to the first point
   ctx.moveTo(points[0].x, points[0].y);
@@ -81,9 +93,6 @@ export function drawCircuit(
   // draw driver positions with team colors and label with abbreviation
   if (driverPositions) {
     Object.keys(driverPositions).forEach((key) => {
-      ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
-      ctx.shadowBlur = 10;
-
       ctx.beginPath();
       ctx.arc(
         driverPositions[key].X,
@@ -107,9 +116,6 @@ export function drawCircuit(
       );
       ctx.fillStyle = "rgba(50, 50, 50, 0.85)";
       ctx.fill();
-
-      // clear the shadow
-      ctx.shadowColor = "rgba(0, 0, 0, 0)";
 
       // label with abbreviation
       ctx.font = "48px monospace ";
