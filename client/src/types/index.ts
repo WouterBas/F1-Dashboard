@@ -93,3 +93,11 @@ export type CircuitInfo = {
     drivers: { racingNumber: number; abbreviation: string }[];
   };
 };
+
+export type CircuitDimensions = {
+  scale: number;
+  calcHeight: number;
+  calcWidth: number;
+  minX: number;
+  minY: number;
+};

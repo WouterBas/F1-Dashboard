@@ -14,7 +14,9 @@ import useSWRMutation from "swr/mutation";
 import { apiService } from "@/services/api.service";
 
 const Admin = () => {
-  const ref: RefObject<HTMLCanvasElement> = useRef<HTMLCanvasElement>(null);
+  const circuitRef: RefObject<HTMLCanvasElement> =
+    useRef<HTMLCanvasElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
   const [close, setClose] = useState<boolean>(false);
   const [drawPoints, setDrawPoints] = useState<boolean>(true);
   const [startTime, setStartTime] = useState<Date>();
@@ -22,11 +24,18 @@ const Admin = () => {
   const [selectedDriver, setSelectedDriver] = useState<number>();
   const [selectedCircuit, setSelectedCircuit] = useState<string>();
   const [circuitSaved, setCircuitSaved] = useState<boolean>(true);
+  const [width, setWidth] = useState<number>(0);
+  const [dpr, setDpr] = useState<number>(1);
 
   // load circuit list
   const { data: circuitList, isLoading: circuitListLoading } = useSWR<
     CircuitList[]
   >("circuit/all", fetcher);
+
+  // set dpr
+  useEffect(() => {
+    setDpr(window.devicePixelRatio);
+  }, []);
 
   // set default circuit
   useEffect(() => {
@@ -69,12 +78,20 @@ const Admin = () => {
     fetcher,
   );
 
+  // set width
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      mainRef.current && setWidth(mainRef.current.clientWidth);
+    });
+    mainRef.current && setWidth(mainRef.current.clientWidth);
+  }, [circuitRef]);
+
   // draw circuit
   useEffect(() => {
     if (circuitPoints && circuitPoints?.length > 0) {
-      drawCircuit(ref, circuitPoints, close, drawPoints);
+      drawCircuit(circuitRef, circuitPoints, close, drawPoints, width, dpr);
     }
-  }, [circuitPoints, close, drawPoints]);
+  }, [circuitPoints, close, drawPoints, width, dpr]);
 
   // save circuit
   const { trigger } = useSWRMutation(`circuit/${circuitInfo?._id}`, (url) => {
@@ -244,17 +261,20 @@ const Admin = () => {
           {circuitSaved ? "Saved" : "Save"}
         </button>
       </div>
-      <main className="relative rounded-lg bg-neutral-800  p-2  sm:p-3 md:p-4">
+      <main
+        className="relative rounded-lg bg-neutral-800 p-2 sm:p-3 md:p-4"
+        ref={mainRef}
+      >
         {(!circuitPoints || circuitPointsLoading) && (
           <FaSpinner className="absolute left-4 top-4 animate-spin text-2xl" />
         )}
         {circuitPoints && circuitPoints.length === 0 ? (
           <p>No circuit data found</p>
         ) : (
-          <div className="relative mx-auto w-fit">
+          <div className="relative mx-auto w-full max-w-fit">
             <canvas
-              className="mx-auto max-h-[calc(100dvh-170px)] w-full"
-              ref={ref}
+              className="mx-auto max-h-[calc(100dvh-172px)] w-full"
+              ref={circuitRef}
             ></canvas>
           </div>
         )}

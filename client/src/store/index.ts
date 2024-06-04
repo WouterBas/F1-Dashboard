@@ -5,8 +5,7 @@ type State = {
   time: Date;
   setTime: (time: Date) => void;
 
-  setIsPlaying: () => void;
-  setNotPlaying: () => void;
+  toggleIsPlaying: () => void;
 };
 
 export const store = create<State>((set) => ({
@@ -15,6 +14,5 @@ export const store = create<State>((set) => ({
 
   setTime: (time: Date) => set({ time }),
 
-  setIsPlaying: () => set({ isPlaying: true }),
-  setNotPlaying: () => set({ isPlaying: false }),
+  toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
 }));
