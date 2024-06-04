@@ -67,7 +67,7 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     if (!data || !circuitDimensions) return;
     // find the position that is closest to newTime but also before it
     const driverPositoins = data.flat();
-    const closestPosition = driverPositoins.flat().reduce((acc, current) => {
+    const closestPosition = driverPositoins.reduce((acc, current) => {
       const currentTime = new Date(current.timestamp).getTime();
       if (
         currentTime < time.getTime() &&
