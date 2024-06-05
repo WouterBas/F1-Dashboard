@@ -8,8 +8,6 @@ export const getPositionByMinute = async (c: Context) => {
   const minute: number = Number(c.req.query("minute"));
   const startTime: Date = new Date(c.req.query("starttime") as string);
 
-  console.log(key, minute, startTime);
-
   const result = await client
     .db("f1dashboard")
     .collection("positions")
