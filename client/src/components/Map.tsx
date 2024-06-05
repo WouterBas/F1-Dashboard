@@ -26,8 +26,6 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     useState<CircuitDimensions>();
   const dpr = window.devicePixelRatio;
 
-  console.log(dpr);
-
   // load circuit points
   const { data: circuitPoints } = useSWR<CircuitPoints[]>(
     `circuit/points/${sessionInfo.circuitKey}`,
@@ -164,10 +162,12 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
             <canvas
               className="mx-auto max-h-[calc(100dvh-136px)] max-w-full"
               ref={circuitRef}
+              style={{ imageRendering: "crisp-edges" }}
             ></canvas>
             <canvas
               className="absolute top-0 mx-auto max-h-[calc(100dvh-136px)] max-w-full"
               ref={circuitDriverssRef}
+              style={{ imageRendering: "crisp-edges" }}
             ></canvas>
           </>
         )}
