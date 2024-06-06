@@ -131,14 +131,36 @@ export type Position = {
   sessionKey: number;
 };
 
-export type TimingData = {
-  Lines: {
-    [key: string]: {
-      Position?: string;
-      Retired?: boolean;
-      InPit?: boolean;
-      PitOut?: boolean;
-      Stopped?: boolean;
+export type Lines = {
+  [key: string]: {
+    Position?: string;
+    Retired?: boolean;
+    InPit?: boolean;
+    PitOut?: boolean;
+    Stopped?: boolean;
+    GapToLeader?: string;
+    IntervalToPositionAhead?: {
+      Value: number;
+      Catching: boolean;
     };
+    RacingNumber?: string;
+    Status?: number;
+    NumberOfLaps?: number;
+    Sectors: object[];
   };
+};
+
+export type ConvertedLines = {
+  [key: string]: {
+    position?: number;
+    retired?: boolean;
+    inPit?: boolean;
+    pitOut?: boolean;
+  };
+};
+
+export type TimingData = {
+  timeStamp: Date;
+  sessionKey: number;
+  lines: ConvertedLines;
 };
