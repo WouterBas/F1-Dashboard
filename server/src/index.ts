@@ -9,7 +9,7 @@ import {
   sessionRouter,
 } from "./modules";
 
-const app = new Hono().basePath("/api/v1");
+export const app = new Hono().basePath("/api/v1");
 app.use(logger());
 app.use(cors());
 
