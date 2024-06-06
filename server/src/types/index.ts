@@ -130,3 +130,15 @@ export type Position = {
   entries: Entrie;
   sessionKey: number;
 };
+
+export type TimingData = {
+  Lines: {
+    [key: string]: {
+      Position?: string;
+      Retired?: boolean;
+      InPit?: boolean;
+      PitOut?: boolean;
+      Stopped?: boolean;
+    };
+  };
+};

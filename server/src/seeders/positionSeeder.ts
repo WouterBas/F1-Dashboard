@@ -1,12 +1,5 @@
 import client from "../shared/dbConnection";
-import {
-  Entrie,
-  Entry,
-  F1Entries,
-  F1Position,
-  Meeting,
-  Position,
-} from "../types";
+import { Entrie, F1Entries, F1Position, Position } from "../types";
 import { getF1StreamData } from "./utils/fetchF1Data";
 import zlib from "zlib";
 
