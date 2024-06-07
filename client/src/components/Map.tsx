@@ -4,6 +4,7 @@ import fetcher from "@/utils/fetcher";
 import {
   CircuitDimensions,
   CircuitPoints,
+  SortedDriverPosition,
   DriverPosition,
   SessionGp,
 } from "@/types";
@@ -21,7 +22,7 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     useRef<HTMLCanvasElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
-  const { time, setTime, isPlaying } = store();
+  const { time, setTime, isPlaying, driverList } = store();
   const [circuitDimensions, setCircuitDimensions] =
     useState<CircuitDimensions>();
   const dpr = window.devicePixelRatio;
@@ -70,7 +71,8 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     if (!driverPositoins.length) {
       window.alert("No positions found");
       return;
-    };
+    }
+
     const closestPosition = driverPositoins.reduce((acc, current) => {
       const currentTime = new Date(current.timestamp).getTime();
       if (
@@ -79,7 +81,6 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
       ) {
         return current;
       }
-
       return acc;
     });
     const index = driverPositoins.indexOf(closestPosition);
@@ -108,10 +109,22 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
       };
     });
 
+    // sort inbetweenPositions based on positions in driverList
+    const sortedDriverList: SortedDriverPosition[] = driverList
+      .map((driver) => {
+        return {
+          racingNumber: driver.racingNumber,
+          abbreviation: driver.abbreviation,
+          teamColor: driver.teamColor,
+          X: inbetweenPositions[driver.racingNumber].X,
+          Y: inbetweenPositions[driver.racingNumber].Y,
+        };
+      })
+      .reverse();
+
     drawDrivers(
       circuitDriverssRef,
-      inbetweenPositions,
-      sessionInfo.drivers,
+      sortedDriverList,
       circuitDimensions,
       width,
       dpr,
@@ -123,7 +136,7 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     circuitDriverssRef,
     width,
     dpr,
-    sessionInfo.drivers,
+    driverList,
   ]);
 
   useLayoutEffect(() => {

@@ -70,6 +70,14 @@ export type DriverPosition = {
   entries: { [key: string]: { X: number; Y: number } };
 };
 
+export type SortedDriverPosition = {
+  racingNumber: number;
+  abbreviation: string;
+  teamColor: string;
+  X: number;
+  Y: number;
+};
+
 export type CircuitPoints = {
   x: number;
   y: number;
@@ -100,4 +108,26 @@ export type CircuitDimensions = {
   calcWidth: number;
   minX: number;
   minY: number;
+};
+
+export type TimgingData = {
+  timestamp: Date;
+  lines: {
+    [key: string]: {
+      inPit: boolean;
+      pitOut: boolean;
+      retired: boolean;
+      position: number;
+    };
+  };
+};
+
+export type DriverTimingList = {
+  racingNumber: number;
+  abbreviation: string;
+  teamColor: string;
+  inPit: boolean;
+  pitOut: boolean;
+  retired: boolean;
+  position: number;
 };
