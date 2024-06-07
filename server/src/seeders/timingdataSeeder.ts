@@ -126,6 +126,13 @@ async function findTimeOffset(url: string) {
     return arr[1].includes("Started");
   });
 
+  if (startIndex === -1) {
+    return {
+      timeOffset: 0,
+      startTime: new Date(),
+    };
+  }
+
   // find the time offset
   const indexOfUtc = sessionDataArr[startIndex][1].indexOf("Utc");
   const startTime = new Date(
@@ -133,7 +140,6 @@ async function findTimeOffset(url: string) {
       .slice(indexOfUtc + 6, indexOfUtc + 32)
       .split('"')[0]
   );
-
   const streamTime = new Date(
     startTime.toISOString().split("T")[0] + "T" + sessionDataArr[startIndex][0]
   );
