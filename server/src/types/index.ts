@@ -164,3 +164,19 @@ export type TimingData = {
   sessionKey: number;
   lines: ConvertedLines;
 };
+
+export type SessionData = {
+  Serries?: {
+    [key: string]: {
+      Utc: string;
+      Lap: number;
+    };
+  };
+  StatusSeries?: {
+    [key: string]: {
+      Utc: string;
+      SessionStatus?: string;
+      TrackStatus?: string;
+    };
+  };
+};
