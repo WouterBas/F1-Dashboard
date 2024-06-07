@@ -28,12 +28,12 @@ async function seeder() {
     const convertedTimingData: TimingData[] = [];
     convertedLines.forEach((line, index) => {
       const prevLines = convertedTimingData[index - 1]?.lines;
-      const timeStamp =
+      const timestamp =
         new Date(
           startTime.toISOString().split("T")[0] + "T" + line[1]
         ).getTime() - timeOffset;
       convertedTimingData.push({
-        timeStamp: new Date(timeStamp),
+        timestamp: new Date(timestamp),
         sessionKey,
         lines: extendLines(line[0], prevLines),
       });

@@ -7,6 +7,7 @@ import {
   scheduleRouter,
   positionRouter,
   sessionRouter,
+  timingDataRouter,
 } from "./modules";
 
 export const app = new Hono().basePath("/api/v1");
@@ -21,5 +22,6 @@ app.route("/circuit", circuitRouter);
 app.route("/position", positionRouter);
 app.route("/session", sessionRouter);
 app.route("/schedule", scheduleRouter);
+app.route("/timingdata", timingDataRouter);
 
 export default app;

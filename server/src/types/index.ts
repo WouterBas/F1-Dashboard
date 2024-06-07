@@ -160,7 +160,7 @@ export type ConvertedLines = {
 };
 
 export type TimingData = {
-  timeStamp: Date;
+  timestamp: Date;
   sessionKey: number;
   lines: ConvertedLines;
 };
