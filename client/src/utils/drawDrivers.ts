@@ -29,9 +29,7 @@ export function drawDrivers(
 
   if (driverPositions.length > 0) {
     driverPositions.forEach(({ abbreviation, teamColor, X, Y, retired }) => {
-      if (X === 0 && Y === 0) {
-        console.log("no position");
-      }
+      ctx.globalAlpha = retired ? 0.5 : 1;
 
       ctx.beginPath();
       ctx.globalAlpha = retired ? 0.5 : 1;
