@@ -76,6 +76,7 @@ export type SortedDriverPosition = {
   teamColor: string;
   X: number;
   Y: number;
+  retired: boolean;
 };
 
 export type CircuitPoints = {

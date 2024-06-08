@@ -28,10 +28,17 @@ export function drawDrivers(
   });
 
   if (driverPositions.length > 0) {
-    driverPositions.forEach(({ abbreviation, teamColor, X, Y }) => {
+    driverPositions.forEach(({ abbreviation, teamColor, X, Y, retired }) => {
+      if (X === 0 && Y === 0) {
+        console.log("no position");
+      }
+
       ctx.beginPath();
+      ctx.globalAlpha = retired ? 0.5 : 1;
+
       ctx.arc(X, Y, width / 125, 0, 2 * Math.PI, false);
       ctx.fillStyle = teamColor ? teamColor : "white";
+
       ctx.fill();
 
       ctx.beginPath();

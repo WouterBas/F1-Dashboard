@@ -135,9 +135,13 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
           teamColor: driver.teamColor,
           X: inbetweenPositions[driver.racingNumber].X,
           Y: inbetweenPositions[driver.racingNumber].Y,
+          retired: driver.retired,
         };
       })
-      .reverse();
+      .reverse()
+      .filter((driver) => {
+        return driver.X !== 0 && driver.Y !== 0;
+      });
 
     drawDrivers(
       circuitDriverssRef,
