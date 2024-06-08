@@ -10,10 +10,10 @@ import {
 } from "@/types";
 import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import useSWR from "swr";
-import useSWRInfinite from "swr/infinite";
 import { store } from "@/store";
 import { drawDrivers } from "@/utils/drawDrivers";
 import MediaControls from "./MediaControls";
+import { FaSpinner } from "react-icons/fa6";
 
 const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   const circuitRef: RefObject<HTMLCanvasElement> =
@@ -22,7 +22,17 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     useRef<HTMLCanvasElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
-  const { time, setTime, isPlaying, driverList } = store();
+  const {
+    time,
+    setTime,
+    isPlaying,
+    driverList,
+    minute,
+    setMinute,
+    toggleIsPlaying,
+    wasPlaying,
+    setWasPlaying,
+  } = store();
   const [circuitDimensions, setCircuitDimensions] =
     useState<CircuitDimensions>();
   const dpr = window.devicePixelRatio;
@@ -34,10 +44,18 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   );
 
   // load driver positions
-  const { data, setSize } = useSWRInfinite<DriverPosition[]>(
-    (index) =>
-      `position/${sessionInfo.sessionKey}?minute=${index}&starttime=${sessionInfo.startDate}`,
+  const { data, isLoading } = useSWR<DriverPosition[]>(
+    `position/${sessionInfo.sessionKey}?minute=${minute}&starttime=${sessionInfo.startDate}`,
     fetcher,
+    {
+      keepPreviousData: true,
+      onSuccess: () => {
+        if (!isPlaying && wasPlaying) {
+          toggleIsPlaying();
+          setWasPlaying(false);
+        }
+      },
+    },
   );
 
   // set width
@@ -68,10 +86,7 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     if (!data || !circuitDimensions) return;
     // find the position that is closest to newTime but also before it
     const driverPositoins = data.flat();
-    if (!driverPositoins.length) {
-      window.alert("No positions found");
-      return;
-    }
+    if (!driverPositoins.length) return;
 
     const closestPosition = driverPositoins.reduce((acc, current) => {
       const currentTime = new Date(current.timestamp).getTime();
@@ -84,6 +99,8 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
       return acc;
     });
     const index = driverPositoins.indexOf(closestPosition);
+
+    if (driverPositoins[index + 1] === undefined) return;
 
     // duration is the ms between the last position and the next
     const duration =
@@ -143,7 +160,6 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     if (isPlaying) {
       let animationFrameId: number;
       const startTime = performance.now();
-      let armed = false;
 
       const render = () => {
         const timeDifference =
@@ -151,14 +167,13 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
         const newTime = new Date(new Date(time).getTime() + timeDifference);
         setTime(newTime);
 
-        // load more data if needed
-        if (newTime.getSeconds() === 1 && !armed) {
-          armed = true;
-          setSize((previousSize) => previousSize + 1);
-        }
-        if (newTime.getSeconds() === 2 && armed) {
-          armed = false;
-        }
+        const minute = Math.floor(
+          (newTime.getTime() - new Date(sessionInfo.startDate).getTime()) /
+            1000 /
+            60,
+        );
+
+        setMinute(minute);
 
         animationFrameId = requestAnimationFrame(render);
       };
@@ -170,9 +185,12 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
 
   return (
     <div
-      className="relative rounded-lg bg-neutral-800 p-2 sm:p-3 md:p-4"
+      className="relative rounded-lg  bg-neutral-800 p-2 sm:p-3 md:p-4"
       ref={mainRef}
     >
+      {isLoading && !isPlaying && (
+        <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin  text-3xl" />
+      )}
       <div className="relative mx-auto w-full max-w-fit">
         {circuitPoints && (
           <>

@@ -9,17 +9,20 @@ import { store } from "@/store";
 import { useEffect } from "react";
 
 function Page({ params }: { params: { sessionkey: string } }) {
-  const { setTime } = store();
+  const { setTime, toggleIsPlaying, setWasPlaying, setMinute, isPlaying } =
+    store();
   const { data: sessionInfo } = useSWR<SessionGp>(
     `session/${params.sessionkey}`,
     fetcher,
   );
 
   useEffect(() => {
-    if (sessionInfo) {
-      setTime(new Date(sessionInfo.startDate));
-    }
-  }, [sessionInfo, setTime]);
+    sessionInfo && setTime(new Date(sessionInfo.startDate));
+    isPlaying && toggleIsPlaying();
+    setWasPlaying(false);
+    setMinute(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionInfo, setMinute, setTime, setWasPlaying, toggleIsPlaying]);
 
   return (
     <>

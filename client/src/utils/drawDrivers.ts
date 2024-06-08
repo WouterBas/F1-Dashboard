@@ -14,9 +14,6 @@ export function drawDrivers(
   ctx.canvas.height = calcHeight * dpr;
   ctx.canvas.width = calcWidth * dpr;
 
-  console.log(ctx.canvas.height, ctx.canvas.width);
-  console.log(scale);
-
   ctx.scale(dpr, dpr);
 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -34,7 +31,7 @@ export function drawDrivers(
     driverPositions.forEach(({ abbreviation, teamColor, X, Y }) => {
       ctx.beginPath();
       ctx.arc(X, Y, width / 125, 0, 2 * Math.PI, false);
-      ctx.fillStyle = teamColor;
+      ctx.fillStyle = teamColor ? teamColor : "white";
       ctx.fill();
 
       ctx.beginPath();

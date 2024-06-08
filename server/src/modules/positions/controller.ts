@@ -15,8 +15,8 @@ export const getPositionByMinute = async (c: Context) => {
       {
         sessionKey: key,
         timestamp: {
-          $gte: new Date(startTime.getTime() + 1000 * 60 * minute),
-          $lt: new Date(startTime.getTime() + 1000 * 60 * (minute + 1)),
+          $gte: new Date(startTime.getTime() + 1000 * 60 * (minute - 1)),
+          $lt: new Date(startTime.getTime() + 1000 * 60 * (minute + 2)),
         },
       },
       { projection: { _id: 0, timestamp: 1, entries: 1 } }
