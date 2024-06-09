@@ -133,8 +133,8 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
           racingNumber: driver.racingNumber,
           abbreviation: driver.abbreviation,
           teamColor: driver.teamColor,
-          X: inbetweenPositions[driver.racingNumber].X,
-          Y: inbetweenPositions[driver.racingNumber].Y,
+          X: inbetweenPositions[driver.racingNumber].X || 0,
+          Y: inbetweenPositions[driver.racingNumber].Y || 0,
           retired: driver.retired,
         };
       })
