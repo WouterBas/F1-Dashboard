@@ -24,7 +24,7 @@ export const login = async (c: Context) => {
   await setSignedCookie(c, "F1-Dashboard", "accessToken", secret, {
     maxAge: 3600,
     sameSite: "none",
-    domain: "f1-dashboard-git-dev-wouterbas-projects.vercel.app",
+    domain: "api.f1-dashboard.app",
   });
 
   return c.json({ message: "success" });
