@@ -21,12 +21,25 @@ export const login = async (c: Context) => {
   }
 
   const secret = process.env.TOKEN_SECRET;
-  await setSignedCookie(c, "F1-Dashboard", "accessToken", secret, {
-    maxAge: 3600,
-    sameSite: "strict",
-    secure: true,
-    domain: ".f1-dashboard.app",
-  });
+
+  let options = {};
+  if (process.env.ENVIRONMENT === "dev") {
+    options = {
+      maxAge: 3600,
+      domain: process.env.DOMAIN,
+    };
+  }
+
+  if (process.env.ENVIRONMENT === "prod") {
+    options = {
+      maxAge: 3600,
+      sameSite: "strict",
+      secure: true,
+      domain: process.env.DOMAIN,
+    };
+  }
+
+  await setSignedCookie(c, "F1-Dashboard", "accessToken", secret, options);
 
   return c.json({ message: "success" });
 };
