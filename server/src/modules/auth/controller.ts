@@ -23,6 +23,8 @@ export const login = async (c: Context) => {
   const secret = process.env.TOKEN_SECRET;
   await setSignedCookie(c, "F1-Dashboard", "accessToken", secret, {
     maxAge: 3600,
+    sameSite: "none",
+    domain: "f1-dashboard-git-dev-wouterbas-projects.vercel.app",
   });
 
   return c.json({ message: "success" });
