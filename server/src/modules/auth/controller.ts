@@ -23,9 +23,9 @@ export const login = async (c: Context) => {
   const secret = process.env.TOKEN_SECRET;
   await setSignedCookie(c, "F1-Dashboard", "accessToken", secret, {
     maxAge: 3600,
-    sameSite: "none",
+    sameSite: "strict",
     secure: true,
-    domain: "api.f1-dashboard.app",
+    domain: ".f1-dashboard.app",
   });
 
   return c.json({ message: "success" });

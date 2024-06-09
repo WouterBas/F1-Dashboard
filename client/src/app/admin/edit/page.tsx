@@ -13,7 +13,7 @@ import fetcher from "@/utils/fetcher";
 import useSWRMutation from "swr/mutation";
 import { apiService } from "@/services/api.service";
 import { HTTPError } from "ky";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Admin = () => {
   const circuitRef: RefObject<HTMLCanvasElement> =
@@ -28,7 +28,7 @@ const Admin = () => {
   const [circuitSaved, setCircuitSaved] = useState<boolean>(true);
   const [width, setWidth] = useState<number>(0);
   const [dpr, setDpr] = useState<number>(1);
-  // const router = useRouter();
+  const router = useRouter();
 
   // load circuit list
   const { data: circuitList, isLoading: circuitListLoading } = useSWR<
@@ -48,17 +48,21 @@ const Admin = () => {
   }, [circuitList]);
 
   // load circuit info
-  const { data: circuitInfo, isLoading: circuitInfoLoading } = useSWR<
-    CircuitInfo,
-    HTTPError
-  >(selectedCircuit ? `circuit/info/${selectedCircuit}` : null, fetcher);
+  const {
+    data: circuitInfo,
+    isLoading: circuitInfoLoading,
+    error,
+  } = useSWR<CircuitInfo, HTTPError>(
+    selectedCircuit ? `circuit/info/${selectedCircuit}` : null,
+    fetcher,
+  );
 
   // redirect if unauthorized
-  // useEffect(() => {
-  //   if (error?.response.status === 401) {
-  //     router.push("/admin");
-  //   }
-  // }, [error, router]);
+  useEffect(() => {
+    if (error?.response.status === 401) {
+      router.push("/admin");
+    }
+  }, [error, router]);
 
   // set default driver, start time and duration
   useEffect(() => {
