@@ -8,11 +8,18 @@ import {
   positionRouter,
   sessionRouter,
   timingDataRouter,
+  authRouter,
 } from "./modules";
 
 export const app = new Hono().basePath("/api/v1");
 app.use(logger());
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "*",
+    allowMethods: ["POST", "GET", "PATCH"],
+    credentials: true,
+  })
+);
 
 app.get("/status", async (c) => {
   return c.text("server is running");
@@ -23,5 +30,6 @@ app.route("/position", positionRouter);
 app.route("/session", sessionRouter);
 app.route("/schedule", scheduleRouter);
 app.route("/timingdata", timingDataRouter);
+app.route("/auth", authRouter);
 
 export default app;
