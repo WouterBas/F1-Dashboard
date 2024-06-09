@@ -20,12 +20,12 @@ const Page = () => {
         json: body,
         credentials: "include",
       });
-      if (res.status === 200) {
+      const data = await res.json();
+      if (res.status === 200 && data) {
         router.push("/admin/edit");
       }
     } catch (error) {
       const data = await (error as HTTPError).response.json();
-      console.log(data);
       setServerError(data.message);
     }
   };

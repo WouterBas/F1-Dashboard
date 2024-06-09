@@ -6,7 +6,6 @@ export const auth = createMiddleware(async (c, next) => {
   const secret = process.env.TOKEN_SECRET;
 
   const accessToken = await getSignedCookie(c, secret, "F1-Dashboard");
-  console.log(accessToken);
   if (!accessToken) {
     c.status(401);
     return c.json({ message: "unauthorized" });
