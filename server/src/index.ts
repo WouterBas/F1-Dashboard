@@ -13,7 +13,13 @@ import {
 
 export const app = new Hono().basePath("/api/v1");
 app.use(logger());
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "*",
+    allowMethods: ["POST", "GET", "PATCH"],
+    credentials: true,
+  })
+);
 
 app.get("/status", async (c) => {
   return c.text("server is running");

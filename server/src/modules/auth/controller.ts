@@ -8,11 +8,16 @@ export const login = async (c: Context) => {
   const result = await client
     .db("f1dashboard")
     .collection("users")
-    .findOne({ username, password });
+    .findOne({ username });
 
   if (!result) {
     c.status(401);
-    return c.json({ message: "invalid credentials" });
+    return c.json({ message: "Incorrect credentials" });
+  }
+  const correctPassword = await Bun.password.verify(password, result.password);
+  if (!correctPassword) {
+    c.status(401);
+    return c.json({ message: "Incorrect credentials" });
   }
 
   const secret = process.env.TOKEN_SECRET;
