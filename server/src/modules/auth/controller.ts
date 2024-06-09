@@ -24,6 +24,7 @@ export const login = async (c: Context) => {
   await setSignedCookie(c, "F1-Dashboard", "accessToken", secret, {
     maxAge: 3600,
     sameSite: "none",
+    secure: true,
     domain: "api.f1-dashboard.app",
   });
 
