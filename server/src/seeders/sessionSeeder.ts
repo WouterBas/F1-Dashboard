@@ -2,6 +2,16 @@ import client from "../shared/dbConnection";
 import { Meeting, F1Meeting, Schedule } from "../types/index";
 import getF1Data from "./utils/fetchF1Data";
 
+async function getLastSeedingDate() {
+  const result = (await client
+    .db("f1dashboard")
+    .collection("seeding")
+    .findOne({})) as unknown as { lastSeedingDate: Date };
+  return result.lastSeedingDate;
+}
+
+const lastSeedingDate = await getLastSeedingDate();
+
 // get schedule from database
 const getSchedule = async () => {
   const schedule = (await client
@@ -9,7 +19,9 @@ const getSchedule = async () => {
     .collection("schedules")
     .find(
       {
-        date: { $lt: new Date().toISOString().split("T")[0] },
+        date: {
+          $lt: new Date().toISOString().split("T")[0],
+        },
       },
       {
         sort: { date: 1 },

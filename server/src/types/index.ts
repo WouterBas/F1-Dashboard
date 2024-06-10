@@ -42,7 +42,7 @@ export type Schedule = {
   _id: ObjectId;
   name: string;
   year: string;
-  date: Date;
+  date: string;
   sessions: Session[];
 };
 
