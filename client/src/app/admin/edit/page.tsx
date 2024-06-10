@@ -287,7 +287,7 @@ const Admin = () => {
         ) : (
           <div className="relative mx-auto w-full max-w-fit">
             <canvas
-              className="mx-auto max-h-[calc(100dvh-172px)] w-full"
+              className="mx-auto max-h-[calc(100dvh-172px)] max-w-full"
               ref={circuitRef}
             ></canvas>
           </div>
