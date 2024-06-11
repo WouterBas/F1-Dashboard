@@ -46,3 +46,7 @@ export const login = async (c: Context) => {
 
   return c.json({ message: "success" });
 };
+
+export const checkLoginStatus = async (c: Context) => {
+  return c.json({ loggedIn: true });
+};

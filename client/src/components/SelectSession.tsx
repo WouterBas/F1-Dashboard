@@ -4,7 +4,7 @@ import { SessionList } from "@/types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const Form = ({ sessions }: { sessions: SessionList[] }) => {
+const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
   const router = useRouter();
   const [selectedYear, setSelectedYear] = useState(sessions[0].year);
   const [selectedGp, setSelectedGp] = useState(sessions[0].name);
@@ -147,4 +147,4 @@ const Form = ({ sessions }: { sessions: SessionList[] }) => {
     </form>
   );
 };
-export default Form;
+export default SelectSession;
