@@ -3,7 +3,10 @@ import client from "../../shared/dbConnection";
 import { setSignedCookie } from "hono/cookie";
 
 export const login = async (c: Context) => {
-  const { username, password } = await c.req.json();
+  const body = await c.req.json();
+
+  const username = body.username.toLowerCase();
+  const password = body.password;
 
   const result = await client
     .db("f1dashboard")

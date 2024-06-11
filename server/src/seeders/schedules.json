@@ -1,507 +1,28 @@
 [
   {
     "name": "Bahrain Grand Prix",
-    "year": "2023",
-    "date": "2023-03-05",
-    "sessions": [
-      {
-        "Practice_1": "2023-03-03"
-      },
-      {
-        "Practice_2": "2023-03-03"
-      },
-      {
-        "Practice_3": "2023-03-04"
-      },
-      {
-        "Qualifying": "2023-03-04"
-      },
-      {
-        "Race": "2023-03-05"
-      }
-    ]
-  },
-  {
-    "name": "Saudi Arabian Grand Prix",
-    "year": "2023",
-    "date": "2023-03-19",
-    "sessions": [
-      {
-        "Practice_1": "2023-03-17"
-      },
-      {
-        "Practice_2": "2023-03-17"
-      },
-      {
-        "Practice_3": "2023-03-18"
-      },
-      {
-        "Qualifying": "2023-03-18"
-      },
-      {
-        "Race": "2023-03-19"
-      }
-    ]
-  },
-  {
-    "name": "Australian Grand Prix",
-    "year": "2023",
-    "date": "2023-04-02",
-    "sessions": [
-      {
-        "Practice_1": "2023-03-31"
-      },
-      {
-        "Practice_2": "2023-03-31"
-      },
-      {
-        "Practice_3": "2023-04-01"
-      },
-      {
-        "Qualifying": "2023-04-01"
-      },
-      {
-        "Race": "2023-04-02"
-      }
-    ]
-  },
-  {
-    "name": "Azerbaijan Grand Prix",
-    "year": "2023",
-    "date": "2023-04-30",
-    "sessions": [
-      {
-        "Practice_1": "2023-04-28"
-      },
-      {
-        "Sprint_Shootout": "2023-04-29"
-      },
-      {
-        "Sprint": "2023-04-29"
-      },
-      {
-        "Qualifying": "2023-04-28"
-      },
-      {
-        "Race": "2023-04-30"
-      }
-    ]
-  },
-  {
-    "name": "Miami Grand Prix",
-    "year": "2023",
-    "date": "2023-05-07",
-    "sessions": [
-      {
-        "Practice_1": "2023-05-05"
-      },
-      {
-        "Practice_2": "2023-05-05"
-      },
-      {
-        "Practice_3": "2023-05-06"
-      },
-      {
-        "Qualifying": "2023-05-06"
-      },
-      {
-        "Race": "2023-05-07"
-      }
-    ]
-  },
-  {
-    "name": "Monaco Grand Prix",
-    "year": "2023",
-    "date": "2023-05-28",
-    "sessions": [
-      {
-        "Practice_1": "2023-05-26"
-      },
-      {
-        "Practice_2": "2023-05-26"
-      },
-      {
-        "Practice_3": "2023-05-27"
-      },
-      {
-        "Qualifying": "2023-05-27"
-      },
-      {
-        "Race": "2023-05-28"
-      }
-    ]
-  },
-  {
-    "name": "Spanish Grand Prix",
-    "year": "2023",
-    "date": "2023-06-04",
-    "sessions": [
-      {
-        "Practice_1": "2023-06-02"
-      },
-      {
-        "Practice_2": "2023-06-02"
-      },
-      {
-        "Practice_3": "2023-06-03"
-      },
-      {
-        "Qualifying": "2023-06-03"
-      },
-      {
-        "Race": "2023-06-04"
-      }
-    ]
-  },
-  {
-    "name": "Canadian Grand Prix",
-    "year": "2023",
-    "date": "2023-06-18",
-    "sessions": [
-      {
-        "Practice_1": "2023-06-16"
-      },
-      {
-        "Practice_2": "2023-06-16"
-      },
-      {
-        "Practice_3": "2023-06-17"
-      },
-      {
-        "Qualifying": "2023-06-17"
-      },
-      {
-        "Race": "2023-06-18"
-      }
-    ]
-  },
-  {
-    "name": "Austrian Grand Prix",
-    "year": "2023",
-    "date": "2023-07-02",
-    "sessions": [
-      {
-        "Practice_1": "2023-06-30"
-      },
-      {
-        "Sprint_Shootout": "2023-07-01"
-      },
-      {
-        "Sprint": "2023-07-01"
-      },
-      {
-        "Qualifying": "2023-06-30"
-      },
-      {
-        "Race": "2023-07-02"
-      }
-    ]
-  },
-  {
-    "name": "British Grand Prix",
-    "year": "2023",
-    "date": "2023-07-09",
-    "sessions": [
-      {
-        "Practice_1": "2023-07-07"
-      },
-      {
-        "Practice_2": "2023-07-07"
-      },
-      {
-        "Practice_3": "2023-07-08"
-      },
-      {
-        "Qualifying": "2023-07-08"
-      },
-      {
-        "Race": "2023-07-09"
-      }
-    ]
-  },
-  {
-    "name": "Hungarian Grand Prix",
-    "year": "2023",
-    "date": "2023-07-23",
-    "sessions": [
-      {
-        "Practice_1": "2023-07-21"
-      },
-      {
-        "Practice_2": "2023-07-21"
-      },
-      {
-        "Practice_3": "2023-07-22"
-      },
-      {
-        "Qualifying": "2023-07-22"
-      },
-      {
-        "Race": "2023-07-23"
-      }
-    ]
-  },
-  {
-    "name": "Belgian Grand Prix",
-    "year": "2023",
-    "date": "2023-07-30",
-    "sessions": [
-      {
-        "Practice_1": "2023-07-28"
-      },
-      {
-        "Sprint_Shootout": "2023-07-29"
-      },
-      {
-        "Sprint": "2023-07-29"
-      },
-      {
-        "Qualifying": "2023-07-28"
-      },
-      {
-        "Race": "2023-07-30"
-      }
-    ]
-  },
-  {
-    "name": "Dutch Grand Prix",
-    "year": "2023",
-    "date": "2023-08-27",
-    "sessions": [
-      {
-        "Practice_1": "2023-08-25"
-      },
-      {
-        "Practice_2": "2023-08-25"
-      },
-      {
-        "Practice_3": "2023-08-26"
-      },
-      {
-        "Qualifying": "2023-08-26"
-      },
-      {
-        "Race": "2023-08-27"
-      }
-    ]
-  },
-  {
-    "name": "Italian Grand Prix",
-    "year": "2023",
-    "date": "2023-09-03",
-    "sessions": [
-      {
-        "Practice_1": "2023-09-01"
-      },
-      {
-        "Practice_2": "2023-09-01"
-      },
-      {
-        "Practice_3": "2023-09-02"
-      },
-      {
-        "Qualifying": "2023-09-02"
-      },
-      {
-        "Race": "2023-09-03"
-      }
-    ]
-  },
-  {
-    "name": "Singapore Grand Prix",
-    "year": "2023",
-    "date": "2023-09-17",
-    "sessions": [
-      {
-        "Practice_1": "2023-09-15"
-      },
-      {
-        "Practice_2": "2023-09-15"
-      },
-      {
-        "Practice_3": "2023-09-16"
-      },
-      {
-        "Qualifying": "2023-09-16"
-      },
-      {
-        "Race": "2023-09-17"
-      }
-    ]
-  },
-  {
-    "name": "Japanese Grand Prix",
-    "year": "2023",
-    "date": "2023-09-24",
-    "sessions": [
-      {
-        "Practice_1": "2023-09-22"
-      },
-      {
-        "Practice_2": "2023-09-22"
-      },
-      {
-        "Practice_3": "2023-09-23"
-      },
-      {
-        "Qualifying": "2023-09-23"
-      },
-      {
-        "Race": "2023-09-24"
-      }
-    ]
-  },
-  {
-    "name": "Qatar Grand Prix",
-    "year": "2023",
-    "date": "2023-10-08",
-    "sessions": [
-      {
-        "Practice_1": "2023-10-06"
-      },
-      {
-        "Sprint_Shootout": "2023-10-07"
-      },
-      {
-        "Sprint": "2023-10-07"
-      },
-      {
-        "Qualifying": "2023-10-06"
-      },
-      {
-        "Race": "2023-10-08"
-      }
-    ]
-  },
-  {
-    "name": "United States Grand Prix",
-    "year": "2023",
-    "date": "2023-10-22",
-    "sessions": [
-      {
-        "Practice_1": "2023-10-20"
-      },
-      {
-        "Sprint_Shootout": "2023-10-21"
-      },
-      {
-        "Sprint": "2023-10-21"
-      },
-      {
-        "Qualifying": "2023-10-20"
-      },
-      {
-        "Race": "2023-10-22"
-      }
-    ]
-  },
-  {
-    "name": "Mexico City Grand Prix",
-    "year": "2023",
-    "date": "2023-10-29",
-    "sessions": [
-      {
-        "Practice_1": "2023-10-27"
-      },
-      {
-        "Practice_2": "2023-10-27"
-      },
-      {
-        "Practice_3": "2023-10-28"
-      },
-      {
-        "Qualifying": "2023-10-28"
-      },
-      {
-        "Race": "2023-10-29"
-      }
-    ]
-  },
-  {
-    "name": "São Paulo Grand Prix",
-    "year": "2023",
-    "date": "2023-11-05",
-    "sessions": [
-      {
-        "Practice_1": "2023-11-03"
-      },
-      {
-        "Sprint_Shootout": "2023-11-04"
-      },
-      {
-        "Sprint": "2023-11-04"
-      },
-      {
-        "Qualifying": "2023-11-03"
-      },
-      {
-        "Race": "2023-11-05"
-      }
-    ]
-  },
-  {
-    "name": "Las Vegas Grand Prix",
-    "year": "2023",
-    "date": "2023-11-18",
-    "sessions": [
-      {
-        "Practice_1": "2023-11-16"
-      },
-      {
-        "Practice_2": "2023-11-17"
-      },
-      {
-        "Practice_3": "2023-11-17"
-      },
-      {
-        "Qualifying": "2023-11-18"
-      },
-      {
-        "Race": "2023-11-18"
-      }
-    ]
-  },
-  {
-    "name": "Abu Dhabi Grand Prix",
-    "year": "2023",
-    "date": "2023-11-26",
-    "sessions": [
-      {
-        "Practice_1": "2023-11-24"
-      },
-      {
-        "Practice_2": "2023-11-24"
-      },
-      {
-        "Practice_3": "2023-11-25"
-      },
-      {
-        "Qualifying": "2023-11-25"
-      },
-      {
-        "Race": "2023-11-26"
-      }
-    ]
-  },
-  {
-    "name": "Bahrain Grand Prix",
     "year": "2021",
     "date": "2021-03-28",
     "sessions": [
       {
-        "Practice_1": "2021-03-26"
+        "type": "Practice_1",
+        "date": "2021-03-26"
       },
       {
-        "Practice_2": "2021-03-26"
+        "type": "Practice_2",
+        "date": "2021-03-26"
       },
       {
-        "Practice_3": "2021-03-27"
+        "type": "Practice_3",
+        "date": "2021-03-27"
       },
       {
-        "Qualifying": "2021-03-27"
+        "type": "Qualifying",
+        "date": "2021-03-27"
       },
       {
-        "Race": "2021-03-28"
+        "type": "Race",
+        "date": "2021-03-28"
       }
     ]
   },
@@ -511,19 +32,51 @@
     "date": "2021-04-18",
     "sessions": [
       {
-        "Practice_1": "2021-04-16"
+        "type": "Practice_1",
+        "date": "2021-04-16"
       },
       {
-        "Practice_2": "2021-04-16"
+        "type": "Practice_2",
+        "date": "2021-04-16"
       },
       {
-        "Practice_3": "2021-04-17"
+        "type": "Practice_3",
+        "date": "2021-04-17"
       },
       {
-        "Qualifying": "2021-04-17"
+        "type": "Qualifying",
+        "date": "2021-04-17"
       },
       {
-        "Race": "2021-04-18"
+        "type": "Race",
+        "date": "2021-04-18"
+      }
+    ]
+  },
+  {
+    "name": "Portuguese Grand Prix",
+    "year": "2021",
+    "date": "2021-05-02",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2021-04-30"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2021-04-30"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2021-05-01"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2021-05-01"
+      },
+      {
+        "type": "Race",
+        "date": "2021-05-02"
       }
     ]
   },
@@ -533,19 +86,24 @@
     "date": "2021-05-09",
     "sessions": [
       {
-        "Practice_1": "2021-05-07"
+        "type": "Practice_1",
+        "date": "2021-05-07"
       },
       {
-        "Practice_2": "2021-05-07"
+        "type": "Practice_2",
+        "date": "2021-05-07"
       },
       {
-        "Practice_3": "2021-05-08"
+        "type": "Practice_3",
+        "date": "2021-05-08"
       },
       {
-        "Qualifying": "2021-05-08"
+        "type": "Qualifying",
+        "date": "2021-05-08"
       },
       {
-        "Race": "2021-05-09"
+        "type": "Race",
+        "date": "2021-05-09"
       }
     ]
   },
@@ -555,19 +113,24 @@
     "date": "2021-05-23",
     "sessions": [
       {
-        "Practice_1": "2021-05-20"
+        "type": "Practice_1",
+        "date": "2021-05-20"
       },
       {
-        "Practice_2": "2021-05-20"
+        "type": "Practice_2",
+        "date": "2021-05-20"
       },
       {
-        "Practice_3": "2021-05-22"
+        "type": "Practice_3",
+        "date": "2021-05-22"
       },
       {
-        "Qualifying": "2021-05-22"
+        "type": "Qualifying",
+        "date": "2021-05-22"
       },
       {
-        "Race": "2021-05-23"
+        "type": "Race",
+        "date": "2021-05-23"
       }
     ]
   },
@@ -577,19 +140,24 @@
     "date": "2021-06-06",
     "sessions": [
       {
-        "Practice_1": "2021-06-04"
+        "type": "Practice_1",
+        "date": "2021-06-04"
       },
       {
-        "Practice_2": "2021-06-04"
+        "type": "Practice_2",
+        "date": "2021-06-04"
       },
       {
-        "Practice_3": "2021-06-05"
+        "type": "Practice_3",
+        "date": "2021-06-05"
       },
       {
-        "Qualifying": "2021-06-05"
+        "type": "Qualifying",
+        "date": "2021-06-05"
       },
       {
-        "Race": "2021-06-06"
+        "type": "Race",
+        "date": "2021-06-06"
       }
     ]
   },
@@ -599,19 +167,24 @@
     "date": "2021-06-20",
     "sessions": [
       {
-        "Practice_1": "2021-06-18"
+        "type": "Practice_1",
+        "date": "2021-06-18"
       },
       {
-        "Practice_2": "2021-06-18"
+        "type": "Practice_2",
+        "date": "2021-06-18"
       },
       {
-        "Practice_3": "2021-06-19"
+        "type": "Practice_3",
+        "date": "2021-06-19"
       },
       {
-        "Qualifying": "2021-06-19"
+        "type": "Qualifying",
+        "date": "2021-06-19"
       },
       {
-        "Race": "2021-06-20"
+        "type": "Race",
+        "date": "2021-06-20"
       }
     ]
   },
@@ -621,19 +194,24 @@
     "date": "2021-06-27",
     "sessions": [
       {
-        "Practice_1": "2021-06-25"
+        "type": "Practice_1",
+        "date": "2021-06-25"
       },
       {
-        "Practice_2": "2021-06-25"
+        "type": "Practice_2",
+        "date": "2021-06-25"
       },
       {
-        "Practice_3": "2021-06-26"
+        "type": "Practice_3",
+        "date": "2021-06-26"
       },
       {
-        "Qualifying": "2021-06-26"
+        "type": "Qualifying",
+        "date": "2021-06-26"
       },
       {
-        "Race": "2021-06-27"
+        "type": "Race",
+        "date": "2021-06-27"
       }
     ]
   },
@@ -643,19 +221,24 @@
     "date": "2021-07-04",
     "sessions": [
       {
-        "Practice_1": "2021-07-02"
+        "type": "Practice_1",
+        "date": "2021-07-02"
       },
       {
-        "Practice_2": "2021-07-02"
+        "type": "Practice_2",
+        "date": "2021-07-02"
       },
       {
-        "Practice_3": "2021-07-03"
+        "type": "Practice_3",
+        "date": "2021-07-03"
       },
       {
-        "Qualifying": "2021-07-03"
+        "type": "Qualifying",
+        "date": "2021-07-03"
       },
       {
-        "Race": "2021-07-04"
+        "type": "Race",
+        "date": "2021-07-04"
       }
     ]
   },
@@ -665,19 +248,24 @@
     "date": "2021-07-18",
     "sessions": [
       {
-        "Practice_1": "2021-07-16"
+        "type": "Practice_1",
+        "date": "2021-07-16"
       },
       {
-        "Practice_2": "2021-07-17"
+        "type": "Practice_2",
+        "date": "2021-07-17"
       },
       {
-        "Sprint": "2021-07-17"
+        "type": "Sprint",
+        "date": "2021-07-17"
       },
       {
-        "Qualifying": "2021-07-16"
+        "type": "Qualifying",
+        "date": "2021-07-16"
       },
       {
-        "Race": "2021-07-18"
+        "type": "Race",
+        "date": "2021-07-18"
       }
     ]
   },
@@ -687,19 +275,24 @@
     "date": "2021-08-01",
     "sessions": [
       {
-        "Practice_1": "2021-07-30"
+        "type": "Practice_1",
+        "date": "2021-07-30"
       },
       {
-        "Practice_2": "2021-07-30"
+        "type": "Practice_2",
+        "date": "2021-07-30"
       },
       {
-        "Practice_3": "2021-07-31"
+        "type": "Practice_3",
+        "date": "2021-07-31"
       },
       {
-        "Qualifying": "2021-07-31"
+        "type": "Qualifying",
+        "date": "2021-07-31"
       },
       {
-        "Race": "2021-08-01"
+        "type": "Race",
+        "date": "2021-08-01"
       }
     ]
   },
@@ -709,19 +302,24 @@
     "date": "2021-08-29",
     "sessions": [
       {
-        "Practice_1": "2021-08-27"
+        "type": "Practice_1",
+        "date": "2021-08-27"
       },
       {
-        "Practice_2": "2021-08-27"
+        "type": "Practice_2",
+        "date": "2021-08-27"
       },
       {
-        "Practice_3": "2021-08-28"
+        "type": "Practice_3",
+        "date": "2021-08-28"
       },
       {
-        "Qualifying": "2021-08-28"
+        "type": "Qualifying",
+        "date": "2021-08-28"
       },
       {
-        "Race": "2021-08-29"
+        "type": "Race",
+        "date": "2021-08-29"
       }
     ]
   },
@@ -731,19 +329,24 @@
     "date": "2021-09-05",
     "sessions": [
       {
-        "Practice_1": "2021-09-03"
+        "type": "Practice_1",
+        "date": "2021-09-03"
       },
       {
-        "Practice_2": "2021-09-03"
+        "type": "Practice_2",
+        "date": "2021-09-03"
       },
       {
-        "Practice_3": "2021-09-04"
+        "type": "Practice_3",
+        "date": "2021-09-04"
       },
       {
-        "Qualifying": "2021-09-04"
+        "type": "Qualifying",
+        "date": "2021-09-04"
       },
       {
-        "Race": "2021-09-05"
+        "type": "Race",
+        "date": "2021-09-05"
       }
     ]
   },
@@ -753,19 +356,24 @@
     "date": "2021-09-12",
     "sessions": [
       {
-        "Practice_1": "2021-09-10"
+        "type": "Practice_1",
+        "date": "2021-09-10"
       },
       {
-        "Practice_2": "2021-09-11"
+        "type": "Practice_2",
+        "date": "2021-09-11"
       },
       {
-        "Sprint": "2021-09-11"
+        "type": "Sprint",
+        "date": "2021-09-11"
       },
       {
-        "Qualifying": "2021-09-10"
+        "type": "Qualifying",
+        "date": "2021-09-10"
       },
       {
-        "Race": "2021-09-12"
+        "type": "Race",
+        "date": "2021-09-12"
       }
     ]
   },
@@ -775,19 +383,24 @@
     "date": "2021-09-26",
     "sessions": [
       {
-        "Practice_1": "2021-09-24"
+        "type": "Practice_1",
+        "date": "2021-09-24"
       },
       {
-        "Practice_2": "2021-09-24"
+        "type": "Practice_2",
+        "date": "2021-09-24"
       },
       {
-        "Practice_3": "2021-09-25"
+        "type": "Practice_3",
+        "date": "2021-09-25"
       },
       {
-        "Qualifying": "2021-09-25"
+        "type": "Qualifying",
+        "date": "2021-09-25"
       },
       {
-        "Race": "2021-09-26"
+        "type": "Race",
+        "date": "2021-09-26"
       }
     ]
   },
@@ -797,19 +410,24 @@
     "date": "2021-10-10",
     "sessions": [
       {
-        "Practice_1": "2021-10-08"
+        "type": "Practice_1",
+        "date": "2021-10-08"
       },
       {
-        "Practice_2": "2021-10-08"
+        "type": "Practice_2",
+        "date": "2021-10-08"
       },
       {
-        "Practice_3": "2021-10-09"
+        "type": "Practice_3",
+        "date": "2021-10-09"
       },
       {
-        "Qualifying": "2021-10-09"
+        "type": "Qualifying",
+        "date": "2021-10-09"
       },
       {
-        "Race": "2021-10-10"
+        "type": "Race",
+        "date": "2021-10-10"
       }
     ]
   },
@@ -819,19 +437,24 @@
     "date": "2021-10-24",
     "sessions": [
       {
-        "Practice_1": "2021-10-22"
+        "type": "Practice_1",
+        "date": "2021-10-22"
       },
       {
-        "Practice_2": "2021-10-22"
+        "type": "Practice_2",
+        "date": "2021-10-22"
       },
       {
-        "Practice_3": "2021-10-23"
+        "type": "Practice_3",
+        "date": "2021-10-23"
       },
       {
-        "Qualifying": "2021-10-23"
+        "type": "Qualifying",
+        "date": "2021-10-23"
       },
       {
-        "Race": "2021-10-24"
+        "type": "Race",
+        "date": "2021-10-24"
       }
     ]
   },
@@ -841,19 +464,24 @@
     "date": "2021-11-07",
     "sessions": [
       {
-        "Practice_1": "2021-11-05"
+        "type": "Practice_1",
+        "date": "2021-11-05"
       },
       {
-        "Practice_2": "2021-11-05"
+        "type": "Practice_2",
+        "date": "2021-11-05"
       },
       {
-        "Practice_3": "2021-11-06"
+        "type": "Practice_3",
+        "date": "2021-11-06"
       },
       {
-        "Qualifying": "2021-11-06"
+        "type": "Qualifying",
+        "date": "2021-11-06"
       },
       {
-        "Race": "2021-11-07"
+        "type": "Race",
+        "date": "2021-11-07"
       }
     ]
   },
@@ -863,19 +491,24 @@
     "date": "2021-11-14",
     "sessions": [
       {
-        "Practice_1": "2021-11-12"
+        "type": "Practice_1",
+        "date": "2021-11-12"
       },
       {
-        "Practice_2": "2021-11-13"
+        "type": "Practice_2",
+        "date": "2021-11-13"
       },
       {
-        "Sprint": "2021-11-13"
+        "type": "Sprint",
+        "date": "2021-11-13"
       },
       {
-        "Qualifying": "2021-11-12"
+        "type": "Qualifying",
+        "date": "2021-11-12"
       },
       {
-        "Race": "2021-11-14"
+        "type": "Race",
+        "date": "2021-11-14"
       }
     ]
   },
@@ -885,19 +518,24 @@
     "date": "2021-11-21",
     "sessions": [
       {
-        "Practice_1": "2021-11-19"
+        "type": "Practice_1",
+        "date": "2021-11-19"
       },
       {
-        "Practice_2": "2021-11-19"
+        "type": "Practice_2",
+        "date": "2021-11-19"
       },
       {
-        "Practice_3": "2021-11-20"
+        "type": "Practice_3",
+        "date": "2021-11-20"
       },
       {
-        "Qualifying": "2021-11-20"
+        "type": "Qualifying",
+        "date": "2021-11-20"
       },
       {
-        "Race": "2021-11-21"
+        "type": "Race",
+        "date": "2021-11-21"
       }
     ]
   },
@@ -907,19 +545,24 @@
     "date": "2021-12-05",
     "sessions": [
       {
-        "Practice_1": "2021-12-03"
+        "type": "Practice_1",
+        "date": "2021-12-03"
       },
       {
-        "Practice_2": "2021-12-03"
+        "type": "Practice_2",
+        "date": "2021-12-03"
       },
       {
-        "Practice_3": "2021-12-04"
+        "type": "Practice_3",
+        "date": "2021-12-04"
       },
       {
-        "Qualifying": "2021-12-04"
+        "type": "Qualifying",
+        "date": "2021-12-04"
       },
       {
-        "Race": "2021-12-05"
+        "type": "Race",
+        "date": "2021-12-05"
       }
     ]
   },
@@ -929,19 +572,24 @@
     "date": "2021-12-12",
     "sessions": [
       {
-        "Practice_1": "2021-12-10"
+        "type": "Practice_1",
+        "date": "2021-12-10"
       },
       {
-        "Practice_2": "2021-12-10"
+        "type": "Practice_2",
+        "date": "2021-12-10"
       },
       {
-        "Practice_3": "2021-12-11"
+        "type": "Practice_3",
+        "date": "2021-12-11"
       },
       {
-        "Qualifying": "2021-12-11"
+        "type": "Qualifying",
+        "date": "2021-12-11"
       },
       {
-        "Race": "2021-12-12"
+        "type": "Race",
+        "date": "2021-12-12"
       }
     ]
   },
@@ -951,19 +599,24 @@
     "date": "2022-03-20",
     "sessions": [
       {
-        "Practice_1": "2022-03-18"
+        "type": "Practice_1",
+        "date": "2022-03-18"
       },
       {
-        "Practice_2": "2022-03-18"
+        "type": "Practice_2",
+        "date": "2022-03-18"
       },
       {
-        "Practice_3": "2022-03-19"
+        "type": "Practice_3",
+        "date": "2022-03-19"
       },
       {
-        "Qualifying": "2022-03-19"
+        "type": "Qualifying",
+        "date": "2022-03-19"
       },
       {
-        "Race": "2022-03-20"
+        "type": "Race",
+        "date": "2022-03-20"
       }
     ]
   },
@@ -973,19 +626,24 @@
     "date": "2022-03-27",
     "sessions": [
       {
-        "Practice_1": "2022-03-25"
+        "type": "Practice_1",
+        "date": "2022-03-25"
       },
       {
-        "Practice_2": "2022-03-25"
+        "type": "Practice_2",
+        "date": "2022-03-25"
       },
       {
-        "Practice_3": "2022-03-26"
+        "type": "Practice_3",
+        "date": "2022-03-26"
       },
       {
-        "Qualifying": "2022-03-26"
+        "type": "Qualifying",
+        "date": "2022-03-26"
       },
       {
-        "Race": "2022-03-27"
+        "type": "Race",
+        "date": "2022-03-27"
       }
     ]
   },
@@ -995,19 +653,24 @@
     "date": "2022-04-10",
     "sessions": [
       {
-        "Practice_1": "2022-04-08"
+        "type": "Practice_1",
+        "date": "2022-04-08"
       },
       {
-        "Practice_2": "2022-04-08"
+        "type": "Practice_2",
+        "date": "2022-04-08"
       },
       {
-        "Practice_3": "2022-04-09"
+        "type": "Practice_3",
+        "date": "2022-04-09"
       },
       {
-        "Qualifying": "2022-04-09"
+        "type": "Qualifying",
+        "date": "2022-04-09"
       },
       {
-        "Race": "2022-04-10"
+        "type": "Race",
+        "date": "2022-04-10"
       }
     ]
   },
@@ -1017,19 +680,24 @@
     "date": "2022-04-24",
     "sessions": [
       {
-        "Practice_1": "2022-04-22"
+        "type": "Practice_1",
+        "date": "2022-04-22"
       },
       {
-        "Practice_2": "2022-04-23"
+        "type": "Practice_2",
+        "date": "2022-04-23"
       },
       {
-        "Sprint": "2022-04-23"
+        "type": "Sprint",
+        "date": "2022-04-23"
       },
       {
-        "Qualifying": "2022-04-22"
+        "type": "Qualifying",
+        "date": "2022-04-22"
       },
       {
-        "Race": "2022-04-24"
+        "type": "Race",
+        "date": "2022-04-24"
       }
     ]
   },
@@ -1039,19 +707,24 @@
     "date": "2022-05-08",
     "sessions": [
       {
-        "Practice_1": "2022-05-06"
+        "type": "Practice_1",
+        "date": "2022-05-06"
       },
       {
-        "Practice_2": "2022-05-06"
+        "type": "Practice_2",
+        "date": "2022-05-06"
       },
       {
-        "Practice_3": "2022-05-07"
+        "type": "Practice_3",
+        "date": "2022-05-07"
       },
       {
-        "Qualifying": "2022-05-07"
+        "type": "Qualifying",
+        "date": "2022-05-07"
       },
       {
-        "Race": "2022-05-08"
+        "type": "Race",
+        "date": "2022-05-08"
       }
     ]
   },
@@ -1061,19 +734,24 @@
     "date": "2022-05-22",
     "sessions": [
       {
-        "Practice_1": "2022-05-20"
+        "type": "Practice_1",
+        "date": "2022-05-20"
       },
       {
-        "Practice_2": "2022-05-20"
+        "type": "Practice_2",
+        "date": "2022-05-20"
       },
       {
-        "Practice_3": "2022-05-21"
+        "type": "Practice_3",
+        "date": "2022-05-21"
       },
       {
-        "Qualifying": "2022-05-21"
+        "type": "Qualifying",
+        "date": "2022-05-21"
       },
       {
-        "Race": "2022-05-22"
+        "type": "Race",
+        "date": "2022-05-22"
       }
     ]
   },
@@ -1083,19 +761,24 @@
     "date": "2022-05-29",
     "sessions": [
       {
-        "Practice_1": "2022-05-27"
+        "type": "Practice_1",
+        "date": "2022-05-27"
       },
       {
-        "Practice_2": "2022-05-27"
+        "type": "Practice_2",
+        "date": "2022-05-27"
       },
       {
-        "Practice_3": "2022-05-28"
+        "type": "Practice_3",
+        "date": "2022-05-28"
       },
       {
-        "Qualifying": "2022-05-28"
+        "type": "Qualifying",
+        "date": "2022-05-28"
       },
       {
-        "Race": "2022-05-29"
+        "type": "Race",
+        "date": "2022-05-29"
       }
     ]
   },
@@ -1105,19 +788,24 @@
     "date": "2022-06-12",
     "sessions": [
       {
-        "Practice_1": "2022-06-10"
+        "type": "Practice_1",
+        "date": "2022-06-10"
       },
       {
-        "Practice_2": "2022-06-10"
+        "type": "Practice_2",
+        "date": "2022-06-10"
       },
       {
-        "Practice_3": "2022-06-11"
+        "type": "Practice_3",
+        "date": "2022-06-11"
       },
       {
-        "Qualifying": "2022-06-11"
+        "type": "Qualifying",
+        "date": "2022-06-11"
       },
       {
-        "Race": "2022-06-12"
+        "type": "Race",
+        "date": "2022-06-12"
       }
     ]
   },
@@ -1127,19 +815,24 @@
     "date": "2022-06-19",
     "sessions": [
       {
-        "Practice_1": "2022-06-17"
+        "type": "Practice_1",
+        "date": "2022-06-17"
       },
       {
-        "Practice_2": "2022-06-17"
+        "type": "Practice_2",
+        "date": "2022-06-17"
       },
       {
-        "Practice_3": "2022-06-18"
+        "type": "Practice_3",
+        "date": "2022-06-18"
       },
       {
-        "Qualifying": "2022-06-18"
+        "type": "Qualifying",
+        "date": "2022-06-18"
       },
       {
-        "Race": "2022-06-19"
+        "type": "Race",
+        "date": "2022-06-19"
       }
     ]
   },
@@ -1149,19 +842,24 @@
     "date": "2022-07-03",
     "sessions": [
       {
-        "Practice_1": "2022-07-01"
+        "type": "Practice_1",
+        "date": "2022-07-01"
       },
       {
-        "Practice_2": "2022-07-01"
+        "type": "Practice_2",
+        "date": "2022-07-01"
       },
       {
-        "Practice_3": "2022-07-02"
+        "type": "Practice_3",
+        "date": "2022-07-02"
       },
       {
-        "Qualifying": "2022-07-02"
+        "type": "Qualifying",
+        "date": "2022-07-02"
       },
       {
-        "Race": "2022-07-03"
+        "type": "Race",
+        "date": "2022-07-03"
       }
     ]
   },
@@ -1171,19 +869,24 @@
     "date": "2022-07-10",
     "sessions": [
       {
-        "Practice_1": "2022-07-08"
+        "type": "Practice_1",
+        "date": "2022-07-08"
       },
       {
-        "Practice_2": "2022-07-09"
+        "type": "Practice_2",
+        "date": "2022-07-09"
       },
       {
-        "Sprint": "2022-07-09"
+        "type": "Sprint",
+        "date": "2022-07-09"
       },
       {
-        "Qualifying": "2022-07-08"
+        "type": "Qualifying",
+        "date": "2022-07-08"
       },
       {
-        "Race": "2022-07-10"
+        "type": "Race",
+        "date": "2022-07-10"
       }
     ]
   },
@@ -1193,19 +896,24 @@
     "date": "2022-07-24",
     "sessions": [
       {
-        "Practice_1": "2022-07-22"
+        "type": "Practice_1",
+        "date": "2022-07-22"
       },
       {
-        "Practice_2": "2022-07-22"
+        "type": "Practice_2",
+        "date": "2022-07-22"
       },
       {
-        "Practice_3": "2022-07-23"
+        "type": "Practice_3",
+        "date": "2022-07-23"
       },
       {
-        "Qualifying": "2022-07-23"
+        "type": "Qualifying",
+        "date": "2022-07-23"
       },
       {
-        "Race": "2022-07-24"
+        "type": "Race",
+        "date": "2022-07-24"
       }
     ]
   },
@@ -1215,19 +923,24 @@
     "date": "2022-07-31",
     "sessions": [
       {
-        "Practice_1": "2022-07-29"
+        "type": "Practice_1",
+        "date": "2022-07-29"
       },
       {
-        "Practice_2": "2022-07-29"
+        "type": "Practice_2",
+        "date": "2022-07-29"
       },
       {
-        "Practice_3": "2022-07-30"
+        "type": "Practice_3",
+        "date": "2022-07-30"
       },
       {
-        "Qualifying": "2022-07-30"
+        "type": "Qualifying",
+        "date": "2022-07-30"
       },
       {
-        "Race": "2022-07-31"
+        "type": "Race",
+        "date": "2022-07-31"
       }
     ]
   },
@@ -1237,19 +950,24 @@
     "date": "2022-08-28",
     "sessions": [
       {
-        "Practice_1": "2022-08-26"
+        "type": "Practice_1",
+        "date": "2022-08-26"
       },
       {
-        "Practice_2": "2022-08-26"
+        "type": "Practice_2",
+        "date": "2022-08-26"
       },
       {
-        "Practice_3": "2022-08-27"
+        "type": "Practice_3",
+        "date": "2022-08-27"
       },
       {
-        "Qualifying": "2022-08-27"
+        "type": "Qualifying",
+        "date": "2022-08-27"
       },
       {
-        "Race": "2022-08-28"
+        "type": "Race",
+        "date": "2022-08-28"
       }
     ]
   },
@@ -1259,19 +977,24 @@
     "date": "2022-09-04",
     "sessions": [
       {
-        "Practice_1": "2022-09-02"
+        "type": "Practice_1",
+        "date": "2022-09-02"
       },
       {
-        "Practice_2": "2022-09-02"
+        "type": "Practice_2",
+        "date": "2022-09-02"
       },
       {
-        "Practice_3": "2022-09-03"
+        "type": "Practice_3",
+        "date": "2022-09-03"
       },
       {
-        "Qualifying": "2022-09-03"
+        "type": "Qualifying",
+        "date": "2022-09-03"
       },
       {
-        "Race": "2022-09-04"
+        "type": "Race",
+        "date": "2022-09-04"
       }
     ]
   },
@@ -1281,19 +1004,24 @@
     "date": "2022-09-11",
     "sessions": [
       {
-        "Practice_1": "2022-09-09"
+        "type": "Practice_1",
+        "date": "2022-09-09"
       },
       {
-        "Practice_2": "2022-09-09"
+        "type": "Practice_2",
+        "date": "2022-09-09"
       },
       {
-        "Practice_3": "2022-09-10"
+        "type": "Practice_3",
+        "date": "2022-09-10"
       },
       {
-        "Qualifying": "2022-09-10"
+        "type": "Qualifying",
+        "date": "2022-09-10"
       },
       {
-        "Race": "2022-09-11"
+        "type": "Race",
+        "date": "2022-09-11"
       }
     ]
   },
@@ -1303,19 +1031,24 @@
     "date": "2022-10-02",
     "sessions": [
       {
-        "Practice_1": "2022-09-30"
+        "type": "Practice_1",
+        "date": "2022-09-30"
       },
       {
-        "Practice_2": "2022-09-30"
+        "type": "Practice_2",
+        "date": "2022-09-30"
       },
       {
-        "Practice_3": "2022-10-01"
+        "type": "Practice_3",
+        "date": "2022-10-01"
       },
       {
-        "Qualifying": "2022-10-01"
+        "type": "Qualifying",
+        "date": "2022-10-01"
       },
       {
-        "Race": "2022-10-02"
+        "type": "Race",
+        "date": "2022-10-02"
       }
     ]
   },
@@ -1325,19 +1058,24 @@
     "date": "2022-10-09",
     "sessions": [
       {
-        "Practice_1": "2022-10-07"
+        "type": "Practice_1",
+        "date": "2022-10-07"
       },
       {
-        "Practice_2": "2022-10-07"
+        "type": "Practice_2",
+        "date": "2022-10-07"
       },
       {
-        "Practice_3": "2022-10-08"
+        "type": "Practice_3",
+        "date": "2022-10-08"
       },
       {
-        "Qualifying": "2022-10-08"
+        "type": "Qualifying",
+        "date": "2022-10-08"
       },
       {
-        "Race": "2022-10-09"
+        "type": "Race",
+        "date": "2022-10-09"
       }
     ]
   },
@@ -1347,19 +1085,24 @@
     "date": "2022-10-23",
     "sessions": [
       {
-        "Practice_1": "2022-10-21"
+        "type": "Practice_1",
+        "date": "2022-10-21"
       },
       {
-        "Practice_2": "2022-10-21"
+        "type": "Practice_2",
+        "date": "2022-10-21"
       },
       {
-        "Practice_3": "2022-10-22"
+        "type": "Practice_3",
+        "date": "2022-10-22"
       },
       {
-        "Qualifying": "2022-10-22"
+        "type": "Qualifying",
+        "date": "2022-10-22"
       },
       {
-        "Race": "2022-10-23"
+        "type": "Race",
+        "date": "2022-10-23"
       }
     ]
   },
@@ -1369,19 +1112,24 @@
     "date": "2022-10-30",
     "sessions": [
       {
-        "Practice_1": "2022-10-28"
+        "type": "Practice_1",
+        "date": "2022-10-28"
       },
       {
-        "Practice_2": "2022-10-28"
+        "type": "Practice_2",
+        "date": "2022-10-28"
       },
       {
-        "Practice_3": "2022-10-29"
+        "type": "Practice_3",
+        "date": "2022-10-29"
       },
       {
-        "Qualifying": "2022-10-29"
+        "type": "Qualifying",
+        "date": "2022-10-29"
       },
       {
-        "Race": "2022-10-30"
+        "type": "Race",
+        "date": "2022-10-30"
       }
     ]
   },
@@ -1391,19 +1139,24 @@
     "date": "2022-11-13",
     "sessions": [
       {
-        "Practice_1": "2022-11-11"
+        "type": "Practice_1",
+        "date": "2022-11-11"
       },
       {
-        "Practice_2": "2022-11-12"
+        "type": "Practice_2",
+        "date": "2022-11-12"
       },
       {
-        "Sprint": "2022-11-12"
+        "type": "Sprint",
+        "date": "2022-11-12"
       },
       {
-        "Qualifying": "2022-11-11"
+        "type": "Qualifying",
+        "date": "2022-11-11"
       },
       {
-        "Race": "2022-11-13"
+        "type": "Race",
+        "date": "2022-11-13"
       }
     ]
   },
@@ -1413,19 +1166,618 @@
     "date": "2022-11-20",
     "sessions": [
       {
-        "Practice_1": "2022-11-18"
+        "type": "Practice_1",
+        "date": "2022-11-18"
       },
       {
-        "Practice_2": "2022-11-18"
+        "type": "Practice_2",
+        "date": "2022-11-18"
       },
       {
-        "Practice_3": "2022-11-19"
+        "type": "Practice_3",
+        "date": "2022-11-19"
       },
       {
-        "Qualifying": "2022-11-19"
+        "type": "Qualifying",
+        "date": "2022-11-19"
       },
       {
-        "Race": "2022-11-20"
+        "type": "Race",
+        "date": "2022-11-20"
+      }
+    ]
+  },
+  {
+    "name": "Bahrain Grand Prix",
+    "year": "2023",
+    "date": "2023-03-05",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-03-03"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-03-03"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-03-04"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-03-04"
+      },
+      {
+        "type": "Race",
+        "date": "2023-03-05"
+      }
+    ]
+  },
+  {
+    "name": "Saudi Arabian Grand Prix",
+    "year": "2023",
+    "date": "2023-03-19",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-03-17"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-03-17"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-03-18"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-03-18"
+      },
+      {
+        "type": "Race",
+        "date": "2023-03-19"
+      }
+    ]
+  },
+  {
+    "name": "Australian Grand Prix",
+    "year": "2023",
+    "date": "2023-04-02",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-03-31"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-03-31"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-04-01"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-04-01"
+      },
+      {
+        "type": "Race",
+        "date": "2023-04-02"
+      }
+    ]
+  },
+  {
+    "name": "Azerbaijan Grand Prix",
+    "year": "2023",
+    "date": "2023-04-30",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-04-28"
+      },
+      {
+        "type": "Sprint_Shootout",
+        "date": "2023-04-29"
+      },
+      {
+        "type": "Sprint",
+        "date": "2023-04-29"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-04-28"
+      },
+      {
+        "type": "Race",
+        "date": "2023-04-30"
+      }
+    ]
+  },
+  {
+    "name": "Miami Grand Prix",
+    "year": "2023",
+    "date": "2023-05-07",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-05-05"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-05-05"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-05-06"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-05-06"
+      },
+      {
+        "type": "Race",
+        "date": "2023-05-07"
+      }
+    ]
+  },
+  {
+    "name": "Monaco Grand Prix",
+    "year": "2023",
+    "date": "2023-05-28",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-05-26"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-05-26"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-05-27"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-05-27"
+      },
+      {
+        "type": "Race",
+        "date": "2023-05-28"
+      }
+    ]
+  },
+  {
+    "name": "Spanish Grand Prix",
+    "year": "2023",
+    "date": "2023-06-04",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-06-02"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-06-02"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-06-03"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-06-03"
+      },
+      {
+        "type": "Race",
+        "date": "2023-06-04"
+      }
+    ]
+  },
+  {
+    "name": "Canadian Grand Prix",
+    "year": "2023",
+    "date": "2023-06-18",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-06-16"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-06-16"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-06-17"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-06-17"
+      },
+      {
+        "type": "Race",
+        "date": "2023-06-18"
+      }
+    ]
+  },
+  {
+    "name": "Austrian Grand Prix",
+    "year": "2023",
+    "date": "2023-07-02",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-06-30"
+      },
+      {
+        "type": "Sprint_Shootout",
+        "date": "2023-07-01"
+      },
+      {
+        "type": "Sprint",
+        "date": "2023-07-01"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-06-30"
+      },
+      {
+        "type": "Race",
+        "date": "2023-07-02"
+      }
+    ]
+  },
+  {
+    "name": "British Grand Prix",
+    "year": "2023",
+    "date": "2023-07-09",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-07-07"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-07-07"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-07-08"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-07-08"
+      },
+      {
+        "type": "Race",
+        "date": "2023-07-09"
+      }
+    ]
+  },
+  {
+    "name": "Hungarian Grand Prix",
+    "year": "2023",
+    "date": "2023-07-23",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-07-21"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-07-21"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-07-22"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-07-22"
+      },
+      {
+        "type": "Race",
+        "date": "2023-07-23"
+      }
+    ]
+  },
+  {
+    "name": "Belgian Grand Prix",
+    "year": "2023",
+    "date": "2023-07-30",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-07-28"
+      },
+      {
+        "type": "Sprint_Shootout",
+        "date": "2023-07-29"
+      },
+      {
+        "type": "Sprint",
+        "date": "2023-07-29"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-07-28"
+      },
+      {
+        "type": "Race",
+        "date": "2023-07-30"
+      }
+    ]
+  },
+  {
+    "name": "Dutch Grand Prix",
+    "year": "2023",
+    "date": "2023-08-27",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-08-25"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-08-25"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-08-26"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-08-26"
+      },
+      {
+        "type": "Race",
+        "date": "2023-08-27"
+      }
+    ]
+  },
+  {
+    "name": "Italian Grand Prix",
+    "year": "2023",
+    "date": "2023-09-03",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-09-01"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-09-01"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-09-02"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-09-02"
+      },
+      {
+        "type": "Race",
+        "date": "2023-09-03"
+      }
+    ]
+  },
+  {
+    "name": "Singapore Grand Prix",
+    "year": "2023",
+    "date": "2023-09-17",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-09-15"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-09-15"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-09-16"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-09-16"
+      },
+      {
+        "type": "Race",
+        "date": "2023-09-17"
+      }
+    ]
+  },
+  {
+    "name": "Japanese Grand Prix",
+    "year": "2023",
+    "date": "2023-09-24",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-09-22"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-09-22"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-09-23"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-09-23"
+      },
+      {
+        "type": "Race",
+        "date": "2023-09-24"
+      }
+    ]
+  },
+  {
+    "name": "Qatar Grand Prix",
+    "year": "2023",
+    "date": "2023-10-08",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-10-06"
+      },
+      {
+        "type": "Sprint_Shootout",
+        "date": "2023-10-07"
+      },
+      {
+        "type": "Sprint",
+        "date": "2023-10-07"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-10-06"
+      },
+      {
+        "type": "Race",
+        "date": "2023-10-08"
+      }
+    ]
+  },
+  {
+    "name": "United States Grand Prix",
+    "year": "2023",
+    "date": "2023-10-22",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-10-20"
+      },
+      {
+        "type": "Sprint_Shootout",
+        "date": "2023-10-21"
+      },
+      {
+        "type": "Sprint",
+        "date": "2023-10-21"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-10-20"
+      },
+      {
+        "type": "Race",
+        "date": "2023-10-22"
+      }
+    ]
+  },
+  {
+    "name": "Mexico City Grand Prix",
+    "year": "2023",
+    "date": "2023-10-29",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-10-27"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-10-27"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-10-28"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-10-28"
+      },
+      {
+        "type": "Race",
+        "date": "2023-10-29"
+      }
+    ]
+  },
+  {
+    "name": "São Paulo Grand Prix",
+    "year": "2023",
+    "date": "2023-11-05",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-11-03"
+      },
+      {
+        "type": "Sprint_Shootout",
+        "date": "2023-11-04"
+      },
+      {
+        "type": "Sprint",
+        "date": "2023-11-04"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-11-03"
+      },
+      {
+        "type": "Race",
+        "date": "2023-11-05"
+      }
+    ]
+  },
+  {
+    "name": "Las Vegas Grand Prix",
+    "year": "2023",
+    "date": "2023-11-18",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-11-16"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-11-17"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-11-17"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-11-18"
+      },
+      {
+        "type": "Race",
+        "date": "2023-11-18"
+      }
+    ]
+  },
+  {
+    "name": "Abu Dhabi Grand Prix",
+    "year": "2023",
+    "date": "2023-11-26",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2023-11-24"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2023-11-24"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2023-11-25"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2023-11-25"
+      },
+      {
+        "type": "Race",
+        "date": "2023-11-26"
       }
     ]
   },
@@ -1435,19 +1787,24 @@
     "date": "2024-03-02",
     "sessions": [
       {
-        "Practice_1": "2024-02-29"
+        "type": "Practice_1",
+        "date": "2024-02-29"
       },
       {
-        "Practice_2": "2024-02-29"
+        "type": "Practice_2",
+        "date": "2024-02-29"
       },
       {
-        "Practice_3": "2024-03-01"
+        "type": "Practice_3",
+        "date": "2024-03-01"
       },
       {
-        "Qualifying": "2024-03-01"
+        "type": "Qualifying",
+        "date": "2024-03-01"
       },
       {
-        "Race": "2024-03-02"
+        "type": "Race",
+        "date": "2024-03-02"
       }
     ]
   },
@@ -1457,19 +1814,24 @@
     "date": "2024-03-09",
     "sessions": [
       {
-        "Practice_1": "2024-03-07"
+        "type": "Practice_1",
+        "date": "2024-03-07"
       },
       {
-        "Practice_2": "2024-03-07"
+        "type": "Practice_2",
+        "date": "2024-03-07"
       },
       {
-        "Practice_3": "2024-03-08"
+        "type": "Practice_3",
+        "date": "2024-03-08"
       },
       {
-        "Qualifying": "2024-03-08"
+        "type": "Qualifying",
+        "date": "2024-03-08"
       },
       {
-        "Race": "2024-03-09"
+        "type": "Race",
+        "date": "2024-03-09"
       }
     ]
   },
@@ -1479,19 +1841,24 @@
     "date": "2024-03-24",
     "sessions": [
       {
-        "Practice_1": "2024-03-22"
+        "type": "Practice_1",
+        "date": "2024-03-22"
       },
       {
-        "Practice_2": "2024-03-22"
+        "type": "Practice_2",
+        "date": "2024-03-22"
       },
       {
-        "Practice_3": "2024-03-23"
+        "type": "Practice_3",
+        "date": "2024-03-23"
       },
       {
-        "Qualifying": "2024-03-23"
+        "type": "Qualifying",
+        "date": "2024-03-23"
       },
       {
-        "Race": "2024-03-24"
+        "type": "Race",
+        "date": "2024-03-24"
       }
     ]
   },
@@ -1501,19 +1868,24 @@
     "date": "2024-04-07",
     "sessions": [
       {
-        "Practice_1": "2024-04-05"
+        "type": "Practice_1",
+        "date": "2024-04-05"
       },
       {
-        "Practice_2": "2024-04-05"
+        "type": "Practice_2",
+        "date": "2024-04-05"
       },
       {
-        "Practice_3": "2024-04-06"
+        "type": "Practice_3",
+        "date": "2024-04-06"
       },
       {
-        "Qualifying": "2024-04-06"
+        "type": "Qualifying",
+        "date": "2024-04-06"
       },
       {
-        "Race": "2024-04-07"
+        "type": "Race",
+        "date": "2024-04-07"
       }
     ]
   },
@@ -1523,19 +1895,24 @@
     "date": "2024-04-21",
     "sessions": [
       {
-        "Practice_1": "2024-04-19"
+        "type": "Practice_1",
+        "date": "2024-04-19"
       },
       {
-        "Sprint_Qualifying": "2024-04-19"
+        "type": "Sprint_Qualifying",
+        "date": "2024-04-19"
       },
       {
-        "Sprint": "2024-04-20"
+        "type": "Sprint",
+        "date": "2024-04-20"
       },
       {
-        "Qualifying": "2024-04-20"
+        "type": "Qualifying",
+        "date": "2024-04-20"
       },
       {
-        "Race": "2024-04-21"
+        "type": "Race",
+        "date": "2024-04-21"
       }
     ]
   },
@@ -1545,19 +1922,24 @@
     "date": "2024-05-05",
     "sessions": [
       {
-        "Practice_1": "2024-05-03"
+        "type": "Practice_1",
+        "date": "2024-05-03"
       },
       {
-        "Sprint_Qualifying": "2024-05-03"
+        "type": "Sprint_Qualifying",
+        "date": "2024-05-03"
       },
       {
-        "Sprint": "2024-05-04"
+        "type": "Sprint",
+        "date": "2024-05-04"
       },
       {
-        "Qualifying": "2024-05-04"
+        "type": "Qualifying",
+        "date": "2024-05-04"
       },
       {
-        "Race": "2024-05-05"
+        "type": "Race",
+        "date": "2024-05-05"
       }
     ]
   },
@@ -1567,19 +1949,24 @@
     "date": "2024-05-19",
     "sessions": [
       {
-        "Practice_1": "2024-05-17"
+        "type": "Practice_1",
+        "date": "2024-05-17"
       },
       {
-        "Practice_2": "2024-05-17"
+        "type": "Practice_2",
+        "date": "2024-05-17"
       },
       {
-        "Practice_3": "2024-05-18"
+        "type": "Practice_3",
+        "date": "2024-05-18"
       },
       {
-        "Qualifying": "2024-05-18"
+        "type": "Qualifying",
+        "date": "2024-05-18"
       },
       {
-        "Race": "2024-05-19"
+        "type": "Race",
+        "date": "2024-05-19"
       }
     ]
   },
@@ -1589,19 +1976,24 @@
     "date": "2024-05-26",
     "sessions": [
       {
-        "Practice_1": "2024-05-24"
+        "type": "Practice_1",
+        "date": "2024-05-24"
       },
       {
-        "Practice_2": "2024-05-24"
+        "type": "Practice_2",
+        "date": "2024-05-24"
       },
       {
-        "Practice_3": "2024-05-25"
+        "type": "Practice_3",
+        "date": "2024-05-25"
       },
       {
-        "Qualifying": "2024-05-25"
+        "type": "Qualifying",
+        "date": "2024-05-25"
       },
       {
-        "Race": "2024-05-26"
+        "type": "Race",
+        "date": "2024-05-26"
       }
     ]
   },
@@ -1611,19 +2003,24 @@
     "date": "2024-06-09",
     "sessions": [
       {
-        "Practice_1": "2024-06-07"
+        "type": "Practice_1",
+        "date": "2024-06-07"
       },
       {
-        "Practice_2": "2024-06-07"
+        "type": "Practice_2",
+        "date": "2024-06-07"
       },
       {
-        "Practice_3": "2024-06-08"
+        "type": "Practice_3",
+        "date": "2024-06-08"
       },
       {
-        "Qualifying": "2024-06-08"
+        "type": "Qualifying",
+        "date": "2024-06-08"
       },
       {
-        "Race": "2024-06-09"
+        "type": "Race",
+        "date": "2024-06-09"
       }
     ]
   },
@@ -1633,19 +2030,24 @@
     "date": "2024-06-23",
     "sessions": [
       {
-        "Practice_1": "2024-06-21"
+        "type": "Practice_1",
+        "date": "2024-06-21"
       },
       {
-        "Practice_2": "2024-06-21"
+        "type": "Practice_2",
+        "date": "2024-06-21"
       },
       {
-        "Practice_3": "2024-06-22"
+        "type": "Practice_3",
+        "date": "2024-06-22"
       },
       {
-        "Qualifying": "2024-06-22"
+        "type": "Qualifying",
+        "date": "2024-06-22"
       },
       {
-        "Race": "2024-06-23"
+        "type": "Race",
+        "date": "2024-06-23"
       }
     ]
   },
@@ -1655,19 +2057,24 @@
     "date": "2024-06-30",
     "sessions": [
       {
-        "Practice_1": "2024-06-28"
+        "type": "Practice_1",
+        "date": "2024-06-28"
       },
       {
-        "Sprint_Qualifying": "2024-06-28"
+        "type": "Sprint_Qualifying",
+        "date": "2024-06-28"
       },
       {
-        "Sprint": "2024-06-29"
+        "type": "Sprint",
+        "date": "2024-06-29"
       },
       {
-        "Qualifying": "2024-06-29"
+        "type": "Qualifying",
+        "date": "2024-06-29"
       },
       {
-        "Race": "2024-06-30"
+        "type": "Race",
+        "date": "2024-06-30"
       }
     ]
   },
@@ -1677,19 +2084,24 @@
     "date": "2024-07-07",
     "sessions": [
       {
-        "Practice_1": "2024-07-05"
+        "type": "Practice_1",
+        "date": "2024-07-05"
       },
       {
-        "Practice_2": "2024-07-05"
+        "type": "Practice_2",
+        "date": "2024-07-05"
       },
       {
-        "Practice_3": "2024-07-06"
+        "type": "Practice_3",
+        "date": "2024-07-06"
       },
       {
-        "Qualifying": "2024-07-06"
+        "type": "Qualifying",
+        "date": "2024-07-06"
       },
       {
-        "Race": "2024-07-07"
+        "type": "Race",
+        "date": "2024-07-07"
       }
     ]
   },
@@ -1699,19 +2111,24 @@
     "date": "2024-07-21",
     "sessions": [
       {
-        "Practice_1": "2024-07-19"
+        "type": "Practice_1",
+        "date": "2024-07-19"
       },
       {
-        "Practice_2": "2024-07-19"
+        "type": "Practice_2",
+        "date": "2024-07-19"
       },
       {
-        "Practice_3": "2024-07-20"
+        "type": "Practice_3",
+        "date": "2024-07-20"
       },
       {
-        "Qualifying": "2024-07-20"
+        "type": "Qualifying",
+        "date": "2024-07-20"
       },
       {
-        "Race": "2024-07-21"
+        "type": "Race",
+        "date": "2024-07-21"
       }
     ]
   },
@@ -1721,19 +2138,24 @@
     "date": "2024-07-28",
     "sessions": [
       {
-        "Practice_1": "2024-07-26"
+        "type": "Practice_1",
+        "date": "2024-07-26"
       },
       {
-        "Practice_2": "2024-07-26"
+        "type": "Practice_2",
+        "date": "2024-07-26"
       },
       {
-        "Practice_3": "2024-07-27"
+        "type": "Practice_3",
+        "date": "2024-07-27"
       },
       {
-        "Qualifying": "2024-07-27"
+        "type": "Qualifying",
+        "date": "2024-07-27"
       },
       {
-        "Race": "2024-07-28"
+        "type": "Race",
+        "date": "2024-07-28"
       }
     ]
   },
@@ -1743,19 +2165,24 @@
     "date": "2024-08-25",
     "sessions": [
       {
-        "Practice_1": "2024-08-23"
+        "type": "Practice_1",
+        "date": "2024-08-23"
       },
       {
-        "Practice_2": "2024-08-23"
+        "type": "Practice_2",
+        "date": "2024-08-23"
       },
       {
-        "Practice_3": "2024-08-24"
+        "type": "Practice_3",
+        "date": "2024-08-24"
       },
       {
-        "Qualifying": "2024-08-24"
+        "type": "Qualifying",
+        "date": "2024-08-24"
       },
       {
-        "Race": "2024-08-25"
+        "type": "Race",
+        "date": "2024-08-25"
       }
     ]
   },
@@ -1765,19 +2192,24 @@
     "date": "2024-09-01",
     "sessions": [
       {
-        "Practice_1": "2024-08-30"
+        "type": "Practice_1",
+        "date": "2024-08-30"
       },
       {
-        "Practice_2": "2024-08-30"
+        "type": "Practice_2",
+        "date": "2024-08-30"
       },
       {
-        "Practice_3": "2024-08-31"
+        "type": "Practice_3",
+        "date": "2024-08-31"
       },
       {
-        "Qualifying": "2024-08-31"
+        "type": "Qualifying",
+        "date": "2024-08-31"
       },
       {
-        "Race": "2024-09-01"
+        "type": "Race",
+        "date": "2024-09-01"
       }
     ]
   },
@@ -1787,19 +2219,24 @@
     "date": "2024-09-15",
     "sessions": [
       {
-        "Practice_1": "2024-09-13"
+        "type": "Practice_1",
+        "date": "2024-09-13"
       },
       {
-        "Practice_2": "2024-09-13"
+        "type": "Practice_2",
+        "date": "2024-09-13"
       },
       {
-        "Practice_3": "2024-09-14"
+        "type": "Practice_3",
+        "date": "2024-09-14"
       },
       {
-        "Qualifying": "2024-09-14"
+        "type": "Qualifying",
+        "date": "2024-09-14"
       },
       {
-        "Race": "2024-09-15"
+        "type": "Race",
+        "date": "2024-09-15"
       }
     ]
   },
@@ -1809,19 +2246,24 @@
     "date": "2024-09-22",
     "sessions": [
       {
-        "Practice_1": "2024-09-20"
+        "type": "Practice_1",
+        "date": "2024-09-20"
       },
       {
-        "Practice_2": "2024-09-20"
+        "type": "Practice_2",
+        "date": "2024-09-20"
       },
       {
-        "Practice_3": "2024-09-21"
+        "type": "Practice_3",
+        "date": "2024-09-21"
       },
       {
-        "Qualifying": "2024-09-21"
+        "type": "Qualifying",
+        "date": "2024-09-21"
       },
       {
-        "Race": "2024-09-22"
+        "type": "Race",
+        "date": "2024-09-22"
       }
     ]
   },
@@ -1831,19 +2273,24 @@
     "date": "2024-10-20",
     "sessions": [
       {
-        "Practice_1": "2024-10-18"
+        "type": "Practice_1",
+        "date": "2024-10-18"
       },
       {
-        "Sprint_Qualifying": "2024-10-18"
+        "type": "Sprint_Qualifying",
+        "date": "2024-10-18"
       },
       {
-        "Sprint": "2024-10-19"
+        "type": "Sprint",
+        "date": "2024-10-19"
       },
       {
-        "Qualifying": "2024-10-19"
+        "type": "Qualifying",
+        "date": "2024-10-19"
       },
       {
-        "Race": "2024-10-20"
+        "type": "Race",
+        "date": "2024-10-20"
       }
     ]
   },
@@ -1853,19 +2300,24 @@
     "date": "2024-10-27",
     "sessions": [
       {
-        "Practice_1": "2024-10-25"
+        "type": "Practice_1",
+        "date": "2024-10-25"
       },
       {
-        "Practice_2": "2024-10-25"
+        "type": "Practice_2",
+        "date": "2024-10-25"
       },
       {
-        "Practice_3": "2024-10-26"
+        "type": "Practice_3",
+        "date": "2024-10-26"
       },
       {
-        "Qualifying": "2024-10-26"
+        "type": "Qualifying",
+        "date": "2024-10-26"
       },
       {
-        "Race": "2024-10-27"
+        "type": "Race",
+        "date": "2024-10-27"
       }
     ]
   },
@@ -1875,19 +2327,24 @@
     "date": "2024-11-03",
     "sessions": [
       {
-        "Practice_1": "2024-11-01"
+        "type": "Practice_1",
+        "date": "2024-11-01"
       },
       {
-        "Sprint_Qualifying": "2024-11-01"
+        "type": "Sprint_Qualifying",
+        "date": "2024-11-01"
       },
       {
-        "Sprint": "2024-11-02"
+        "type": "Sprint",
+        "date": "2024-11-02"
       },
       {
-        "Qualifying": "2024-11-02"
+        "type": "Qualifying",
+        "date": "2024-11-02"
       },
       {
-        "Race": "2024-11-03"
+        "type": "Race",
+        "date": "2024-11-03"
       }
     ]
   },
@@ -1897,19 +2354,24 @@
     "date": "2024-11-23",
     "sessions": [
       {
-        "Practice_1": "2024-11-21"
+        "type": "Practice_1",
+        "date": "2024-11-21"
       },
       {
-        "Practice_2": "2024-11-21"
+        "type": "Practice_2",
+        "date": "2024-11-21"
       },
       {
-        "Practice_3": "2024-11-22"
+        "type": "Practice_3",
+        "date": "2024-11-22"
       },
       {
-        "Qualifying": "2024-11-22"
+        "type": "Qualifying",
+        "date": "2024-11-22"
       },
       {
-        "Race": "2024-11-23"
+        "type": "Race",
+        "date": "2024-11-23"
       }
     ]
   },
@@ -1919,19 +2381,24 @@
     "date": "2024-12-01",
     "sessions": [
       {
-        "Practice_1": "2024-11-29"
+        "type": "Practice_1",
+        "date": "2024-11-29"
       },
       {
-        "Sprint_Qualifying": "2024-11-29"
+        "type": "Sprint_Qualifying",
+        "date": "2024-11-29"
       },
       {
-        "Sprint": "2024-11-30"
+        "type": "Sprint",
+        "date": "2024-11-30"
       },
       {
-        "Qualifying": "2024-11-30"
+        "type": "Qualifying",
+        "date": "2024-11-30"
       },
       {
-        "Race": "2024-12-01"
+        "type": "Race",
+        "date": "2024-12-01"
       }
     ]
   },
@@ -1941,19 +2408,24 @@
     "date": "2024-12-08",
     "sessions": [
       {
-        "Practice_1": "2024-12-06"
+        "type": "Practice_1",
+        "date": "2024-12-06"
       },
       {
-        "Practice_2": "2024-12-06"
+        "type": "Practice_2",
+        "date": "2024-12-06"
       },
       {
-        "Practice_3": "2024-12-07"
+        "type": "Practice_3",
+        "date": "2024-12-07"
       },
       {
-        "Qualifying": "2024-12-07"
+        "type": "Qualifying",
+        "date": "2024-12-07"
       },
       {
-        "Race": "2024-12-08"
+        "type": "Race",
+        "date": "2024-12-08"
       }
     ]
   }

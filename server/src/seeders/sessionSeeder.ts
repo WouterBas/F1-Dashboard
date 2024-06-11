@@ -2,6 +2,16 @@ import client from "../shared/dbConnection";
 import { Meeting, F1Meeting, Schedule } from "../types/index";
 import getF1Data from "./utils/fetchF1Data";
 
+async function getLastSeedingDate() {
+  const result = (await client
+    .db("f1dashboard")
+    .collection("seeding")
+    .findOne({})) as unknown as { lastSeedingDate: Date };
+  return result.lastSeedingDate;
+}
+
+// const lastSeedingDate = await getLastSeedingDate();
+
 // get schedule from database
 const getSchedule = async () => {
   const schedule = (await client
@@ -9,46 +19,77 @@ const getSchedule = async () => {
     .collection("schedules")
     .find(
       {
-        date: { $lt: new Date().toISOString().split("T")[0] },
+        sessions: {
+          $elemMatch: {
+            date: {
+              $lt: new Date().toISOString().split("T")[0],
+            },
+          },
+        },
       },
       {
         sort: { date: 1 },
       }
     )
-    .toArray()) as Schedule[];
+    .toArray()) as unknown as Schedule[];
   return schedule;
 };
 console.log("fetching schedule...");
 const schedules = await getSchedule();
 
+async function getSessionsFromDb() {
+  const schedule = (await client
+    .db("f1dashboard")
+    .collection("sessions")
+    .find({})
+    .toArray()) as unknown as Meeting[];
+  return schedule;
+}
+
 // insert session info into database
 async function seeder() {
   await client.connect();
-  const meetings: Meeting[] = [];
+
+  await client
+    .db("f1dashboard")
+    .collection("sessions")
+    .createIndexes([{ key: { sessionKey: 1 } }, { key: { startDate: 1 } }]);
 
   // fetch sessions
   console.log("fetching sessions...");
 
+  const sessions: Meeting[] = [];
+  const dbSessions = await getSessionsFromDb();
+
   for (const schedule of schedules) {
-    console.log(`fetching ${schedule.year} ${schedule.name}`);
     for (const session of schedule.sessions) {
+      console.log(`fetching ${schedule.year} ${schedule.name} ${session.type}`);
       const data = (await getF1Data(
         schedule,
         session,
         "SessionInfo"
       )) as F1Meeting;
       const convertedData: Meeting = convertData(data);
-      meetings.push(convertedData);
+      sessions.push(convertedData);
     }
   }
 
-  //insert sessions
-  console.log("inserting sessions...");
-  const result = await client
-    .db("f1dashboard")
-    .collection("sessions")
-    .insertMany(meetings);
-  console.log(`${result.insertedCount} sessions were inserted`);
+  const filteredSessions = sessions.filter(
+    (session) =>
+      !dbSessions.some(
+        (dbSession) => dbSession.sessionKey === session.sessionKey
+      )
+  );
+  // insert sessions
+  if (filteredSessions.length === 0) {
+    console.log("No new sessions to insert");
+  } else {
+    const result = await client
+      .db("f1dashboard")
+      .collection("sessions")
+      .insertMany(filteredSessions);
+    console.log(`${result.insertedCount} sessions were inserted`);
+  }
 
   await client.close();
 }
@@ -75,7 +116,6 @@ function convertData(data: F1Meeting) {
 seeder()
   .then(() => {
     console.log("Session seeding completed");
-    process.exit(0);
   })
   .catch((err) => {
     console.error("Session seeding error:", err);

@@ -1,9 +1,9 @@
 import client from "../shared/dbConnection";
 import { F1Driver, F1DriverObject } from "../types";
 import { getF1DataWithUrl } from "./utils/fetchF1Data";
-import { getMeetings } from "./utils/helpers";
+import { getMeetingsWithoutDrivers } from "./utils/helpers";
 
-const meetings = await getMeetings();
+const meetings = await getMeetingsWithoutDrivers();
 
 async function seeder() {
   await client.connect();
@@ -48,7 +48,6 @@ function convertData(data: F1Driver) {
 seeder()
   .then(() => {
     console.log("Driver seeding completed");
-    process.exit(0);
   })
   .catch((err) => {
     console.error("Driver seeding error:", err);
