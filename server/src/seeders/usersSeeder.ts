@@ -12,6 +12,16 @@ async function seeder() {
     password: await Bun.password.hash(process.env.ADMIN_PASSWORD),
   };
 
+  const existInDb = await client
+    .db("f1dashboard")
+    .collection("users")
+    .findOne({ username: user.username });
+  if (existInDb) {
+    console.log("User already exists");
+    await client.close();
+    return;
+  }
+
   const result = await client
     .db("f1dashboard")
     .collection("users")
@@ -23,7 +33,6 @@ async function seeder() {
 seeder()
   .then(() => {
     console.log("User seeding completed");
-    process.exit(0);
   })
   .catch((err) => {
     console.error("User seeding error:", err);

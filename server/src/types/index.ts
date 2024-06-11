@@ -27,23 +27,22 @@ export type PatchCircuit = {
 };
 
 export type Session = {
-  [Practice_1: string]:
-    | string
-    | [Practice_2: string]
-    | [Practice_3: string]
-    | [Sprint_Shootout: string]
-    | [Sprint: string]
-    | [Qualifying: string]
-    | [Sprint_Qualifying: string]
-    | [Race: string];
+  type: string;
+  date: string;
 };
 
 export type Schedule = {
-  _id: ObjectId;
   name: string;
-  year: string;
   date: string;
+  year: string;
   sessions: Session[];
+};
+
+export type convertedSchedule = {
+  name: string;
+  raceDate: string;
+  type: string;
+  date: Date;
 };
 
 export type F1Meeting = {
@@ -179,4 +178,38 @@ export type SessionData = {
       TrackStatus?: string;
     };
   };
+};
+
+// schedule types
+export type ScheduleApi = {
+  season: string;
+  round: string;
+  url: string;
+  raceName: string;
+  Circuit: Circuit;
+  date: Date;
+  time: string;
+  FirstPractice: FirstPractice;
+  SecondPractice: FirstPractice;
+  ThirdPractice: FirstPractice;
+  Qualifying: FirstPractice;
+};
+
+export type Circuit = {
+  circuitId: string;
+  url: string;
+  circuitName: string;
+  Location: Location;
+};
+
+export type Location = {
+  lat: string;
+  long: string;
+  locality: string;
+  country: string;
+};
+
+export type FirstPractice = {
+  date: Date;
+  time: string;
 };

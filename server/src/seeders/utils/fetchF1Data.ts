@@ -1,11 +1,11 @@
-import { Schedule, Session } from "../../types";
+import { F1Meeting, Schedule, Session } from "../../types";
 
 // get session info from f1
 async function getF1Data(schedule: Schedule, session: Session, type: string) {
   const name = schedule.name.replaceAll(" ", "_");
-  const date = Object.values(session);
-  const raceDate = schedule.sessions[4].Race;
-  const sessionKey = Object.keys(session);
+  const date = session.date;
+  const raceDate = schedule.date;
+  const sessionKey = session.type;
 
   const url = `https://livetiming.formula1.com/static/${schedule.year}/${raceDate}_${name}/${date}_${sessionKey}/${type}.json`;
 

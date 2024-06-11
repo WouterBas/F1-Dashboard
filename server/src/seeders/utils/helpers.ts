@@ -6,12 +6,20 @@ export const getMeetings = async () => {
   const result = (await client
     .db("f1dashboard")
     .collection("sessions")
+    .find({})
+    .sort({ startDate: 1 })
+    .toArray()) as unknown as Meeting[];
+  console.log("fetching sessions...");
+  return result;
+};
+
+// get schedule from database where there are no drivers
+export const getMeetingsWithoutDrivers = async () => {
+  const result = (await client
+    .db("f1dashboard")
+    .collection("sessions")
     .find({
-      //find all the meetings with a startdate in 2024
-      // startDate: {
-      //   $gte: new Date("2024-02-29"),
-      //   $lt: new Date("2024-02-30"),
-      // },
+      drivers: { $exists: false },
     })
     .toArray()) as unknown as Meeting[];
   console.log("fetching sessions...");

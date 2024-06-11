@@ -3,16 +3,30 @@ import { getF1StreamData } from "./utils/fetchF1Data";
 import type { TimingData, Lines, ConvertedLines, SessionData } from "../types";
 
 import { getMeetings } from "./utils/helpers";
-import { timeStamp } from "console";
-import { listeners } from "process";
 
 const meetings = await getMeetings();
 
 async function seeder() {
   await client.connect();
 
+  await client
+    .db("f1dashboard")
+    .collection("timingdata")
+    .createIndexes([{ key: { sessionKey: 1 } }, { key: { timestamp: 1 } }]);
+
   console.log("fetching timing data...");
-  for (const { url, name, sessionKey, type, startDate, endDate } of meetings) {
+  for (const { url, name, sessionKey, type, startDate } of meetings) {
+    const existInDb = await client
+      .db("f1dashboard")
+      .collection("timingdata")
+      .findOne({ sessionKey: sessionKey });
+    if (existInDb) {
+      console.log(
+        `${startDate.getFullYear()} - ${name} - ${type} - timing data already exists`
+      );
+      continue;
+    }
+
     const timingData = await getF1StreamData(url, "TimingDataF1");
     const LinesArr: [Lines, string][] = timingData
       .split("\n")
@@ -153,7 +167,6 @@ async function findTimeOffset(url: string) {
 seeder()
   .then(() => {
     console.log("Position seeding completed");
-    process.exit(0);
   })
   .catch((err) => {
     console.error("Position seeding error:", err);

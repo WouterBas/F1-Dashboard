@@ -3,12 +3,12 @@ import { Schedule } from "../types";
 
 import schedules from "./schedules.json";
 
-async function getSchedule() {
+async function getScheduleFromDb() {
   const schedule = (await client
     .db("f1dashboard")
     .collection("schedules")
     .find({})
-    .toArray()) as Schedule[];
+    .toArray()) as unknown as Schedule[];
   return schedule;
 }
 
@@ -16,7 +16,7 @@ async function seeder() {
   await client.connect();
   console.log("inserting schedule...");
 
-  const dbSchedules = await getSchedule();
+  const dbSchedules = await getScheduleFromDb();
   const filteredSchedules = schedules.filter(
     (schedule) =>
       !dbSchedules.some((dbSchedule) => dbSchedule.date === schedule.date)

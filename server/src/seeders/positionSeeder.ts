@@ -10,8 +10,24 @@ const meetings = await getMeetings();
 async function seeder() {
   await client.connect();
 
+  await client
+    .db("f1dashboard")
+    .collection("positions")
+    .createIndex({ sessionKey: 1, timestamp: 1 });
+
   console.log("fetching positions...");
   for (const { url, name, sessionKey, type, startDate, endDate } of meetings) {
+    const existInDb = await client
+      .db("f1dashboard")
+      .collection("positions")
+      .findOne({ sessionKey: sessionKey });
+    if (existInDb) {
+      console.log(
+        `${startDate.getFullYear()} - ${name} - ${type} - positions already exists`
+      );
+      continue;
+    }
+
     const positions = await getF1StreamData(url, "Position.z");
     const positionsArr: string[] = positions
       .split("\n")
@@ -103,7 +119,6 @@ function removePostionsBetween(
 seeder()
   .then(() => {
     console.log("Position seeding completed");
-    process.exit(0);
   })
   .catch((err) => {
     console.error("Position seeding error:", err);
