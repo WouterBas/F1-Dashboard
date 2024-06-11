@@ -17,7 +17,7 @@ type State = {
 
 export const store = create<State>((set) => ({
   isPlaying: false,
-  time: new Date(),
+  time: new Date("1970-01-01T00:00:00.000Z"),
   driverList: [],
   minute: 0,
   wasPlaying: false,

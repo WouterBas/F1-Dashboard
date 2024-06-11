@@ -35,7 +35,12 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   } = store();
   const [circuitDimensions, setCircuitDimensions] =
     useState<CircuitDimensions>();
-  const dpr = window.devicePixelRatio;
+  const [dpr, setDpr] = useState<number>(1);
+
+  // set dpr
+  useEffect(() => {
+    setDpr(window.devicePixelRatio);
+  }, []);
 
   // load circuit points
   const { data: circuitPoints } = useSWR<CircuitPoints[]>(

@@ -28,5 +28,10 @@ export const getSessionByKey = async (c: Context) => {
     .db("f1dashboard")
     .collection("sessions")
     .findOne({ sessionKey: key });
-  return c.json(result);
+  if (result) {
+    return c.json(result);
+  } else {
+    c.status(404);
+    return c.json({ message: "Session not found" });
+  }
 };
