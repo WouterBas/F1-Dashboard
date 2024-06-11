@@ -1,4 +1,4 @@
-import Form from "@/components/Form";
+import SelectSession from "@/components/SelectSession";
 import { apiService } from "@/services/api.service";
 import { SessionList } from "@/types";
 
@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <>
       <main className="col-span-2 grid h-[calc(100dvh-36px)] items-center">
-        <Form sessions={sessions} />
+        <SelectSession sessions={sessions} />
       </main>
     </>
   );

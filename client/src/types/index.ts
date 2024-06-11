@@ -30,8 +30,8 @@ export type SessionGp = {
   meetingKey: number;
   sessionKey: number;
   type: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   gmtOffset: string;
   url: string;
   circuitKey: number;

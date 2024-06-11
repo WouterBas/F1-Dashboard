@@ -1,3 +1,4 @@
+"use client";
 import { store } from "@/store";
 import { SessionGp, TimgingData } from "@/types";
 import fetcher from "@/utils/fetcher";

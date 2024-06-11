@@ -1,3 +1,4 @@
+"use client";
 import { store } from "@/store/";
 import { SessionGp } from "@/types";
 import { FaPlay, FaPause } from "react-icons/fa6";
@@ -52,7 +53,7 @@ const MediaControls = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
         onClick={sizeHandler}
       />
 
-      <p className="text-sm">{`${time.toLocaleTimeString()}`}</p>
+      <p className="text-sm">{`${time.toLocaleTimeString("en-GB")}`}</p>
     </div>
   );
 };
