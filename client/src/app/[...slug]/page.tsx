@@ -1,6 +1,6 @@
 import GP from "@/components/Gp";
 import { SessionGp, SessionList } from "@/types";
-import LeaderBoard from "@/components/LeaderBoard";
+import LeaderBoardServer from "@/components/LeaderBoardServer";
 import Map from "@/components/Map";
 import { apiService } from "@/services/api.service";
 import SetDefaults from "@/components/SetDefaults";
@@ -34,7 +34,7 @@ async function Page({ params }: { params: { slug: string[] } }) {
         <GP sessionInfo={sessionInfo} />
         <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-2 sm:gap-3 md:gap-4 ">
           <SetDefaults sessionInfo={sessionInfo} />
-          <LeaderBoard sessionInfo={sessionInfo} />
+          <LeaderBoardServer sessionInfo={sessionInfo} />
           <Map sessionInfo={sessionInfo} />
         </main>
       </>
