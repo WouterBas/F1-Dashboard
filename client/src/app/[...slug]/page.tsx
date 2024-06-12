@@ -1,7 +1,7 @@
 import GP from "@/components/Gp";
 import { SessionGp, SessionList } from "@/types";
 import LeaderBoardServer from "@/components/LeaderBoardServer";
-import Map from "@/components/Map";
+import MapCircuitServer from "@/components/MapCircuitServer";
 import { apiService } from "@/services/api.service";
 import SetDefaults from "@/components/SetDefaults";
 import { HTTPError } from "ky";
@@ -35,7 +35,7 @@ async function Page({ params }: { params: { slug: string[] } }) {
         <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-2 sm:gap-3 md:gap-4 ">
           <SetDefaults sessionInfo={sessionInfo} />
           <LeaderBoardServer sessionInfo={sessionInfo} />
-          <Map sessionInfo={sessionInfo} />
+          <MapCircuitServer sessionInfo={sessionInfo} />
         </main>
       </>
     );

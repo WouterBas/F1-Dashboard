@@ -2,7 +2,11 @@ import { apiService } from "@/services/api.service";
 import { SessionGp, TimgingData } from "@/types";
 import LeaderBoardClient from "@/components/LeaderBoardClient";
 
-const LeaderBoard = async ({ sessionInfo }: { sessionInfo: SessionGp }) => {
+const LeaderBoardServer = async ({
+  sessionInfo,
+}: {
+  sessionInfo: SessionGp;
+}) => {
   const response = await apiService.get(
     `timingdata/${sessionInfo.sessionKey}`,
     {},
@@ -14,4 +18,4 @@ const LeaderBoard = async ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   );
 };
 
-export default LeaderBoard;
+export default LeaderBoardServer;

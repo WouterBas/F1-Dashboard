@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import DriverList from "@/components/DriverList";
 import DriverListLoading from "@/components/DriverListLoading";
 
-const LeaderBoard = ({
+const LeaderBoardClient = ({
   timingData,
   sessionInfo,
 }: {
@@ -59,4 +59,4 @@ const LeaderBoard = ({
   );
 };
 
-export default LeaderBoard;
+export default LeaderBoardClient;
