@@ -56,11 +56,9 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       },
     },
   );
-
+  // update circuit list data after saving
   useEffect(() => {
-    if (data) {
-      setNewCircuits(data as CircuitList[]);
-    }
+    data && setNewCircuits(data as CircuitList[]);
   }, [data]);
 
   const availableCircuits = newCircuits.map((circuit) => ({
@@ -90,6 +88,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       value: driver.racingNumber,
     }));
 
+  // get circuit points
   const {
     data: circuitPoints,
     isLoading,
@@ -137,25 +136,11 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
             value={new Date(startTime).toTimeString().split(" ")[0]}
             label="Start Time"
             step={1}
-            onChange={(e) => {
-              setSaved(false);
-              const day = new Date(startTime).toISOString().split("T")[0];
-              setStartTime(new Date(`${day}T${e.target.value}.000`));
-            }}
           />
           <TimeInput
             value={getFormattedTime(duration)}
             label="Duration"
             step={60}
-            onChange={(e) => {
-              setSaved(false);
-              const milliSeconds: number =
-                e.target.value.split(":").reduce((a, b) => a * 60 + +b, 0) *
-                1000;
-              if (milliSeconds < 180000) {
-                setDuration(milliSeconds);
-              }
-            }}
           />
           <ButtonAdmin value={closed} label="Close" setValue={setClosed} />
           <ButtonAdmin value={points} label="Points" setValue={setPoints} />

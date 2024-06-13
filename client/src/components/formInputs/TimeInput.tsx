@@ -1,14 +1,30 @@
+import { useAdminStore } from "@/store/adminStore";
+
 const TimeInput = ({
   value,
   label,
   step,
-  onChange,
 }: {
   value: string;
   label: string;
   step: number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
+  const { setDuration, setSaved, setStartTime, startTime } = useAdminStore();
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSaved(false);
+    if (label === "Duration") {
+      const milliSeconds: number =
+        e.target.value.split(":").reduce((a, b) => a * 60 + +b, 0) * 1000;
+      if (milliSeconds < 180000) {
+        setDuration(milliSeconds);
+      }
+    }
+    if (label === "Start Time") {
+      setSaved(false);
+      const day = new Date(startTime).toISOString().split("T")[0];
+      setStartTime(new Date(`${day}T${e.target.value}.000`));
+    }
+  };
   return (
     <div className="flex items-center gap-2 rounded-md bg-neutral-800 px-1 py-1 pl-2">
       <label htmlFor={label}>{label}</label>
@@ -19,7 +35,7 @@ const TimeInput = ({
         step={step}
         name={label}
         value={value}
-        onChange={onChange}
+        onChange={onChangeHandler}
       />
     </div>
   );
