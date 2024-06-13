@@ -48,5 +48,10 @@ export const getPositionOneDriver = async (c: Context) => {
     y: position.entries[driverNumber].Y,
   }));
 
+  if (filterDriver.length === 0) {
+    c.status(404);
+    return c.json({ message: "Points not found" });
+  }
+
   return c.json(filterDriver);
 };

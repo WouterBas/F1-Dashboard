@@ -1,7 +1,7 @@
 import { FaChevronDown } from "react-icons/fa6";
 import { selectSession } from "@/store/selectSession";
 
-const dropdownMain = ({
+const DropdownMain = ({
   options,
   value,
   label,
@@ -57,4 +57,4 @@ const dropdownMain = ({
     </div>
   );
 };
-export default dropdownMain;
+export default DropdownMain;

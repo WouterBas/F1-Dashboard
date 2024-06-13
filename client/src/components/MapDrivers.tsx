@@ -1,27 +1,30 @@
 "use client";
-import { drawCircuit } from "@/utils/drawCircuit";
 import fetcher from "@/utils/fetcher";
 import {
-  CircuitDimensions,
-  CircuitPoints,
   SortedDriverPosition,
   DriverPosition,
   SessionGp,
+  CircuitDimensions,
 } from "@/types";
-import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { RefObject, useLayoutEffect, useRef } from "react";
 import useSWR from "swr";
 import { store } from "@/store";
 import { drawDrivers } from "@/utils/drawDrivers";
-import MediaControls from "./MediaControls";
 import { FaSpinner } from "react-icons/fa6";
 
-const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
-  const circuitRef: RefObject<HTMLCanvasElement> =
-    useRef<HTMLCanvasElement>(null);
+const MapDrivers = ({
+  sessionInfo,
+  circuitDimensions,
+  width,
+  dpr,
+}: {
+  sessionInfo: SessionGp;
+  circuitDimensions: CircuitDimensions;
+  width: number;
+  dpr: number;
+}) => {
   const circuitDriverssRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
-  const mainRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState<number>(0);
   const {
     time,
     setTime,
@@ -33,20 +36,6 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     wasPlaying,
     setWasPlaying,
   } = store();
-  const [circuitDimensions, setCircuitDimensions] =
-    useState<CircuitDimensions>();
-  const [dpr, setDpr] = useState<number>(1);
-
-  // set dpr
-  useEffect(() => {
-    setDpr(window.devicePixelRatio);
-  }, []);
-
-  // load circuit points
-  const { data: circuitPoints } = useSWR<CircuitPoints[]>(
-    `circuit/points/${sessionInfo.circuitKey}`,
-    fetcher,
-  );
 
   // load driver positions
   const { data, isLoading } = useSWR<DriverPosition[]>(
@@ -62,29 +51,6 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
       },
     },
   );
-
-  // set width
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      mainRef.current && setWidth(mainRef.current.clientWidth);
-    });
-    mainRef.current && setWidth(mainRef.current.clientWidth);
-  }, [circuitRef, circuitPoints]);
-
-  // draw circuit
-  useEffect(() => {
-    if (circuitPoints && circuitPoints.length > 0) {
-      const circuitDim = drawCircuit(
-        circuitRef,
-        circuitPoints,
-        true,
-        false,
-        width,
-        dpr,
-      );
-      setCircuitDimensions(circuitDim);
-    }
-  }, [circuitPoints, circuitRef, width, dpr]);
 
   // Render the Drivers
   useLayoutEffect(() => {
@@ -193,31 +159,16 @@ const Map = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   }, [isPlaying]);
 
   return (
-    <div
-      className="relative rounded-lg  bg-neutral-800 p-2 sm:p-3 md:p-4"
-      ref={mainRef}
-    >
-      {isLoading && !isPlaying && (
+    <>
+      {isLoading && !isPlaying && circuitDimensions.calcWidth && (
         <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin  text-3xl" />
       )}
-      <div className="relative mx-auto w-full max-w-fit">
-        {circuitPoints && (
-          <>
-            <canvas
-              className="mx-auto max-h-[calc(100dvh-136px)] max-w-full"
-              ref={circuitRef}
-            ></canvas>
-            <canvas
-              className="absolute top-0 mx-auto max-h-[calc(100dvh-136px)] max-w-full"
-              ref={circuitDriverssRef}
-              style={{ imageRendering: "crisp-edges" }}
-            ></canvas>
-          </>
-        )}
-      </div>
-
-      <MediaControls sessionInfo={sessionInfo} />
-    </div>
+      <canvas
+        className="absolute top-0 mx-auto max-h-[calc(100dvh-130px)] max-w-full"
+        ref={circuitDriverssRef}
+        style={{ imageRendering: "crisp-edges" }}
+      ></canvas>
+    </>
   );
 };
-export default Map;
+export default MapDrivers;

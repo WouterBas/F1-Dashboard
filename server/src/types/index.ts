@@ -21,9 +21,11 @@ export type Entry = {
 
 export type PatchCircuit = {
   circuitPoints: circuitPoints[];
-  selectedDriver: number;
   startTime: Date;
   duration: number;
+  circuitKey: number;
+  sessionKey: number;
+  driverKey: number;
 };
 
 export type Session = {
