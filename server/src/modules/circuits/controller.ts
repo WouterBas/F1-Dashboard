@@ -60,19 +60,27 @@ export const getCircuitInfoById = async (c: Context) => {
 };
 
 export const patchCircuit = async (c: Context) => {
-  const id: string = c.req.param("id");
-  const { selectedDriver, startTime, duration, circuitPoints }: PatchCircuit =
-    await c.req.json();
+  const key: number = parseInt(c.req.param("key"));
+  const {
+    circuitKey,
+    sessionKey,
+    driverKey,
+    startTime,
+    duration,
+    circuitPoints,
+  }: PatchCircuit = await c.req.json();
 
   const result = await client
     .db("f1dashboard")
     .collection("circuits")
     .updateOne(
-      { _id: new ObjectId(id) },
+      { circuitKey: key },
       {
         $set: {
           circuitPoints,
-          selectedDriver,
+          circuitKey,
+          sessionKey,
+          driverKey,
           startTime,
           duration,
         },
@@ -98,26 +106,33 @@ export const getAllCircuits = async (c: Context) => {
               $sort: { startDate: -1 },
             },
             {
-              $limit: 1,
-            },
-            {
-              $project: { sessionKey: 1, _id: 0 },
+              $project: {
+                _id: 0,
+                sessionKey: 1,
+                type: 1,
+                startDate: 1,
+                drivers: 1,
+              },
             },
           ],
-          as: "latestSession",
+          as: "sessions",
         },
       },
       { $sort: { name: 1 } },
       {
         $project: {
-          _id: 1,
+          _id: 0,
+          circuitKey: 1,
           name: 1,
-          latestSession: { $arrayElemAt: ["$latestSession.sessionKey", 0] },
+          duration: 1,
+          startTime: 1,
+          sessionKey: 1,
+          driverKey: 1,
+          sessions: 1,
         },
       },
     ])
     .toArray();
 
-  const circuitNames = result.map((circuit) => circuit.name);
   return c.json(result);
 };

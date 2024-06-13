@@ -85,9 +85,18 @@ export type CircuitPoints = {
 };
 
 export type CircuitList = {
-  _id: string;
   name: string;
-  latestSession: number;
+  circuitKey: number;
+  duration?: number;
+  startTime?: string;
+  sessionKey?: number;
+  driverKey?: number;
+  sessions: {
+    startDate: string;
+    type: string;
+    sessionKey: number;
+    drivers: driverList[];
+  }[];
 };
 
 export type CircuitInfo = {

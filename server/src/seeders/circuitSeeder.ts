@@ -1,28 +1,6 @@
 import client from "../shared/dbConnection";
-// import { getMeetings } from "./utils/helpers";
-
-// const meetings = await getMeetings();
 
 import circuits from "./circuits.json";
-
-// const uniqueCircuits = [
-//   ...new Map(
-//     meetings.map((meeting) => [meeting["circuitKey"], meeting])
-//   ).values(),
-// ];
-// const convertCircuit = uniqueCircuits.map((circuit) => {
-//   const index = circuits.findIndex((c) => c.circuitKey === circuit.circuitKey);
-//   if (index != -1) {
-//     return {
-//       ...circuits[index],
-//     };
-//   } else {
-//     return {
-//       name: circuit.circuitName,
-//       circuitKey: circuit.circuitKey,
-//     };
-//   }
-// });
 
 async function seeder() {
   await client.connect();

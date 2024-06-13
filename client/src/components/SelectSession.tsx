@@ -1,6 +1,6 @@
 "use client";
 import { SessionList } from "@/types";
-import DropdownMain from "@/components/formInputs/dropdownMain";
+import DropdownMain from "@/components/formInputs/DropdownMain";
 import { selectSession } from "@/store/selectSession";
 import Link from "next/link";
 import slugify from "slugify";

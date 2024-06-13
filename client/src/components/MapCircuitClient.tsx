@@ -8,9 +8,15 @@ import MapDrivers from "@/components/MapDrivers";
 const MapCircuitClient = ({
   circuitPoints,
   sessionInfo,
+  closed = true,
+  points = false,
+  admin = false,
 }: {
   circuitPoints: CircuitPoints[];
-  sessionInfo: SessionGp;
+  sessionInfo?: SessionGp;
+  closed?: boolean;
+  points?: boolean;
+  admin?: boolean;
 }) => {
   const circuitRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
@@ -41,38 +47,40 @@ const MapCircuitClient = ({
       const circuitDim = drawCircuit(
         circuitRef,
         circuitPoints,
-        true,
-        false,
+        closed,
+        points,
         width,
         dpr,
       );
       setCircuitDimensions(circuitDim);
     }
     setLoading(false);
-  }, [circuitPoints, circuitRef, width, dpr]);
+  }, [circuitPoints, circuitRef, width, dpr, closed, points]);
 
   return (
     <div
-      className="relative max-h-[calc(100dvh-100px)] rounded-lg bg-neutral-800 p-2 sm:p-3 md:p-4"
+      className={`${admin ? "h-[calc(100dvh-180px)]" : "max-h-[calc(100dvh-100px)]"} relative rounded-lg bg-neutral-800 p-2 sm:p-3 md:p-4`}
       ref={mainRef}
     >
       {loading && (
         <div className="relative mx-auto h-[calc(100dvh-170px)] w-full animate-pulse rounded bg-neutral-700"></div>
       )}
       <div className="relative mx-auto w-full max-w-fit">
-        <MapDrivers
-          sessionInfo={sessionInfo}
-          circuitDimensions={circuitDimensions}
-          width={width}
-          dpr={dpr}
-        />
+        {sessionInfo && (
+          <MapDrivers
+            sessionInfo={sessionInfo}
+            circuitDimensions={circuitDimensions}
+            width={width}
+            dpr={dpr}
+          />
+        )}
         <canvas
-          className="mx-auto max-h-[calc(100dvh-130px)] max-w-full"
+          className={`${admin ? "h-[calc(100dvh-210px)]" : "max-h-[calc(100dvh-130px)]"} mx-auto max-w-full`}
           ref={circuitRef}
         ></canvas>
       </div>
 
-      <MediaControls sessionInfo={sessionInfo} />
+      {sessionInfo && <MediaControls sessionInfo={sessionInfo} />}
     </div>
   );
 };
