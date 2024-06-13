@@ -3,14 +3,13 @@ import { CircuitList, CircuitPoints } from "@/types";
 import DropdownAdmin from "@/components/formInputs/DropdownAdmin";
 import { useAdminStore } from "@/store/adminStore";
 import useSWR from "swr";
-import fetcher from "@/utils/fetcher";
+import fetcher, { sendRequest } from "@/utils/fetcher";
 import MapCircuitClient from "@/components/MapCircuitClient";
 import ButtonAdmin from "@/components/formInputs/ButtonAdmin";
 import TimeInput from "@/components/formInputs/TimeInput";
 import { FaSpinner } from "react-icons/fa6";
-import { apiService } from "@/services/api.service";
 import useSWRMutation from "swr/mutation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
   const {
@@ -27,6 +26,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     saved,
     setSaved,
   } = useAdminStore();
+  const [newCircuits, setNewCircuits] = useState<CircuitList[]>(circuitList);
 
   // set Default Values
   useEffect(() => {
@@ -43,14 +43,32 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
         setDuration(circuitList[0].duration);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [circuitList]);
 
-  const availableCircuits = circuitList.map((circuit) => ({
+  // save circuit
+  const { trigger, data } = useSWRMutation(
+    `circuit/${selected.circuitKey}`,
+    sendRequest,
+    {
+      onSuccess: () => {
+        setSaved(true);
+      },
+    },
+  );
+
+  useEffect(() => {
+    if (data) {
+      setNewCircuits(data as CircuitList[]);
+    }
+  }, [data]);
+
+  const availableCircuits = newCircuits.map((circuit) => ({
     name: circuit.name,
     value: circuit.circuitKey,
   }));
 
-  const availableSessions = circuitList
+  const availableSessions = newCircuits
     .filter((circuit) => circuit.circuitKey === selected.circuitKey)
     .map((circuit) => circuit.sessions)
     .flat()
@@ -63,7 +81,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     (session) => session.value === selected.sessionKey,
   );
 
-  const availableDrivers = circuitList
+  const availableDrivers = newCircuits
     .filter((circuit) => circuit.circuitKey === selected.circuitKey)
     .map((circuit) => circuit.sessions)
     .flat()
@@ -85,26 +103,6 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     },
   );
 
-  // save circuit
-  const { trigger } = useSWRMutation(
-    `circuit/${selected.circuitKey}`,
-    (url) => {
-      apiService
-        .patch(url, {
-          json: {
-            circuitPoints,
-            circuitKey: selected?.circuitKey,
-            sessionKey: selected?.sessionKey,
-            driverKey: selected?.driverKey,
-            startTime,
-            duration,
-          },
-          credentials: "include",
-        })
-        .then((res) => res.ok && setSaved(true));
-    },
-  );
-
   // get formatted time
   function getFormattedTime(duration: number): string {
     const minutes = Math.floor(duration / 60 / 1000);
@@ -120,13 +118,13 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
             options={availableCircuits}
             value="circuitKey"
             label="Circuit"
-            circuitList={circuitList}
+            circuitList={newCircuits}
           />
           <DropdownAdmin
             options={availableSessions}
             value="sessionKey"
             label="Session"
-            circuitList={circuitList}
+            circuitList={newCircuits}
           />
 
           <DropdownAdmin
@@ -165,7 +163,15 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
         <button
           className={` ml-auto flex h-10 items-center rounded-md border-2 bg-neutral-800 px-3 disabled:opacity-50`}
           disabled={saved}
-          onClick={() => trigger()}
+          onClick={() =>
+            trigger({
+              sessionKey: selected.sessionKey,
+              driverKey: selected.driverKey,
+              startTime: startTime,
+              duration: duration,
+              circuitPoints: circuitPoints,
+            })
+          }
         >
           {saved ? "Saved" : "Save"}
         </button>

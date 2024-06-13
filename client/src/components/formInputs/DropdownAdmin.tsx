@@ -13,7 +13,8 @@ const DropdownAdmin = ({
   label: string;
   circuitList?: CircuitList[];
 }) => {
-  const { selected, setSelected, setStartTime, setSaved } = useAdminStore();
+  const { selected, setSelected, setStartTime, setSaved, setDuration } =
+    useAdminStore();
   const selectedObj: { [key: string]: string | number } = selected;
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -21,30 +22,39 @@ const DropdownAdmin = ({
     // Change Circuit
     if (value === "circuitKey" && circuitList) {
       const key = parseInt(e.target.value);
-      const dbSessionKey = circuitList.filter(
+      const filteredCircuitKey = circuitList.filter(
         (circuit) => circuit.circuitKey === key,
-      )[0].sessionKey;
+      );
+      const {
+        sessionKey: dbSessionKey,
+        driverKey: dbDriverKey,
+        duration,
+        startTime,
+      } = filteredCircuitKey[0];
 
-      console.log(dbSessionKey);
-
-      const filteredSessionKey = circuitList
-        .filter((circuit) => circuit.circuitKey === key)
+      const filteredSessionKey = filteredCircuitKey
         .map((circuit) => circuit.sessions)
         .flat()[0].sessionKey;
+
+      const filteredDriverKey = filteredCircuitKey
+        .map((circuit) => circuit.sessions)
+        .flat()[0].drivers[0].racingNumber;
 
       setSelected({
         circuitKey: key,
         sessionKey: dbSessionKey || filteredSessionKey,
-        driverKey: circuitList
-          .filter((circuit) => circuit.circuitKey === key)
-          .map((circuit) => circuit.sessions)
-          .flat()[0].drivers[0].racingNumber,
+        driverKey: dbDriverKey || filteredDriverKey,
       });
-      const time = circuitList
-        .filter((circuit) => circuit.circuitKey === key)
+
+      const time = filteredCircuitKey
         .map((circuit) => circuit.sessions)
         .flat()[0].startDate;
-      setStartTime(new Date(time));
+
+      startTime
+        ? setStartTime(new Date(startTime))
+        : setStartTime(new Date(time));
+
+      duration && setDuration(duration);
 
       // Change Session
     } else if (value === "sessionKey" && circuitList !== undefined) {

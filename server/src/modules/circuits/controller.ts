@@ -59,36 +59,6 @@ export const getCircuitInfoById = async (c: Context) => {
   return c.json(result);
 };
 
-export const patchCircuit = async (c: Context) => {
-  const key: number = parseInt(c.req.param("key"));
-  const {
-    circuitKey,
-    sessionKey,
-    driverKey,
-    startTime,
-    duration,
-    circuitPoints,
-  }: PatchCircuit = await c.req.json();
-
-  const result = await client
-    .db("f1dashboard")
-    .collection("circuits")
-    .updateOne(
-      { circuitKey: key },
-      {
-        $set: {
-          circuitPoints,
-          circuitKey,
-          sessionKey,
-          driverKey,
-          startTime,
-          duration,
-        },
-      }
-    );
-  return c.json(result);
-};
-
 export const getAllCircuits = async (c: Context) => {
   const result = await client
     .db("f1dashboard")
@@ -135,4 +105,33 @@ export const getAllCircuits = async (c: Context) => {
     .toArray();
 
   return c.json(result);
+};
+
+export const patchCircuit = async (c: Context) => {
+  const key: number = parseInt(c.req.param("key"));
+  const {
+    sessionKey,
+    driverKey,
+    startTime,
+    duration,
+    circuitPoints,
+  }: PatchCircuit = await c.req.json();
+
+  const result = await client
+    .db("f1dashboard")
+    .collection("circuits")
+    .updateOne(
+      { circuitKey: key },
+      {
+        $set: {
+          circuitPoints,
+          sessionKey,
+          driverKey,
+          startTime,
+          duration,
+        },
+      }
+    );
+
+  return await getAllCircuits(c);
 };

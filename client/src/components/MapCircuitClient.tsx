@@ -59,7 +59,7 @@ const MapCircuitClient = ({
 
   return (
     <div
-      className={`${admin ? "h-[calc(100dvh-180px)]" : "max-h-[calc(100dvh-100px)]"} relative rounded-lg bg-neutral-800 p-2 sm:p-3 md:p-4`}
+      className={`${admin ? "max-h-[calc(100dvh-180px)]" : "max-h-[calc(100dvh-100px)]"} relative rounded-lg bg-neutral-800 p-2 sm:p-3 md:p-4`}
       ref={mainRef}
     >
       {loading && (
@@ -75,7 +75,7 @@ const MapCircuitClient = ({
           />
         )}
         <canvas
-          className={`${admin ? "h-[calc(100dvh-210px)]" : "max-h-[calc(100dvh-130px)]"} mx-auto max-w-full`}
+          className={`${admin ? "max-h-[calc(100dvh-210px)]" : "max-h-[calc(100dvh-130px)]"} mx-auto max-w-full`}
           ref={circuitRef}
         ></canvas>
       </div>
