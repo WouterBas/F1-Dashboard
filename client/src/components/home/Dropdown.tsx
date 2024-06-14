@@ -36,7 +36,7 @@ const Dropdown = ({
 
   return (
     <div>
-      <label htmlFor={value} className="text-lg">
+      <label htmlFor={value} className="text-base sm:text-lg">
         {label}
       </label>
       <div className="relative">
@@ -44,7 +44,7 @@ const Dropdown = ({
           onChange={onChangeHandler}
           id={value}
           value={selectedObj[value]}
-          className="block w-[260px] appearance-none rounded-md border-2 border-neutral-700 bg-neutral-700 px-2 py-1 pr-8 font-sans tracking-wider outline-none focus:border-neutral-500 "
+          className="block w-[236px] appearance-none rounded-md border-2 border-neutral-700 bg-neutral-700 px-2 py-1 pr-8 font-sans text-sm tracking-wider outline-none focus:border-neutral-500 sm:w-[260px] sm:text-base"
         >
           {options.map((option: any) => (
             <option key={option} value={option}>

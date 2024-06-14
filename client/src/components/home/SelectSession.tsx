@@ -38,13 +38,13 @@ const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
   const { year, name, type, sessionKey } = selectedSession as SessionList;
 
   return (
-    <div className="mx-auto grid w-fit justify-center gap-4 md:grid-cols-3">
+    <div className="mx-auto grid w-fit justify-center gap-4 lg:grid-cols-3">
       <Dropdown options={availableYears} value="year" label="Year" />
       <Dropdown options={availableGp} value="gp" label="Grand Prix" />
       <Dropdown options={availableTypes} value="type" label="Type" />
       <Link
         href={`/${slugify(name, { lower: true })}/${slugify(type, { lower: true })}/${year}/${sessionKey}`}
-        className="mx-auto mt-4 block w-full rounded-md border-2 border-white  py-1 text-center font-mono text-lg md:col-start-2"
+        className="mx-auto mt-4 block w-full rounded-md border-2 border-white py-1 text-center font-mono sm:text-lg lg:col-start-2"
       >
         View
       </Link>

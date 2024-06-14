@@ -17,11 +17,13 @@ const MapDrivers = ({
   circuitDimensions,
   width,
   dpr,
+  deviceWidth,
 }: {
   sessionInfo: SessionGp;
   circuitDimensions: CircuitDimensions;
   width: number;
   dpr: number;
+  deviceWidth: number;
 }) => {
   const circuitDriverssRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
@@ -120,6 +122,7 @@ const MapDrivers = ({
       circuitDimensions,
       width,
       dpr,
+      deviceWidth,
     );
   }, [
     time,
@@ -129,6 +132,7 @@ const MapDrivers = ({
     width,
     dpr,
     driverList,
+    deviceWidth,
   ]);
 
   useLayoutEffect(() => {
@@ -164,7 +168,7 @@ const MapDrivers = ({
         <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin  text-3xl" />
       )}
       <canvas
-        className="absolute top-0 mx-auto max-h-[calc(100dvh-130px)] max-w-full"
+        className="absolute top-0 mx-auto max-h-[calc(100dvh-82px)] max-w-full"
         ref={circuitDriverssRef}
         style={{ imageRendering: "crisp-edges" }}
       ></canvas>

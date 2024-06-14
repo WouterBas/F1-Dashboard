@@ -35,9 +35,9 @@ const MediaControls = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   };
 
   return (
-    <div className="absolute bottom-2 flex w-[calc(100%-2rem)] items-center gap-4">
+    <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
       <button
-        className="rounded-full bg-neutral-700 p-2 text-sm"
+        className="rounded-full bg-neutral-700 p-1.5 text-[10px] sm:text-sm md:p-2 md:text-base lg:p-2.5 lg:text-lg"
         onClick={() => toggleIsPlaying()}
         aria-label="Play/Pause"
       >
@@ -56,7 +56,7 @@ const MediaControls = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
         onClick={sizeHandler}
       />
 
-      <p className="text-sm">{`${time.toLocaleTimeString("en-GB")}`}</p>
+      <p className="text-[10px] sm:text-xs md:text-sm lg:text-base">{`${time.toLocaleTimeString("en-GB")}`}</p>
     </div>
   );
 };

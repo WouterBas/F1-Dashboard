@@ -89,9 +89,9 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
   }
 
   return (
-    <>
-      <div className="grid grid-cols-[auto_auto] gap-2">
-        <div className="flex w-fit flex-wrap gap-2">
+    <main className="col-span-2">
+      <div className="mb-1 grid gap-1 text-sm sm:mb-2 sm:grid-cols-[auto,1fr] sm:gap-2 sm:text-base">
+        <div className="flex flex-wrap gap-1 sm:gap-2">
           <Dropdown
             options={availableCircuits}
             value="circuitKey"
@@ -121,11 +121,14 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
             label="Duration"
             step={60}
           />
-          <Button value={closed} label="Close" setValue={setClosed} />
-          <Button value={points} label="Points" setValue={setPoints} />
+          <div className="flex gap-1 sm:gap-2">
+            <Button value={closed} label="Close" setValue={setClosed} />
+            <Button value={points} label="Points" setValue={setPoints} />
+          </div>
         </div>
+
         <button
-          className={` ml-auto flex h-10 items-center rounded-md border-2 bg-neutral-800 px-3 disabled:opacity-50`}
+          className="h-fit w-full self-center justify-self-end rounded border-2 bg-neutral-800 px-3 py-1 text-center text-base disabled:opacity-50 sm:w-fit"
           disabled={saved}
           onClick={() =>
             trigger({
@@ -154,7 +157,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
           />
         )}
       </div>
-    </>
+    </main>
   );
 };
 export default CreateCircuitForm;

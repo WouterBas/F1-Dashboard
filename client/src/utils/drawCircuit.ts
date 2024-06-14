@@ -9,6 +9,7 @@ export function drawCircuit(
   drawPoints: boolean,
   width: number,
   dpr: number,
+  deviceWidth: number,
 ) {
   const minX = Math.min(...circuitPoints.map((loc) => loc.x));
   const minY = Math.min(...circuitPoints.map((loc) => loc.y));
@@ -29,7 +30,7 @@ export function drawCircuit(
   const points = circuitPoints.map((loc) => {
     return {
       x: (loc.x + Math.abs(minX)) / scale + width / 20,
-      y: (loc.y + Math.abs(minY)) / scale + width / 20,
+      y: (loc.y + Math.abs(minY)) / scale + width / 15,
     };
   });
 
@@ -52,7 +53,7 @@ export function drawCircuit(
     points[i + 1].y,
   );
 
-  ctx.lineWidth = width / 200;
+  ctx.lineWidth = 2 * deviceWidth;
   ctx.strokeStyle = "whitesmoke";
   if (close) {
     ctx.closePath();
@@ -67,22 +68,22 @@ export function drawCircuit(
 
       // first point green
       if (i === 0) {
-        ctx.arc(point.x, point.y, width / 150, 0, 2 * Math.PI, false);
+        ctx.arc(point.x, point.y, 4 * deviceWidth, 0, 2 * Math.PI, false);
         ctx.fillStyle = "rgba(52, 211, 153, 0.25)";
         ctx.strokeStyle = "rgb(52, 211, 153)";
         // last point red
       } else if (i === arr.length - 1) {
-        ctx.arc(point.x, point.y, width / 150, 0, 2 * Math.PI, false);
+        ctx.arc(point.x, point.y, 4 * deviceWidth, 0, 2 * Math.PI, false);
         ctx.fillStyle = "rgba(239, 68, 68, 0.25)";
         ctx.strokeStyle = "rgb(239, 68, 68)";
         // middle points blue
       } else {
-        ctx.arc(point.x, point.y, width / 200, 0, 2 * Math.PI, false);
+        ctx.arc(point.x, point.y, 3 * deviceWidth, 0, 2 * Math.PI, false);
         ctx.fillStyle = "rgba(96, 165, 250, 0.25)";
         ctx.strokeStyle = "rgb(96, 165, 250)";
       }
 
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 0.5 * deviceWidth;
       ctx.fill();
       ctx.stroke();
     });

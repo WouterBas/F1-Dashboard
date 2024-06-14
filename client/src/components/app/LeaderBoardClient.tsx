@@ -47,7 +47,7 @@ const LeaderBoardClient = ({
   }, [timingData, sessionInfo, time, setDriverList]);
 
   return (
-    <div className="rounded-lg bg-neutral-800 px-2 py-1 font-mono text-xs tracking-wider text-white sm:text-sm md:px-3 md:py-2 md:text-base  lg:px-4 lg:text-lg">
+    <div className="rounded-md bg-neutral-800 p-1 font-mono text-xs tracking-wider text-white sm:p-2 sm:text-sm md:px-3 md:text-base lg:text-lg">
       <ul className="divide-y divide-gray-500">
         {driverList.length > 0 ? (
           <DriverList driverList={driverList} />

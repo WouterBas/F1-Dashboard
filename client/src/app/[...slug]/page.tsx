@@ -32,7 +32,7 @@ async function Page({ params }: { params: { slug: string[] } }) {
     return (
       <AppInitializer sessionInfo={sessionInfo}>
         <GP sessionInfo={sessionInfo} />
-        <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-2 sm:gap-3 md:gap-4 ">
+        <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
           <LeaderBoardServer sessionInfo={sessionInfo} />
           <MapCircuitServer sessionInfo={sessionInfo} />
         </main>

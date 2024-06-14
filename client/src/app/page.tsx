@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="col-span-2 grid h-[calc(100dvh-36px)] items-center">
+      <main className="col-span-2 grid h-[calc(100dvh-52px)] items-center sm:h-[calc(100dvh-72px)] md:h-[calc(100dvh-86px)]">
         <HomeInitializer sessions={sessions}>
           <SelectSession sessions={sessions} />
         </HomeInitializer>

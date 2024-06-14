@@ -7,6 +7,7 @@ export function drawDrivers(
   { calcWidth, calcHeight, scale, minX, minY }: CircuitDimensions,
   width: number,
   dpr: number,
+  deviceWidth: number,
 ) {
   const canvas = ref.current as HTMLCanvasElement;
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -23,7 +24,7 @@ export function drawDrivers(
     return {
       ...driver,
       X: (driver.X + Math.abs(minX)) / scale + width / 20,
-      Y: (driver.Y + Math.abs(minY)) / scale + width / 20,
+      Y: (driver.Y + Math.abs(minY)) / scale + width / 15,
     };
   });
 
@@ -34,19 +35,29 @@ export function drawDrivers(
       ctx.beginPath();
       ctx.globalAlpha = retired ? 0.5 : 1;
 
-      ctx.arc(X, Y, width / 125, 0, 2 * Math.PI, false);
+      ctx.arc(X, Y, 3.5 * deviceWidth, 0, 2 * Math.PI, false);
       ctx.fillStyle = teamColor ? teamColor : "white";
 
       ctx.fill();
 
       ctx.beginPath();
-      ctx.roundRect(X, Y - 33, 42, 22, 4);
+      ctx.roundRect(
+        X,
+        Y - 4 * deviceWidth,
+        13 * deviceWidth,
+        -7 * deviceWidth,
+        deviceWidth,
+      );
       ctx.fillStyle = "rgba(50, 50, 50, 0.85)";
       ctx.fill();
 
-      ctx.font = "18px monospace";
+      ctx.font = `${6 * deviceWidth}px monospace`;
       ctx.fillStyle = "white";
-      ctx.fillText(abbreviation ? abbreviation : "", X + 5, Y - 16);
+      ctx.fillText(
+        abbreviation ? abbreviation : "",
+        X + 1 * deviceWidth,
+        Y - 5 * deviceWidth,
+      );
     });
   }
 }

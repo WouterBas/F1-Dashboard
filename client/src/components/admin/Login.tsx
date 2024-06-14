@@ -30,20 +30,18 @@ const Login = () => {
     }
   };
   return (
-    <main className="flex h-screen items-center justify-center">
+    <main className="col-span-2 flex h-[calc(100dvh-50px)] items-center justify-center">
       <form
-        className="grid w-80 gap-4 rounded-md bg-neutral-800 px-6 py-4"
+        className="grid w-80 gap-4 rounded-md bg-neutral-800 p-4 px-6"
         onSubmit={submitHandler}
       >
-        <p className="text-center text-lg font-semibold text-red-400">
-          {serverError}
-        </p>
+        <p className="text-center font-semibold text-red-400">{serverError}</p>
         <div className="flex flex-col">
-          <label className="text-lg" htmlFor="username">
+          <label className="sm:text-lg" htmlFor="username">
             Username
           </label>
           <input
-            className="rounded border-2 border-neutral-400 bg-neutral-800 p-1 focus:border-white focus:outline-none "
+            className="rounded border-2 border-neutral-400 bg-neutral-800 p-1 text-sm focus:border-white focus:outline-none sm:text-base"
             type="text"
             name="username"
             autoComplete="off"
@@ -51,18 +49,18 @@ const Login = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-lg" htmlFor="password">
+          <label className="sm:text-lg" htmlFor="password">
             Password
           </label>
           <input
-            className="rounded border-2 border-neutral-400 bg-neutral-800 p-1 focus:border-white focus:outline-none "
+            className="rounded border-2 border-neutral-400 bg-neutral-800 p-1 text-sm focus:border-white focus:outline-none sm:text-base"
             type="password"
             name="password"
             id="password"
           />
         </div>
         <button
-          className="mx-auto mt-4 w-1/2 rounded border-2 py-1 text-lg"
+          className="mx-auto mt-4 w-1/2 rounded border-2 py-1 sm:text-lg"
           type="submit"
         >
           Login

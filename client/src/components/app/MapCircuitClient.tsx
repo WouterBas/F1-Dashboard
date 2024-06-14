@@ -26,7 +26,7 @@ const MapCircuitClient = ({
     {} as CircuitDimensions,
   );
   const [dpr, setDpr] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [deviceWidth, setDeviceWidth] = useState<number>(1);
 
   // set dpr
   useEffect(() => {
@@ -36,10 +36,26 @@ const MapCircuitClient = ({
   // set width
   useEffect(() => {
     window.addEventListener("resize", () => {
-      mainRef.current && setWidth(mainRef.current.clientWidth);
+      onResize();
     });
-    mainRef.current && setWidth(mainRef.current.clientWidth);
+    onResize();
   }, [circuitRef, circuitPoints]);
+
+  function onResize() {
+    mainRef.current && setWidth(mainRef.current.clientWidth);
+    const width = window.innerWidth;
+    let deviceWidth = 4;
+    if (width < 640) {
+      deviceWidth = 1;
+    } else if (width < 768) {
+      deviceWidth = 2;
+    } else if (width < 1024) {
+      deviceWidth = 3;
+    } else {
+      deviceWidth = 4;
+    }
+    setDeviceWidth(deviceWidth);
+  }
 
   // draw circuit
   useEffect(() => {
@@ -51,20 +67,17 @@ const MapCircuitClient = ({
         points,
         width,
         dpr,
+        deviceWidth,
       );
       setCircuitDimensions(circuitDim);
     }
-    setLoading(false);
-  }, [circuitPoints, circuitRef, width, dpr, closed, points]);
+  }, [circuitPoints, circuitRef, width, dpr, closed, points, deviceWidth]);
 
   return (
     <div
-      className={`${admin ? "max-h-[calc(100dvh-180px)]" : "max-h-[calc(100dvh-100px)]"} relative rounded-lg bg-neutral-800 p-2 sm:p-3 md:p-4`}
+      className={`${admin ? "max-h-[calc(100dvh-240px)] sm:max-h-[calc(100dvh-244px)] md:max-h-[calc(100dvh-216px)] lg:max-h-[calc(100dvh-176px)] 2xl:max-h-[calc(100dvh-132px)]" : "max-h-[calc(100dvh-52px)] sm:max-h-[calc(100dvh-72px)] md:max-h-[calc(100dvh-86px)] lg:max-h-[calc(100dvh-98px)]"} relative rounded-md bg-neutral-800 p-1 sm:p-2 md:p-3`}
       ref={mainRef}
     >
-      {loading && (
-        <div className="relative mx-auto h-[calc(100dvh-170px)] w-full animate-pulse rounded bg-neutral-700"></div>
-      )}
       <div className="relative mx-auto w-full max-w-fit">
         {sessionInfo && (
           <MapDrivers
@@ -72,10 +85,11 @@ const MapCircuitClient = ({
             circuitDimensions={circuitDimensions}
             width={width}
             dpr={dpr}
+            deviceWidth={deviceWidth}
           />
         )}
         <canvas
-          className={`${admin ? "max-h-[calc(100dvh-210px)]" : "max-h-[calc(100dvh-130px)]"} mx-auto max-w-full`}
+          className={`${admin ? "max-h-[calc(100dvh-250px)] sm:max-h-[calc(100dvh-260px)] md:max-h-[calc(100dvh-240px)] lg:max-h-[calc(100dvh-200px)] 2xl:max-h-[calc(100dvh-156px)]" : "max-h-[calc(100dvh-82px)] sm:max-h-[calc(100dvh-110px)] md:max-h-[calc(100dvh-138px)] lg:max-h-[calc(100dvh-158px)]"} mx-auto max-w-full`}
           ref={circuitRef}
         ></canvas>
       </div>
