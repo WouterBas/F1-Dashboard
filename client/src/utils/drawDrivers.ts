@@ -35,7 +35,7 @@ export function drawDrivers(
       ctx.beginPath();
       ctx.globalAlpha = retired ? 0.5 : 1;
 
-      ctx.arc(X, Y, 3.5 * deviceWidth, 0, 2 * Math.PI, false);
+      ctx.arc(X, Y, 4 * deviceWidth, 0, 2 * Math.PI, false);
       ctx.fillStyle = teamColor ? teamColor : "white";
 
       ctx.fill();
@@ -44,14 +44,14 @@ export function drawDrivers(
       ctx.roundRect(
         X,
         Y - 4 * deviceWidth,
-        13 * deviceWidth,
-        -7 * deviceWidth,
+        16 * deviceWidth,
+        -8 * deviceWidth,
         deviceWidth,
       );
       ctx.fillStyle = "rgba(50, 50, 50, 0.85)";
       ctx.fill();
 
-      ctx.font = `${6 * deviceWidth}px monospace`;
+      ctx.font = `${8 * deviceWidth}px monospace`;
       ctx.fillStyle = "white";
       ctx.fillText(
         abbreviation ? abbreviation : "",
