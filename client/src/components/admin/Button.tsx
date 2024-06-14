@@ -1,6 +1,6 @@
 import { FaRegSquare, FaRegSquareCheck } from "react-icons/fa6";
 
-const ButtonAdmin = ({
+const Button = ({
   value,
   label,
   setValue,
@@ -33,4 +33,4 @@ const ButtonAdmin = ({
     </div>
   );
 };
-export default ButtonAdmin;
+export default Button;

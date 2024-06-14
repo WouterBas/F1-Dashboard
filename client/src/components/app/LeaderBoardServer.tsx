@@ -1,6 +1,6 @@
 import { apiService } from "@/services/api.service";
 import { SessionGp, TimgingData } from "@/types";
-import LeaderBoardClient from "@/components/LeaderBoardClient";
+import LeaderBoardClient from "@/components/app/LeaderBoardClient";
 
 const LeaderBoardServer = async ({
   sessionInfo,

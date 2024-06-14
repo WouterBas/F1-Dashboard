@@ -1,9 +1,9 @@
 "use client";
-import { store } from "@/store";
+import { useAppStore } from "@/store/appStore";
 import { SessionGp, TimgingData } from "@/types";
 import { useEffect } from "react";
-import DriverList from "@/components/DriverList";
-import DriverListLoading from "@/components/DriverListLoading";
+import DriverList from "@/components/app/DriverList";
+import DriverListLoading from "@/components/app/DriverListLoading";
 
 const LeaderBoardClient = ({
   timingData,
@@ -12,7 +12,7 @@ const LeaderBoardClient = ({
   timingData: TimgingData[];
   sessionInfo: SessionGp;
 }) => {
-  const { time, setDriverList, driverList } = store();
+  const { time, setDriverList, driverList } = useAppStore();
 
   useEffect(() => {
     // find index of closest timing data based on current time

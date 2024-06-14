@@ -1,5 +1,5 @@
 "use client";
-import { store } from "@/store/";
+import { useAppStore } from "@/store/appStore";
 import { SessionGp } from "@/types";
 import { FaPlay, FaPause } from "react-icons/fa6";
 
@@ -11,7 +11,7 @@ const MediaControls = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
     toggleIsPlaying,
     setMinute,
     setWasPlaying,
-  } = store();
+  } = useAppStore();
   const totalSeconds =
     new Date(sessionInfo.endDate).getTime() -
     new Date(sessionInfo.startDate).getTime();
@@ -39,11 +39,14 @@ const MediaControls = ({ sessionInfo }: { sessionInfo: SessionGp }) => {
       <button
         className="rounded-full bg-neutral-700 p-2 text-sm"
         onClick={() => toggleIsPlaying()}
+        aria-label="Play/Pause"
       >
         {isPlaying ? <FaPause /> : <FaPlay className="translate-x-0.5" />}
       </button>
 
       <input
+        aria-label="Timeline"
+        id="timeline"
         type="range"
         min="0"
         max={totalSeconds}

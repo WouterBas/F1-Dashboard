@@ -1,12 +1,12 @@
 "use client";
 import { CircuitList, CircuitPoints } from "@/types";
-import DropdownAdmin from "@/components/formInputs/DropdownAdmin";
+import Dropdown from "@/components/admin/Dropdown";
 import { useAdminStore } from "@/store/adminStore";
 import useSWR from "swr";
 import fetcher, { sendRequest } from "@/utils/fetcher";
-import MapCircuitClient from "@/components/MapCircuitClient";
-import ButtonAdmin from "@/components/formInputs/ButtonAdmin";
-import TimeInput from "@/components/formInputs/TimeInput";
+import MapCircuitClient from "@/components/app/MapCircuitClient";
+import Button from "@/components/admin/Button";
+import TimeInput from "@/components/admin/TimeInput";
 import { FaSpinner } from "react-icons/fa6";
 import useSWRMutation from "swr/mutation";
 import { useEffect, useState } from "react";
@@ -14,37 +14,16 @@ import { useEffect, useState } from "react";
 const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
   const {
     selected,
-    setSelected,
     closed,
     points,
     setClosed,
     setPoints,
     duration,
-    setDuration,
     startTime,
-    setStartTime,
     saved,
     setSaved,
   } = useAdminStore();
   const [newCircuits, setNewCircuits] = useState<CircuitList[]>(circuitList);
-
-  // set Default Values
-  useEffect(() => {
-    if (circuitList[0].driverKey && circuitList[0].sessionKey) {
-      setSelected({
-        ...selected,
-        sessionKey: circuitList[0].sessionKey,
-        driverKey: circuitList[0].driverKey,
-      });
-      if (circuitList[0].startTime) {
-        setStartTime(new Date(circuitList[0].startTime));
-      }
-      if (circuitList[0].duration) {
-        setDuration(circuitList[0].duration);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [circuitList]);
 
   // save circuit
   const { trigger, data } = useSWRMutation(
@@ -113,20 +92,20 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     <>
       <div className="grid grid-cols-[auto_auto] gap-2">
         <div className="flex w-fit flex-wrap gap-2">
-          <DropdownAdmin
+          <Dropdown
             options={availableCircuits}
             value="circuitKey"
             label="Circuit"
             circuitList={newCircuits}
           />
-          <DropdownAdmin
+          <Dropdown
             options={availableSessions}
             value="sessionKey"
             label="Session"
             circuitList={newCircuits}
           />
 
-          <DropdownAdmin
+          <Dropdown
             options={availableDrivers}
             value="driverKey"
             label="Driver"
@@ -142,8 +121,8 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
             label="Duration"
             step={60}
           />
-          <ButtonAdmin value={closed} label="Close" setValue={setClosed} />
-          <ButtonAdmin value={points} label="Points" setValue={setPoints} />
+          <Button value={closed} label="Close" setValue={setClosed} />
+          <Button value={points} label="Points" setValue={setPoints} />
         </div>
         <button
           className={` ml-auto flex h-10 items-center rounded-md border-2 bg-neutral-800 px-3 disabled:opacity-50`}

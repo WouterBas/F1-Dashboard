@@ -1,12 +1,12 @@
 "use client";
 import { SessionList } from "@/types";
-import DropdownMain from "@/components/formInputs/DropdownMain";
-import { selectSession } from "@/store/selectSession";
+import Dropdown from "@/components/home/Dropdown";
+import { useHomeStore } from "@/store/homeStore";
 import Link from "next/link";
 import slugify from "slugify";
 
 const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
-  const { selected } = selectSession();
+  const { selected } = useHomeStore();
 
   const availableYears = [
     ...new Set(sessions.map((session) => session.year.toString())),
@@ -39,9 +39,9 @@ const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
 
   return (
     <div className="mx-auto grid w-fit justify-center gap-4 md:grid-cols-3">
-      <DropdownMain options={availableYears} value="year" label="Year" />
-      <DropdownMain options={availableGp} value="gp" label="Grand Prix" />
-      <DropdownMain options={availableTypes} value="type" label="Type" />
+      <Dropdown options={availableYears} value="year" label="Year" />
+      <Dropdown options={availableGp} value="gp" label="Grand Prix" />
+      <Dropdown options={availableTypes} value="type" label="Type" />
       <Link
         href={`/${slugify(name, { lower: true })}/${slugify(type, { lower: true })}/${year}/${sessionKey}`}
         className="mx-auto mt-4 block w-full rounded-md border-2 border-white  py-1 text-center font-mono text-lg md:col-start-2"

@@ -1,6 +1,6 @@
 import { apiService } from "@/services/api.service";
 import { CircuitPoints, SessionGp } from "@/types";
-import MapCircuitClient from "@/components/MapCircuitClient";
+import MapCircuitClient from "@/components/app/MapCircuitClient";
 
 const MapCircuitServer = async ({
   sessionInfo,

@@ -1,6 +1,7 @@
-import SelectSession from "@/components/SelectSession";
+import SelectSession from "@/components/home/SelectSession";
 import { apiService } from "@/services/api.service";
 import { SessionList } from "@/types";
+import HomeInitializer from "@/components/home/HomeInitializer";
 
 export default async function Home() {
   async function fetchSessions() {
@@ -16,7 +17,9 @@ export default async function Home() {
   return (
     <>
       <main className="col-span-2 grid h-[calc(100dvh-36px)] items-center">
-        <SelectSession sessions={sessions} />
+        <HomeInitializer sessions={sessions}>
+          <SelectSession sessions={sessions} />
+        </HomeInitializer>
       </main>
     </>
   );

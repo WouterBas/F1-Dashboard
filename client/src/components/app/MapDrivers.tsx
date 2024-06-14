@@ -8,7 +8,7 @@ import {
 } from "@/types";
 import { RefObject, useLayoutEffect, useRef } from "react";
 import useSWR from "swr";
-import { store } from "@/store";
+import { useAppStore } from "@/store/appStore";
 import { drawDrivers } from "@/utils/drawDrivers";
 import { FaSpinner } from "react-icons/fa6";
 
@@ -35,7 +35,7 @@ const MapDrivers = ({
     toggleIsPlaying,
     wasPlaying,
     setWasPlaying,
-  } = store();
+  } = useAppStore();
 
   // load driver positions
   const { data, isLoading } = useSWR<DriverPosition[]>(

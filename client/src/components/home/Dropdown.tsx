@@ -1,7 +1,7 @@
 import { FaChevronDown } from "react-icons/fa6";
-import { selectSession } from "@/store/selectSession";
+import { useHomeStore } from "@/store/homeStore";
 
-const DropdownMain = ({
+const Dropdown = ({
   options,
   value,
   label,
@@ -10,7 +10,7 @@ const DropdownMain = ({
   value: string;
   label: string;
 }) => {
-  const { selected, setSelected } = selectSession();
+  const { selected, setSelected } = useHomeStore();
   const selectedObj: { [key: string]: string } = selected;
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -36,7 +36,7 @@ const DropdownMain = ({
 
   return (
     <div>
-      <label htmlFor="year" className="text-lg">
+      <label htmlFor={value} className="text-lg">
         {label}
       </label>
       <div className="relative">
@@ -57,4 +57,4 @@ const DropdownMain = ({
     </div>
   );
 };
-export default DropdownMain;
+export default Dropdown;

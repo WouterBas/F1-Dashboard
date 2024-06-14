@@ -15,7 +15,7 @@ type State = {
   setWasPlaying: (wasPlaying: boolean) => void;
 };
 
-export const store = create<State>((set) => ({
+export const useAppStore = create<State>((set) => ({
   isPlaying: false,
   time: new Date("1970-01-01T00:00:00.000Z"),
   driverList: [],

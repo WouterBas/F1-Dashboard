@@ -2,7 +2,7 @@ import { FaChevronDown } from "react-icons/fa6";
 import { useAdminStore } from "@/store/adminStore";
 import { CircuitList } from "@/types";
 
-const DropdownAdmin = ({
+const Dropdown = ({
   options,
   value,
   label,
@@ -75,7 +75,7 @@ const DropdownAdmin = ({
 
   return (
     <div className="flex items-center gap-2 rounded-md bg-neutral-800 px-1 py-1 pl-2">
-      <label htmlFor="circuit">{label}</label>
+      <label htmlFor={value}>{label}</label>
       <div className="relative">
         <select
           onChange={onChangeHandler}
@@ -94,4 +94,4 @@ const DropdownAdmin = ({
     </div>
   );
 };
-export default DropdownAdmin;
+export default Dropdown;

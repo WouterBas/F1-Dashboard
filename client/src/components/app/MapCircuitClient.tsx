@@ -3,7 +3,7 @@ import { drawCircuit } from "@/utils/drawCircuit";
 import { CircuitDimensions, CircuitPoints, SessionGp } from "@/types";
 import { RefObject, useEffect, useRef, useState } from "react";
 import MediaControls from "./MediaControls";
-import MapDrivers from "@/components/MapDrivers";
+import MapDrivers from "@/components/app/MapDrivers";
 
 const MapCircuitClient = ({
   circuitPoints,

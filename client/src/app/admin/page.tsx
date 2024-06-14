@@ -1,5 +1,5 @@
-import Login from "@/components/Login";
-import CreateCircuit from "@/components/CreateCircuit";
+import Login from "@/components/admin/Login";
+import CreateCircuit from "@/components/admin/CreateCircuit";
 import { cookies } from "next/headers";
 import { apiService } from "@/services/api.service";
 

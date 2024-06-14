@@ -10,7 +10,7 @@ type State = {
   setSelected: (selected: State["selected"]) => void;
 };
 
-export const selectSession = create<State>((set) => ({
+export const useHomeStore = create<State>((set) => ({
   selected: {
     year: "2024",
     gp: "Bahrain Grand Prix",

@@ -1,9 +1,9 @@
-import GP from "@/components/Gp";
+import GP from "@/components/app/Gp";
 import { SessionGp, SessionList } from "@/types";
-import LeaderBoardServer from "@/components/LeaderBoardServer";
-import MapCircuitServer from "@/components/MapCircuitServer";
+import LeaderBoardServer from "@/components/app/LeaderBoardServer";
+import MapCircuitServer from "@/components/app/MapCircuitServer";
 import { apiService } from "@/services/api.service";
-import SetDefaults from "@/components/SetDefaults";
+import AppInitializer from "@/components/app/AppInitializer";
 import { HTTPError } from "ky";
 import Link from "next/link";
 import slugify from "slugify";
@@ -30,14 +30,13 @@ async function Page({ params }: { params: { slug: string[] } }) {
     });
     const sessionInfo: SessionGp = await response.json();
     return (
-      <>
+      <AppInitializer sessionInfo={sessionInfo}>
         <GP sessionInfo={sessionInfo} />
         <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-2 sm:gap-3 md:gap-4 ">
-          <SetDefaults sessionInfo={sessionInfo} />
           <LeaderBoardServer sessionInfo={sessionInfo} />
           <MapCircuitServer sessionInfo={sessionInfo} />
         </main>
-      </>
+      </AppInitializer>
     );
   } catch (error) {
     const status = (error as HTTPError).response.status;
