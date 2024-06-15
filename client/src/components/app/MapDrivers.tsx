@@ -37,6 +37,7 @@ const MapDrivers = ({
     toggleIsPlaying,
     wasPlaying,
     setWasPlaying,
+    speed,
   } = useAppStore();
 
   // load driver positions
@@ -136,6 +137,7 @@ const MapDrivers = ({
     deviceWidth,
   ]);
 
+  // main clock animation
   useLayoutEffect(() => {
     if (isPlaying) {
       let animationFrameId: number;
@@ -144,7 +146,14 @@ const MapDrivers = ({
       const render = () => {
         const timeDifference =
           performance.now() - new Date(startTime).getTime();
-        const newTime = new Date(new Date(time).getTime() + timeDifference);
+        const newTime = new Date(
+          new Date(time).getTime() + timeDifference * speed,
+        );
+
+        if (newTime > new Date(sessionInfo.endDate)) {
+          toggleIsPlaying();
+          return () => cancelAnimationFrame(animationFrameId);
+        }
         setTime(newTime);
 
         const minute = Math.floor(

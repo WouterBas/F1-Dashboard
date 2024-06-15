@@ -46,7 +46,7 @@ const MapCircuitClient = ({
     const width = window.innerWidth;
     let deviceWidth = 3;
     if (width < 640) {
-      deviceWidth = 1.5;
+      deviceWidth = 1.25;
     } else if (width < 768) {
       deviceWidth = 2;
     } else if (width < 1024) {
@@ -75,7 +75,7 @@ const MapCircuitClient = ({
 
   return (
     <div
-      className={`${admin ? "max-h-[calc(100dvh-240px)] sm:max-h-[calc(100dvh-244px)] md:max-h-[calc(100dvh-216px)] lg:max-h-[calc(100dvh-176px)] 2xl:max-h-[calc(100dvh-132px)]" : "max-h-[calc(100dvh-52px)] sm:max-h-[calc(100dvh-72px)] md:max-h-[calc(100dvh-86px)] lg:max-h-[calc(100dvh-98px)]"} relative rounded-md bg-neutral-800 p-1 sm:p-2 md:p-3`}
+      className={`${admin ? "max-h-[calc(100dvh-232px)] sm:max-h-[calc(100dvh-236px)] md:max-h-[calc(100dvh-208px)] lg:max-h-[calc(100dvh-176px)] 2xl:max-h-[calc(100dvh-132px)]" : "max-h-[calc(100dvh-46px)] sm:max-h-[calc(100dvh-64px)] md:max-h-[calc(100dvh-78px)] lg:max-h-[calc(100dvh-98px)]"} relative rounded-md bg-neutral-800 p-1 sm:p-2 md:p-3`}
       ref={mainRef}
     >
       <div className="relative mx-auto w-full max-w-fit">
@@ -89,7 +89,7 @@ const MapCircuitClient = ({
           />
         )}
         <canvas
-          className={`${admin ? "max-h-[calc(100dvh-250px)] sm:max-h-[calc(100dvh-260px)] md:max-h-[calc(100dvh-240px)] lg:max-h-[calc(100dvh-200px)] 2xl:max-h-[calc(100dvh-156px)]" : "max-h-[calc(100dvh-82px)] sm:max-h-[calc(100dvh-110px)] md:max-h-[calc(100dvh-138px)] lg:max-h-[calc(100dvh-158px)]"} mx-auto max-w-full`}
+          className={`${admin ? "max-h-[calc(100dvh-242px)] sm:max-h-[calc(100dvh-252px)] md:max-h-[calc(100dvh-232px)] lg:max-h-[calc(100dvh-200px)] 2xl:max-h-[calc(100dvh-156px)]" : "max-h-[calc(100dvh-76px)] sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"} mx-auto max-w-full`}
           ref={circuitRef}
         ></canvas>
       </div>

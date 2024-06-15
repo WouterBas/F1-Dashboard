@@ -196,9 +196,9 @@ async function findTimeOffset(url: string) {
 
 seeder()
   .then(() => {
-    console.log("Position seeding completed");
+    console.log("timing data seeding completed");
   })
   .catch((err) => {
-    console.error("Position seeding error:", err);
+    console.error("timing data seeding error:", err);
     process.exit(1);
   });

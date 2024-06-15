@@ -168,19 +168,20 @@ export type TimingData = {
 };
 
 export type SessionData = {
-  Serries?: {
-    [key: string]: {
-      Utc: string;
-      Lap: number;
-    };
-  };
-  StatusSeries?: {
-    [key: string]: {
-      Utc: string;
-      SessionStatus?: string;
-      TrackStatus?: string;
-    };
-  };
+  Series: Series[];
+  StatusSeries: StatusSery[];
+};
+
+export type Series = {
+  Utc: Date;
+  Lap?: number;
+  QualifyingPart?: number;
+};
+
+export type StatusSery = {
+  Utc: Date;
+  TrackStatus?: string;
+  SessionStatus?: string;
 };
 
 // schedule types

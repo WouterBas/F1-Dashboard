@@ -1,5 +1,11 @@
 import client from "../shared/dbConnection";
-import { Meeting, F1Meeting, Schedule } from "../types/index";
+import {
+  Meeting,
+  F1Meeting,
+  Schedule,
+  SessionData,
+  StatusSery,
+} from "../types/index";
 import getF1Data from "./utils/fetchF1Data";
 
 async function getLastSeedingDate() {
@@ -69,7 +75,15 @@ async function seeder() {
         session,
         "SessionInfo"
       )) as F1Meeting;
-      const convertedData: Meeting = convertData(data);
+
+      const SessionData: SessionData = (await getF1Data(
+        schedule,
+        session,
+        "SessionData"
+      )) as SessionData;
+      const { startDate, endDate } = getStartAndEndDates(SessionData);
+
+      const convertedData: Meeting = convertData(data, startDate, endDate);
       sessions.push(convertedData);
     }
   }
@@ -95,7 +109,7 @@ async function seeder() {
 }
 
 // convert session info from f1 to the format of the database
-function convertData(data: F1Meeting) {
+function convertData(data: F1Meeting, startDate: Date, endDate: Date) {
   const offset =
     data.GmtOffset[0] !== "-"
       ? (data.GmtOffset = "+" + data.GmtOffset.slice(0, -3))
@@ -104,13 +118,35 @@ function convertData(data: F1Meeting) {
     name: data.Meeting.Name,
     sessionKey: data.Key,
     type: data.Name,
-    startDate: new Date(data.StartDate + offset),
-    endDate: new Date(data.EndDate + offset),
+    startDate,
+    endDate,
     gmtOffset: data.GmtOffset,
     url: data.Path,
     circuitKey: data.Meeting.Circuit.Key,
     circuitName: data.Meeting.Circuit.ShortName,
   };
+}
+
+// get start and end dates
+function getStartAndEndDates(sessionData: SessionData): {
+  startDate: Date;
+  endDate: Date;
+} {
+  const startDate = sessionData.StatusSeries.find(
+    (series) => series.SessionStatus === "Started"
+  );
+
+  const endDate = sessionData.StatusSeries.find(
+    (series) => series.SessionStatus === "Finalised"
+  );
+
+  if (startDate && endDate) {
+    return {
+      startDate: new Date(startDate.Utc),
+      endDate: new Date(endDate.Utc),
+    };
+  }
+  throw new Error("Start and end dates not found");
 }
 
 seeder()
