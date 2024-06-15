@@ -40,6 +40,7 @@ const LeaderBoardClient = ({
           pitOut: driverTiming.pitOut,
           retired: driverTiming.retired,
           position: driverTiming.position,
+          stopped: driverTiming.stopped,
         };
       })
       .sort((a, b) => a.position - b.position);

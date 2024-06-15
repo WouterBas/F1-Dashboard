@@ -20,6 +20,7 @@ export default function AppInitializer({
       pitOut: false,
       retired: false,
       position: 0,
+      stopped: false,
     })),
     minute: 0,
     wasPlaying: false,

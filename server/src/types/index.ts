@@ -157,6 +157,7 @@ export type ConvertedLines = {
     retired?: boolean;
     inPit?: boolean;
     pitOut?: boolean;
+    stopped?: boolean;
   };
 };
 

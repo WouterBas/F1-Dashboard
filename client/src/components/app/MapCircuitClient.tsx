@@ -44,15 +44,15 @@ const MapCircuitClient = ({
   function onResize() {
     mainRef.current && setWidth(mainRef.current.clientWidth);
     const width = window.innerWidth;
-    let deviceWidth = 4;
+    let deviceWidth = 3;
     if (width < 640) {
-      deviceWidth = 1;
+      deviceWidth = 1.5;
     } else if (width < 768) {
       deviceWidth = 2;
     } else if (width < 1024) {
-      deviceWidth = 3;
+      deviceWidth = 2.5;
     } else {
-      deviceWidth = 4;
+      deviceWidth = 3;
     }
     setDeviceWidth(deviceWidth);
   }

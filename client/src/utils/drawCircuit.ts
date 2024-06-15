@@ -53,7 +53,7 @@ export function drawCircuit(
     points[i + 1].y,
   );
 
-  ctx.lineWidth = 2 * deviceWidth;
+  ctx.lineWidth = 3 * deviceWidth;
   ctx.strokeStyle = "whitesmoke";
   if (close) {
     ctx.closePath();

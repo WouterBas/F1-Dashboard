@@ -109,6 +109,7 @@ const MapDrivers = ({
           X: inbetweenPositions[driver.racingNumber].X || 0,
           Y: inbetweenPositions[driver.racingNumber].Y || 0,
           retired: driver.retired,
+          stopped: driver.stopped,
         };
       })
       .reverse()
@@ -165,12 +166,11 @@ const MapDrivers = ({
   return (
     <>
       {isLoading && !isPlaying && circuitDimensions.calcWidth && (
-        <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin  text-3xl" />
+        <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin text-3xl" />
       )}
       <canvas
         className="absolute top-0 mx-auto max-h-[calc(100dvh-82px)] max-w-full"
         ref={circuitDriverssRef}
-        style={{ imageRendering: "crisp-edges" }}
       ></canvas>
     </>
   );

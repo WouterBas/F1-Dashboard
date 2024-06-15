@@ -29,35 +29,35 @@ export function drawDrivers(
   });
 
   if (driverPositions.length > 0) {
-    driverPositions.forEach(({ abbreviation, teamColor, X, Y, retired }) => {
-      ctx.globalAlpha = retired ? 0.5 : 1;
+    driverPositions.forEach(
+      ({ abbreviation, teamColor, X, Y, retired, stopped }) => {
+        ctx.beginPath();
+        ctx.globalAlpha = retired || stopped ? 0.5 : 1;
 
-      ctx.beginPath();
-      ctx.globalAlpha = retired ? 0.5 : 1;
+        ctx.arc(X, Y, 4 * deviceWidth, 0, 2 * Math.PI, false);
+        ctx.fillStyle = teamColor ? teamColor : "white";
 
-      ctx.arc(X, Y, 4 * deviceWidth, 0, 2 * Math.PI, false);
-      ctx.fillStyle = teamColor ? teamColor : "white";
+        ctx.fill();
 
-      ctx.fill();
+        ctx.beginPath();
+        ctx.roundRect(
+          X,
+          Y - 4 * deviceWidth,
+          16 * deviceWidth,
+          -8 * deviceWidth,
+          deviceWidth,
+        );
+        ctx.fillStyle = "rgba(50, 50, 50, 0.85)";
+        ctx.fill();
 
-      ctx.beginPath();
-      ctx.roundRect(
-        X,
-        Y - 4 * deviceWidth,
-        16 * deviceWidth,
-        -8 * deviceWidth,
-        deviceWidth,
-      );
-      ctx.fillStyle = "rgba(50, 50, 50, 0.85)";
-      ctx.fill();
-
-      ctx.font = `${8 * deviceWidth}px monospace`;
-      ctx.fillStyle = "white";
-      ctx.fillText(
-        abbreviation ? abbreviation : "",
-        X + 1 * deviceWidth,
-        Y - 5 * deviceWidth,
-      );
-    });
+        ctx.font = `${8 * deviceWidth}px monospace`;
+        ctx.fillStyle = "white";
+        ctx.fillText(
+          abbreviation ? abbreviation : "",
+          X + 1 * deviceWidth,
+          Y - 5 * deviceWidth,
+        );
+      },
+    );
   }
 }

@@ -27,7 +27,7 @@ async function seeder() {
       continue;
     }
 
-    const timingData = await getF1StreamData(url, "TimingDataF1");
+    const timingData = await getF1StreamData(url, "TimingData");
     const LinesArr: [Lines, string][] = timingData
       .split("\n")
       .map((str: string) => [str.substring(12), str.substring(0, 12)])
@@ -37,7 +37,9 @@ async function seeder() {
     const { timeOffset, startTime } = await findTimeOffset(url);
 
     const filteredLines = filterUnusefulData(LinesArr);
-    const convertedLines = filteredLines.map((line) => convertLines(line));
+    const convertedLines = filteredLines.map((line) =>
+      convertLines(line, startDate, startTime, timeOffset)
+    );
 
     const convertedTimingData: TimingData[] = [];
     convertedLines.forEach((line, index) => {
@@ -78,7 +80,8 @@ function filterUnusefulData(data: [Lines, string][]): [Lines, string][] {
         line[0][key].InPit ||
         line[0][key].PitOut ||
         line[0][key].Retired ||
-        line[0][key].Position
+        line[0][key].Position ||
+        line[0][key].Stopped
       );
     });
   });
@@ -87,16 +90,39 @@ function filterUnusefulData(data: [Lines, string][]): [Lines, string][] {
 }
 
 // convert lines to new format and remove useless data such as sectors, number of laps, status,...
-function convertLines(line: [Lines, string]): [ConvertedLines, string] {
+function convertLines(
+  line: [Lines, string],
+  startDate: Date,
+  startTime: Date,
+  offset: number
+): [ConvertedLines, string] {
   const convertedLines: [ConvertedLines, string] = [{}, line[1]];
-  Object.keys(line[0]).forEach((key) => {
-    convertedLines[0][key] = {
-      inPit: line[0][key].InPit,
-      pitOut: line[0][key].PitOut,
-      retired: line[0][key].Retired,
-      position: Number(line[0][key].Position),
-    };
-  });
+  const timestamp =
+    new Date(startTime.toISOString().split("T")[0] + "T" + line[1]).getTime() -
+    offset;
+
+  if (new Date(timestamp) < startDate) {
+    Object.keys(line[0]).forEach((key) => {
+      convertedLines[0][key] = {
+        inPit: false,
+        pitOut: line[0][key].PitOut,
+        retired: line[0][key].Retired,
+        position: Number(line[0][key].Position),
+        stopped: line[0][key].Stopped,
+      };
+    });
+  } else {
+    Object.keys(line[0]).forEach((key) => {
+      convertedLines[0][key] = {
+        inPit: line[0][key].InPit,
+        pitOut: line[0][key].PitOut,
+        retired: line[0][key].Retired,
+        position: Number(line[0][key].Position),
+        stopped: line[0][key].Stopped,
+      };
+    });
+  }
+
   return convertedLines;
 }
 
@@ -123,6 +149,10 @@ function extendLines(line: ConvertedLines, previousLine: ConvertedLines) {
         line[key]?.position === undefined || !line[key].position
           ? previousLine[key].position
           : line[key].position,
+      stopped:
+        line[key]?.stopped === undefined
+          ? previousLine[key].stopped
+          : line[key].stopped,
     };
   });
   return newLines;

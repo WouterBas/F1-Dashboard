@@ -77,6 +77,7 @@ export type SortedDriverPosition = {
   X: number;
   Y: number;
   retired: boolean;
+  stopped: boolean;
 };
 
 export type CircuitPoints = {
@@ -128,6 +129,7 @@ export type TimgingData = {
       pitOut: boolean;
       retired: boolean;
       position: number;
+      stopped: boolean;
     };
   };
 };
@@ -140,4 +142,5 @@ export type DriverTimingList = {
   pitOut: boolean;
   retired: boolean;
   position: number;
+  stopped: boolean;
 };
