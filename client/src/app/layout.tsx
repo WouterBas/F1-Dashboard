@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${mono.className} h-dvh bg-neutral-900 text-white`}>
-        <div className="m-auto grid max-w-[1920px] grid-cols-[auto_1fr] gap-1 p-1 sm:gap-2 sm:p-2 md:gap-3 md:p-3 lg:p-4">
+        <div className="m-auto grid max-w-7xl grid-cols-[auto_1fr] gap-1 p-1 sm:gap-2 sm:p-2 md:gap-3 md:p-3 lg:p-4">
           <Header />
           {children}
         </div>
