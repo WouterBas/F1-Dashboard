@@ -653,10 +653,6 @@
     "date": "2023-04-02",
     "sessions": [
       {
-        "type": "Practice_1",
-        "date": "2023-03-31"
-      },
-      {
         "type": "Practice_2",
         "date": "2023-03-31"
       },
@@ -868,10 +864,6 @@
     "year": "2023",
     "date": "2023-07-23",
     "sessions": [
-      {
-        "type": "Practice_1",
-        "date": "2023-07-21"
-      },
       {
         "type": "Practice_2",
         "date": "2023-07-21"
