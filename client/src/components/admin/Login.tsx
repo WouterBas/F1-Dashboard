@@ -30,7 +30,7 @@ const Login = () => {
     }
   };
   return (
-    <main className="col-span-2 flex h-[calc(100dvh-50px)] items-center justify-center">
+    <main className="col-span-2 flex h-[calc(100dvh-52px)] items-center justify-center sm:h-[calc(100dvh-72px)] md:h-[calc(100dvh-86px)]">
       <form
         className="grid w-80 gap-4 rounded-md bg-neutral-800 p-4 px-6"
         onSubmit={submitHandler}

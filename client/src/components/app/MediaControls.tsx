@@ -55,6 +55,9 @@ const MediaControls = ({
       <select
         className="appearance-none rounded border-2 border-neutral-700 bg-neutral-700 px-1 text-center outline-none focus:border-neutral-500 sm:px-1.5 sm:py-0.5 md:px-2 md:py-1"
         value={speed}
+        name="speed"
+        id="speed"
+        aria-label="Playback Speed"
         onChange={(e) => {
           if (isPlaying) {
             toggleIsPlaying();
@@ -74,6 +77,7 @@ const MediaControls = ({
         <input
           aria-label="Timeline"
           id="timeline"
+          name="timeline"
           type="range"
           min="0"
           max={totalSeconds}
