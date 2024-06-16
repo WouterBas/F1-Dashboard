@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "seed": "bun src/seeders/scheduleSeeder.ts && bun src/seeders/usersSeeder.ts && bun src/seeders/circuitSeeder.ts && bun src/seeders/sessionSeeder.ts && bun src/seeders/driverSeeder.ts && bun src/seeders/timingdataSeeder.ts && bun src/seeders/positionSeeder.ts && bun src/seeders/trackStatusSeeder.ts"
+  },
+  "dependencies": {
+    "hono": "^4.4.2",
+    "mongodb": "^6.7.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^20.14.0",
+    "bun-types": "^1.1.12"
+  }
+}
