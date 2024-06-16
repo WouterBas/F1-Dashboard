@@ -27,7 +27,8 @@ const TrackStatus = ({ trackStatusAll }: { trackStatusAll: Trackstatus[] }) => {
     <>
       {trackStatus === "Red Flag" && (
         <TrackSatusBanner
-          color="red-400"
+          textColor="text-red-500"
+          borderColor="border-red-500"
           trackStatus={trackStatus}
           icon={<FaFlag />}
         />
@@ -36,21 +37,24 @@ const TrackStatus = ({ trackStatusAll }: { trackStatusAll: Trackstatus[] }) => {
         trackStatus === "VSC Deployed" ||
         trackStatus === "VSC Ending") && (
         <TrackSatusBanner
-          color="yellow-400"
+          textColor="text-amber-400"
+          borderColor="border-amber-400"
           trackStatus={trackStatus}
           icon={<FaFlag />}
         />
       )}
       {trackStatus === "SC Deployed" && (
         <TrackSatusBanner
-          color="amber-400"
+          textColor="text-amber-400"
+          borderColor="border-amber-400"
           trackStatus={trackStatus}
           icon={<FaCarOn />}
         />
       )}
       {trackStatus === "Finished" && (
         <TrackSatusBanner
-          color="green-400"
+          textColor="text-white"
+          borderColor="border-white"
           trackStatus={trackStatus}
           icon={<FaFlagCheckered />}
         />
