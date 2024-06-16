@@ -38,6 +38,7 @@ const MapDrivers = ({
     wasPlaying,
     setWasPlaying,
     speed,
+    showLabels,
   } = useAppStore();
 
   // load driver positions
@@ -126,6 +127,7 @@ const MapDrivers = ({
       dpr,
       deviceWidth,
       sessionInfo,
+      showLabels,
     );
   }, [
     time,
@@ -137,6 +139,7 @@ const MapDrivers = ({
     driverList,
     deviceWidth,
     sessionInfo,
+    showLabels,
   ]);
 
   // main clock animation

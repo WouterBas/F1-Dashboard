@@ -144,3 +144,8 @@ export type DriverTimingList = {
   position: number;
   stopped: boolean;
 };
+
+export type Trackstatus = {
+  timestamp: string;
+  status: string;
+};

@@ -8,6 +8,8 @@ type State = {
   minute: number;
   wasPlaying: boolean;
   speed: number;
+  trackStatus: string;
+  showLabels: boolean;
 
   setTime: (time: Date) => void;
   toggleIsPlaying: () => void;
@@ -15,6 +17,8 @@ type State = {
   setMinute: (minute: number) => void;
   setWasPlaying: (wasPlaying: boolean) => void;
   setSpeed: (speed: number) => void;
+  setTrackStatus: (trackStatus: string) => void;
+  toggleShowLabels: () => void;
 };
 
 export const useAppStore = create<State>((set) => ({
@@ -24,6 +28,8 @@ export const useAppStore = create<State>((set) => ({
   minute: 0,
   wasPlaying: false,
   speed: 1,
+  trackStatus: "Started",
+  showLabels: true,
 
   setTime: (time: Date) => set({ time }),
   toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
@@ -31,4 +37,6 @@ export const useAppStore = create<State>((set) => ({
   setDriverList: (driverList: DriverTimingList[]) => set({ driverList }),
   setMinute: (minute: number) => set({ minute }),
   setSpeed: (speed: number) => set({ speed }),
+  setTrackStatus: (trackStatus: string) => set({ trackStatus }),
+  toggleShowLabels: () => set((state) => ({ showLabels: !state.showLabels })),
 }));

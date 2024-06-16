@@ -1,18 +1,28 @@
 "use client";
 import { drawCircuit } from "@/utils/drawCircuit";
-import { CircuitDimensions, CircuitPoints, SessionGp } from "@/types";
+import {
+  CircuitDimensions,
+  CircuitPoints,
+  SessionGp,
+  Trackstatus,
+} from "@/types";
 import { RefObject, useEffect, useRef, useState } from "react";
 import MediaControls from "./MediaControls";
 import MapDrivers from "@/components/app/MapDrivers";
+import TrackStatus from "@/components/app/TrackStatus";
+import { FaRegCircleCheck, FaRegCircle } from "react-icons/fa6";
+import { useAppStore } from "@/store/appStore";
 
 const MapCircuitClient = ({
   circuitPoints,
   sessionInfo,
+  trackStatus,
   closed = true,
   points = false,
   admin = false,
 }: {
   circuitPoints: CircuitPoints[];
+  trackStatus?: Trackstatus[];
   sessionInfo?: SessionGp;
   closed?: boolean;
   points?: boolean;
@@ -27,6 +37,7 @@ const MapCircuitClient = ({
   );
   const [dpr, setDpr] = useState<number>(1);
   const [deviceWidth, setDeviceWidth] = useState<number>(1);
+  const { showLabels, toggleShowLabels } = useAppStore();
 
   // set dpr
   useEffect(() => {
@@ -94,7 +105,19 @@ const MapCircuitClient = ({
         ></canvas>
       </div>
 
-      {sessionInfo && <MediaControls sessionInfo={sessionInfo} />}
+      {sessionInfo && trackStatus && (
+        <MediaControls sessionInfo={sessionInfo} trackStatusAll={trackStatus} />
+      )}
+      {trackStatus && <TrackStatus trackStatusAll={trackStatus} />}
+      {!admin && (
+        <button
+          className="absolute left-1 top-1 flex items-center gap-1 rounded text-xs sm:left-2 sm:top-2 sm:text-sm md:left-3 md:top-3 md:text-base lg:text-lg"
+          onClick={toggleShowLabels}
+        >
+          {showLabels ? <FaRegCircleCheck /> : <FaRegCircle />}
+          Labels
+        </button>
+      )}
     </div>
   );
 };

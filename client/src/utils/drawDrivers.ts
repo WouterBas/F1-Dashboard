@@ -9,6 +9,7 @@ export function drawDrivers(
   dpr: number,
   deviceWidth: number,
   sessionInfo: SessionGp,
+  showLabels: boolean,
 ) {
   const canvas = ref.current as HTMLCanvasElement;
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -41,24 +42,26 @@ export function drawDrivers(
 
         ctx.fill();
 
-        ctx.beginPath();
-        ctx.roundRect(
-          X,
-          Y - 4 * deviceWidth,
-          16 * deviceWidth,
-          -8 * deviceWidth,
-          deviceWidth,
-        );
-        ctx.fillStyle = "rgba(50, 50, 50, 0.85)";
-        ctx.fill();
+        if (showLabels) {
+          ctx.beginPath();
+          ctx.roundRect(
+            X,
+            Y - 4 * deviceWidth,
+            16 * deviceWidth,
+            -8 * deviceWidth,
+            deviceWidth,
+          );
+          ctx.fillStyle = "rgba(50, 50, 50, 0.85)";
+          ctx.fill();
 
-        ctx.font = `${8 * deviceWidth}px monospace`;
-        ctx.fillStyle = "white";
-        ctx.fillText(
-          abbreviation ? abbreviation : "",
-          X + 1 * deviceWidth,
-          Y - 5 * deviceWidth,
-        );
+          ctx.font = `${8 * deviceWidth}px monospace`;
+          ctx.fillStyle = "white";
+          ctx.fillText(
+            abbreviation ? abbreviation : "",
+            X + 1 * deviceWidth,
+            Y - 5 * deviceWidth,
+          );
+        }
       },
     );
   }
