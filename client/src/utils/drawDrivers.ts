@@ -1,4 +1,4 @@
-import { CircuitDimensions, SortedDriverPosition } from "@/types";
+import { CircuitDimensions, SessionGp, SortedDriverPosition } from "@/types";
 import { RefObject } from "react";
 
 export function drawDrivers(
@@ -8,6 +8,7 @@ export function drawDrivers(
   width: number,
   dpr: number,
   deviceWidth: number,
+  sessionInfo: SessionGp,
 ) {
   const canvas = ref.current as HTMLCanvasElement;
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -32,7 +33,8 @@ export function drawDrivers(
     driverPositions.forEach(
       ({ abbreviation, teamColor, X, Y, retired, stopped }) => {
         ctx.beginPath();
-        ctx.globalAlpha = retired || stopped ? 0.5 : 1;
+        ctx.globalAlpha =
+          retired || (stopped && sessionInfo.type === "Race") ? 0.5 : 1;
 
         ctx.arc(X, Y, 4 * deviceWidth, 0, 2 * Math.PI, false);
         ctx.fillStyle = teamColor ? teamColor : "white";

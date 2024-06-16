@@ -51,7 +51,7 @@ const LeaderBoardClient = ({
     <div className="rounded-md bg-neutral-800 p-1 font-mono text-xs tracking-wider text-white sm:p-2 sm:text-sm md:px-3 md:text-base lg:text-lg">
       <ul className="divide-y divide-gray-500">
         {driverList.length > 0 ? (
-          <DriverList driverList={driverList} />
+          <DriverList driverList={driverList} sessionInfo={sessionInfo} />
         ) : (
           <DriverListLoading />
         )}

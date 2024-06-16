@@ -88,10 +88,13 @@ function convertPosition(positions: F1Position[], sessionKey: number) {
 function convertEntries(entries: F1Entries): Entrie {
   const convertedEntries: Entrie = {};
   Object.keys(entries).forEach((key) => {
-    convertedEntries[key] = {
-      X: entries[key].X,
-      Y: entries[key].Y,
-    };
+    if (parseInt(key) > 100) return;
+    else {
+      convertedEntries[key] = {
+        X: entries[key].X,
+        Y: entries[key].Y,
+      };
+    }
   });
   return convertedEntries;
 }

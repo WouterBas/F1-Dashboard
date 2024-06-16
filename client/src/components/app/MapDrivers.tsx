@@ -125,6 +125,7 @@ const MapDrivers = ({
       width,
       dpr,
       deviceWidth,
+      sessionInfo,
     );
   }, [
     time,
@@ -135,6 +136,7 @@ const MapDrivers = ({
     dpr,
     driverList,
     deviceWidth,
+    sessionInfo,
   ]);
 
   // main clock animation
