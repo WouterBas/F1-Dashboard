@@ -22,6 +22,11 @@ export const getPositionByMinute = async (c: Context) => {
       { projection: { _id: 0, timestamp: 1, entries: 1 } }
     )
     .toArray();
+
+  if (result.length === 0) {
+    c.status(404);
+    return c.json({ message: "Points not found" });
+  }
   return c.json(result);
 };
 

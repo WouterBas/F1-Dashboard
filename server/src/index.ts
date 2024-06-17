@@ -4,7 +4,6 @@ import { cors } from "hono/cors";
 
 import {
   circuitRouter,
-  scheduleRouter,
   positionRouter,
   sessionRouter,
   timingDataRouter,
@@ -29,7 +28,6 @@ app.get("/status", async (c) => {
 app.route("/circuit", circuitRouter);
 app.route("/position", positionRouter);
 app.route("/session", sessionRouter);
-app.route("/schedule", scheduleRouter);
 app.route("/timingdata", timingDataRouter);
 app.route("/auth", authRouter);
 app.route("/trackstatus", trackstatusRouter);

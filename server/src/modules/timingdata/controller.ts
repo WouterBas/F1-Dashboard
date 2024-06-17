@@ -17,5 +17,10 @@ export const getTimingDataByMinute = async (c: Context) => {
     )
 
     .toArray();
+
+  if (result.length === 0) {
+    c.status(404);
+    return c.json({ message: "Timingdata not found" });
+  }
   return c.json(result);
 };
