@@ -142,7 +142,7 @@ const MapDrivers = ({
         <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin text-3xl" />
       )}
 
-      {!isLoading && (
+      {data && (
         <canvas
           className="absolute top-0 max-h-[calc(100dvh-76px)] max-w-full sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"
           ref={circuitDriverssRef}
