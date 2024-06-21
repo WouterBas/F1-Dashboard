@@ -4,7 +4,6 @@ import { cors } from "hono/cors";
 
 import {
   circuitRouter,
-  scheduleRouter,
   positionRouter,
   sessionRouter,
   timingDataRouter,
@@ -26,10 +25,15 @@ app.get("/status", async (c) => {
   return c.text("server is running");
 });
 
+app.get("/doc", async (c) => {
+  return c.redirect(
+    "https://documenter.getpostman.com/view/33579344/2sA3XSA1Vc"
+  );
+});
+
 app.route("/circuit", circuitRouter);
 app.route("/position", positionRouter);
 app.route("/session", sessionRouter);
-app.route("/schedule", scheduleRouter);
 app.route("/timingdata", timingDataRouter);
 app.route("/auth", authRouter);
 app.route("/trackstatus", trackstatusRouter);

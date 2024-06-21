@@ -1,4 +1,5 @@
 import client from "../shared/dbConnection";
+import slugify from "slugify";
 import {
   Meeting,
   F1Meeting,
@@ -59,7 +60,11 @@ async function seeder() {
   await client
     .db("f1dashboard")
     .collection("sessions")
-    .createIndexes([{ key: { sessionKey: 1 } }, { key: { startDate: 1 } }]);
+    .createIndexes([
+      { key: { sessionKey: 1 } },
+      { key: { startDate: 1 } },
+      { key: { slug: 1 } },
+    ]);
 
   // fetch sessions
   console.log("fetching sessions...");
@@ -121,7 +126,12 @@ function convertData(data: F1Meeting, startDate: Date, endDate: Date) {
     startDate,
     endDate,
     gmtOffset: data.GmtOffset,
-    url: data.Path,
+    url: "https://livetiming.formula1.com/static/" + data.Path,
+    slug: `${slugify(data.Meeting.Name, {
+      lower: true,
+    })}/${startDate.getFullYear()}/${slugify(data.Name, {
+      lower: true,
+    })}`,
     circuitKey: data.Meeting.Circuit.Key,
     circuitName: data.Meeting.Circuit.ShortName,
   };

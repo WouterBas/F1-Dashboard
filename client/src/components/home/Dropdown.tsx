@@ -1,5 +1,7 @@
+import { HomeContext } from "@/store/homeStore";
+import { useContext } from "react";
 import { FaChevronDown } from "react-icons/fa6";
-import { useHomeStore } from "@/store/homeStore";
+import { useStore } from "zustand";
 
 const Dropdown = ({
   options,
@@ -10,7 +12,9 @@ const Dropdown = ({
   value: string;
   label: string;
 }) => {
-  const { selected, setSelected } = useHomeStore();
+  const store = useContext(HomeContext);
+  if (!store) throw new Error("Missing HomeContext.Provider in the tree");
+  const { selected, setSelected } = useStore(store);
   const selectedObj: { [key: string]: string } = selected;
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {

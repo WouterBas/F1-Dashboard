@@ -12,7 +12,7 @@ const DriverList = ({
       {driverList.map((driver) => (
         <li
           key={driver.racingNumber}
-          className={`${(driver.retired || (driver.stopped && sessionInfo.type === "Race")) && "opacity-30"} flex h-4 items-center justify-end sm:h-5 md:h-6 lg:h-7`}
+          className={`${(driver.retired || (driver.stopped && (sessionInfo.type === "Race" || sessionInfo.type === "Sprint"))) && "opacity-30"} flex h-4 items-center justify-end sm:h-5 md:h-6 lg:h-7`}
         >
           <div className="mr-1 flex h-full w-[17px] items-center  justify-center justify-self-center text-center sm:w-[19px] md:mr-1.5 md:w-[21px]  lg:mr-2 lg:w-[23px]">
             {driver.inPit && !driver.retired && !driver.stopped ? (

@@ -22,6 +22,11 @@ export const getPositionByMinute = async (c: Context) => {
       { projection: { _id: 0, timestamp: 1, entries: 1 } }
     )
     .toArray();
+
+  if (result.length === 0) {
+    c.status(404);
+    return c.json({ message: "Points not found" });
+  }
   return c.json(result);
 };
 
@@ -42,6 +47,12 @@ export const getPositionOneDriver = async (c: Context) => {
       },
     })
     .toArray()) as unknown as Position[];
+
+  // check if driver exists in array
+  if (!result[0].entries[driverNumber]) {
+    c.status(404);
+    return c.json({ message: "Driver not found" });
+  }
 
   const filterDriver = result.map((position) => ({
     x: position.entries[driverNumber].X,

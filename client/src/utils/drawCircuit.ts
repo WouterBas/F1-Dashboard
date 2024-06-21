@@ -5,11 +5,11 @@ import { circuitSize } from "@/utils/helpers";
 export function drawCircuit(
   ref: RefObject<HTMLCanvasElement>,
   circuitPoints: CircuitPoints[],
-  close: boolean,
-  drawPoints: boolean,
   width: number,
   dpr: number,
   deviceWidth: number,
+  close?: boolean,
+  drawPoints?: boolean,
 ) {
   const minX = Math.min(...circuitPoints.map((loc) => loc.x));
   const minY = Math.min(...circuitPoints.map((loc) => loc.y));

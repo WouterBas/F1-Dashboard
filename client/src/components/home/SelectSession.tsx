@@ -1,12 +1,15 @@
 "use client";
 import { SessionList } from "@/types";
 import Dropdown from "@/components/home/Dropdown";
-import { useHomeStore } from "@/store/homeStore";
 import Link from "next/link";
-import slugify from "slugify";
+import { useContext } from "react";
+import { HomeContext } from "@/store/homeStore";
+import { useStore } from "zustand";
 
 const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
-  const { selected } = useHomeStore();
+  const store = useContext(HomeContext);
+  if (!store) throw new Error("Missing HomeContext.Provider in the tree");
+  const { selected } = useStore(store);
 
   const availableYears = [
     ...new Set(sessions.map((session) => session.year.toString())),
@@ -35,15 +38,15 @@ const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
       session.type === selected.type
     );
   });
-  const { year, name, type, sessionKey } = selectedSession as SessionList;
+  const { slug } = selectedSession as SessionList;
 
   return (
-    <div className="mx-auto grid w-fit justify-center gap-4 lg:grid-cols-3">
+    <div className="mx-auto grid w-fit justify-center gap-4 self-start lg:grid-cols-3">
       <Dropdown options={availableYears} value="year" label="Year" />
       <Dropdown options={availableGp} value="gp" label="Grand Prix" />
       <Dropdown options={availableTypes} value="type" label="Type" />
       <Link
-        href={`/${slugify(name, { lower: true })}/${slugify(type, { lower: true })}/${year}/${sessionKey}`}
+        href={slug}
         className="mx-auto mt-4 block w-full rounded-md border-2 border-white py-1 text-center font-mono sm:text-lg lg:col-start-2"
       >
         View

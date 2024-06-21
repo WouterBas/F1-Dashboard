@@ -32,4 +32,24 @@ describe("Sessions", () => {
     expect(data.drivers).toBeArray();
     expect(data.drivers).toHaveLength(20);
   });
+
+  test("should not found session", async () => {
+    const response = await fetch("http://localhost:4000/api/v1/session/9999");
+    const data: any = await response.json();
+    expect(response.status).toBe(404);
+    expect(data).not.toBeNull();
+    expect(data).toBeInstanceOf(Object);
+    expect(data.message).toEqual("Session not found");
+  });
+
+  test("should error on invalid key", async () => {
+    const response = await fetch("http://localhost:4000/api/v1/session/abc");
+    const data: any = await response.json();
+    expect(response.status).toBe(400);
+    expect(data).not.toBeNull();
+    expect(data).toBeInstanceOf(Object);
+    expect(data.message).toEqual(
+      "key is required and must be a number greater than 0"
+    );
+  });
 });

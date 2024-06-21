@@ -1,7 +1,9 @@
 "use client";
-import { useAppStore } from "@/store/appStore";
+import { AppContext } from "@/store/appStore";
 import { SessionGp, Trackstatus } from "@/types";
+import { useContext } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
+import { useStore } from "zustand";
 
 const MediaControls = ({
   sessionInfo,
@@ -10,6 +12,8 @@ const MediaControls = ({
   sessionInfo: SessionGp;
   trackStatusAll: Trackstatus[];
 }) => {
+  const store = useContext(AppContext);
+  if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const {
     isPlaying,
     setTime,
@@ -19,7 +23,7 @@ const MediaControls = ({
     setWasPlaying,
     speed,
     setSpeed,
-  } = useAppStore();
+  } = useStore(store);
   const totalSeconds =
     new Date(sessionInfo.endDate).getTime() -
     new Date(sessionInfo.startDate).getTime();

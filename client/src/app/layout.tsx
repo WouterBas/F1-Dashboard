@@ -7,9 +7,26 @@ const mono = Noto_Sans_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "F1 Dashboard",
-  description: "A Dashboard to view historic data from F1",
+  description:
+    "Explore F1 Dashboard, the premier web app for replaying Formula 1 telemetry data. Track driver positions, rankings, and track status through an interactive timeline. Analyze past sessions with detailed insights into race progress and performance. Enhance your Formula 1 experience today!",
   icons: {
     icon: "/favicon.ico",
+  },
+  metadataBase: new URL("https://f1-dashboard.app"),
+  alternates: {
+    canonical: "./",
+    languages: {
+      en: "/en",
+    },
+  },
+  openGraph: {
+    title: "F1 Dashboard",
+    description:
+      "Analyze past sessions with detailed insights into race progress and performance. Enhance your Formula 1 experience today!",
+    url: "https://f1-dashboard.app",
+    siteName: "F1 Dashboard",
+    locale: "en-US",
+    type: "website",
   },
 };
 

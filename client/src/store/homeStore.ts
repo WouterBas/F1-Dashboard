@@ -1,23 +1,33 @@
-import { create } from "zustand";
+import { createStore } from "zustand";
+import { createContext } from "react";
 
-type State = {
+type HomeProps = {
   selected: {
     year: string;
     gp: string;
     type: string;
   };
-
-  setSelected: (selected: State["selected"]) => void;
 };
 
-export const useHomeStore = create<State>((set) => ({
-  selected: {
-    year: "2024",
-    gp: "Bahrain Grand Prix",
-    type: "Race",
-  },
-  availableGpState: [],
-  availableTypesState: [],
+interface HomeState extends HomeProps {
+  setSelected: (selected: HomeProps["selected"]) => void;
+}
 
-  setSelected: (selected: State["selected"]) => set({ selected }),
-}));
+export type HomeStore = ReturnType<typeof createHomeStore>;
+
+export const createHomeStore = (initProps?: Partial<HomeProps>) => {
+  const DEFAULT_PROPS: HomeProps = {
+    selected: {
+      year: "2024",
+      gp: "Bahrain Grand Prix",
+      type: "Race",
+    },
+  };
+  return createStore<HomeState>()((set) => ({
+    ...DEFAULT_PROPS,
+    ...initProps,
+    setSelected: (selected: HomeState["selected"]) => set({ selected }),
+  }));
+};
+
+export const HomeContext = createContext<HomeStore | null>(null);
