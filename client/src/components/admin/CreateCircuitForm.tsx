@@ -193,7 +193,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
           </div>
 
           <canvas
-            className="max-h-[calc(100dvh-242px)] max-w-full sm:max-h-[calc(100dvh-252px)] md:max-h-[calc(100dvh-232px)] lg:max-h-[calc(100dvh-200px)]  2xl:max-h-[calc(100dvh-156px)]"
+            className="mx-auto max-h-[calc(100dvh-242px)] max-w-full sm:max-h-[calc(100dvh-252px)] md:max-h-[calc(100dvh-232px)]  lg:max-h-[calc(100dvh-200px)] 2xl:max-h-[calc(100dvh-156px)]"
             ref={circuitRef}
           ></canvas>
         </div>

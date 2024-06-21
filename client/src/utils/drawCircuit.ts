@@ -8,7 +8,7 @@ export function drawCircuit(
   width: number,
   dpr: number,
   deviceWidth: number,
-  close?: boolean,
+  close = true,
   drawPoints?: boolean,
 ) {
   const minX = Math.min(...circuitPoints.map((loc) => loc.x));
