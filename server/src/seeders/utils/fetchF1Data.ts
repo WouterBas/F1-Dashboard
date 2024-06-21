@@ -20,7 +20,7 @@ async function getF1Data(schedule: Schedule, session: Session, type: string) {
 }
 
 export async function getF1DataWithUrl(url: string, feed: string) {
-  const fullUrl = `https://livetiming.formula1.com/static/${url}${feed}.json`;
+  const fullUrl = `${url}${feed}.json`;
   try {
     const response = await fetch(fullUrl);
     const data = await response.json();
