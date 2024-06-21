@@ -1,17 +1,11 @@
 import GP from "@/components/app/Gp";
-import {
-  CircuitPoints,
-  SessionGp,
-  SessionList,
-  TimgingData,
-  Trackstatus,
-} from "@/types";
+import { SessionGp, SessionList, TimgingData } from "@/types";
 import { apiService } from "@/services/api.service";
-import AppInitializer from "@/components/app/AppInitializer";
+import AppProvider from "@/components/app/AppProvider";
 import { HTTPError } from "ky";
 import Link from "next/link";
-import MapCircuit from "@/components/app/MapCircuit";
-import LeaderBoardClient from "@/components/app/LeaderBoardClient";
+import Main from "@/components/app/Main";
+import LeaderBoard from "@/components/app/LeaderBoard";
 
 export async function generateStaticParams() {
   const response = await apiService.get(`session/all`, {});
@@ -54,16 +48,7 @@ async function Page({ params }: { params: { slug: string[] } }) {
       next: { revalidate: 600 },
     });
     const sessionInfo: SessionGp = await response.json();
-    const circuitPointsRes = await apiService.get(
-      `circuit/points/${sessionInfo.circuitKey}`,
-    );
-    const circuitPoints: CircuitPoints[] = await circuitPointsRes.json();
 
-    const trackStatusRes = await apiService.get(
-      `trackstatus/${sessionInfo.sessionKey}`,
-      {},
-    );
-    const trackStatus: Trackstatus[] = await trackStatusRes.json();
     const timingDataRes = await apiService.get(
       `timingdata/${sessionInfo.sessionKey}`,
       {},
@@ -71,20 +56,13 @@ async function Page({ params }: { params: { slug: string[] } }) {
     const timingData: TimgingData[] = await timingDataRes.json();
 
     return (
-      <AppInitializer sessionInfo={sessionInfo}>
+      <AppProvider sessionInfo={sessionInfo}>
         <GP sessionInfo={sessionInfo} />
         <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
-          <LeaderBoardClient
-            timingData={timingData}
-            sessionInfo={sessionInfo}
-          />
-          <MapCircuit
-            circuitPoints={circuitPoints}
-            sessionInfo={sessionInfo}
-            trackStatus={trackStatus}
-          />
+          <LeaderBoard timingData={timingData} sessionInfo={sessionInfo} />
+          <Main sessionInfo={sessionInfo} />
         </main>
-      </AppInitializer>
+      </AppProvider>
     );
   } catch (error) {
     const status = (error as HTTPError).response.status;

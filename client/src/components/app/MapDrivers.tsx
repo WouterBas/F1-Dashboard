@@ -1,45 +1,39 @@
 "use client";
 import fetcher from "@/utils/fetcher";
-import {
-  SortedDriverPosition,
-  DriverPosition,
-  SessionGp,
-  CircuitDimensions,
-} from "@/types";
-import { RefObject, useLayoutEffect, useRef } from "react";
+import { SortedDriverPosition, DriverPosition, SessionGp } from "@/types";
+import { RefObject, useContext, useLayoutEffect, useRef } from "react";
 import useSWR from "swr";
-import { useAppStore } from "@/store/appStore";
 import { drawDrivers } from "@/utils/drawDrivers";
 import { FaSpinner } from "react-icons/fa6";
+import { useStore } from "zustand";
+import { AppContext } from "@/store/appStore";
 
 const MapDrivers = ({
   sessionInfo,
-  circuitDimensions,
   width,
   dpr,
-  deviceWidth,
+  scale,
 }: {
   sessionInfo: SessionGp;
-  circuitDimensions: CircuitDimensions;
   width: number;
   dpr: number;
-  deviceWidth: number;
+  scale: number;
 }) => {
   const circuitDriverssRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
+  const store = useContext(AppContext);
+  if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const {
     time,
-    setTime,
     isPlaying,
     driverList,
     minute,
-    setMinute,
     toggleIsPlaying,
     wasPlaying,
     setWasPlaying,
-    speed,
     showLabels,
-  } = useAppStore();
+    circuitDimensions,
+  } = useStore(store);
 
   // load driver positions
   const { data, isLoading } = useSWR<DriverPosition[]>(
@@ -125,7 +119,7 @@ const MapDrivers = ({
       circuitDimensions,
       width,
       dpr,
-      deviceWidth,
+      scale,
       sessionInfo,
       showLabels,
     );
@@ -137,45 +131,10 @@ const MapDrivers = ({
     width,
     dpr,
     driverList,
-    deviceWidth,
+    scale,
     sessionInfo,
     showLabels,
   ]);
-
-  // main clock animation
-  useLayoutEffect(() => {
-    if (isPlaying) {
-      let animationFrameId: number;
-      const startTime = performance.now();
-
-      const render = () => {
-        const timeDifference =
-          performance.now() - new Date(startTime).getTime();
-        const newTime = new Date(
-          new Date(time).getTime() + timeDifference * speed,
-        );
-
-        if (newTime > new Date(sessionInfo.endDate)) {
-          toggleIsPlaying();
-          return () => cancelAnimationFrame(animationFrameId);
-        }
-        setTime(newTime);
-
-        const minute = Math.floor(
-          (newTime.getTime() - new Date(sessionInfo.startDate).getTime()) /
-            1000 /
-            60,
-        );
-
-        setMinute(minute);
-
-        animationFrameId = requestAnimationFrame(render);
-      };
-      animationFrameId = requestAnimationFrame(render);
-      return () => cancelAnimationFrame(animationFrameId);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying]);
 
   return (
     <>
@@ -183,7 +142,7 @@ const MapDrivers = ({
         <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin text-3xl" />
       )}
       <canvas
-        className="absolute top-0 mx-auto max-h-[calc(100dvh-82px)] max-w-full"
+        className="absolute top-0 max-h-[calc(100dvh-76px)] max-w-full sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"
         ref={circuitDriverssRef}
         width={circuitDimensions.calcWidth}
         height={circuitDimensions.calcHeight}

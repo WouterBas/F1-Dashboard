@@ -1,11 +1,15 @@
 "use client";
 import { SessionList } from "@/types";
 import Dropdown from "@/components/home/Dropdown";
-import { useHomeStore } from "@/store/homeStore";
 import Link from "next/link";
+import { useContext } from "react";
+import { HomeContext } from "@/store/homeStore";
+import { useStore } from "zustand";
 
 const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
-  const { selected } = useHomeStore();
+  const store = useContext(HomeContext);
+  if (!store) throw new Error("Missing HomeContext.Provider in the tree");
+  const { selected } = useStore(store);
 
   const availableYears = [
     ...new Set(sessions.map((session) => session.year.toString())),

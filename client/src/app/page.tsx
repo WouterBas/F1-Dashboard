@@ -1,7 +1,7 @@
 import SelectSession from "@/components/home/SelectSession";
 import { apiService } from "@/services/api.service";
 import { SessionList } from "@/types";
-import HomeInitializer from "@/components/home/HomeInitializer";
+import HomeProvider from "@/components/home/HomeProvider";
 
 export default async function Home() {
   async function fetchSessions() {
@@ -20,9 +20,9 @@ export default async function Home() {
         <h2 className="upp mx-auto mb-16 w-11/12 max-w-xs self-end rounded text-center text-lg font-bold sm:text-xl md:max-w-xl md:text-2xl">
           Experience Formula 1 with Detailed Telemetry Insights
         </h2>
-        <HomeInitializer sessions={sessions}>
+        <HomeProvider sessions={sessions}>
           <SelectSession sessions={sessions} />
-        </HomeInitializer>
+        </HomeProvider>
         <p className=" font-sans text-[10px] text-neutral-700">
           This project/website is unofficial and is not associated in any way
           with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA

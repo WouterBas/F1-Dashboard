@@ -1,18 +1,20 @@
 "use client";
-import { useAppStore } from "@/store/appStore";
+import { AppContext } from "@/store/appStore";
 import { SessionGp, TimgingData } from "@/types";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import DriverList from "@/components/app/DriverList";
-import DriverListLoading from "@/components/app/DriverListLoading";
+import { useStore } from "zustand";
 
-const LeaderBoardClient = ({
+const LeaderBoard = ({
   timingData,
   sessionInfo,
 }: {
   timingData: TimgingData[];
   sessionInfo: SessionGp;
 }) => {
-  const { time, setDriverList, driverList } = useAppStore();
+  const store = useContext(AppContext);
+  if (!store) throw new Error("Missing AppContext.Provider in the tree");
+  const { time, driverList, setDriverList } = useStore(store, (s) => s);
 
   useEffect(() => {
     // find index of closest timing data based on current time
@@ -50,14 +52,10 @@ const LeaderBoardClient = ({
   return (
     <div className="rounded-md bg-neutral-800 p-1 font-mono text-xs tracking-wider text-white sm:p-2 sm:text-sm md:px-3 md:text-base lg:text-lg">
       <ul className="divide-y divide-gray-500">
-        {driverList.length > 0 ? (
-          <DriverList driverList={driverList} sessionInfo={sessionInfo} />
-        ) : (
-          <DriverListLoading />
-        )}
+        <DriverList driverList={driverList} sessionInfo={sessionInfo} />
       </ul>
     </div>
   );
 };
 
-export default LeaderBoardClient;
+export default LeaderBoard;

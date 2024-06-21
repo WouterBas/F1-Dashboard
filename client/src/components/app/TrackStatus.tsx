@@ -1,11 +1,15 @@
-import { useAppStore } from "@/store/appStore";
+"use client";
 import { Trackstatus } from "@/types";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { FaFlag, FaFlagCheckered, FaCarOn } from "react-icons/fa6";
 import TrackSatusBanner from "@/components/app/TrackSatusBanner";
+import { useStore } from "zustand";
+import { AppContext } from "@/store/appStore";
 
 const TrackStatus = ({ trackStatusAll }: { trackStatusAll: Trackstatus[] }) => {
-  const { time, trackStatus, setTrackStatus } = useAppStore();
+  const store = useContext(AppContext);
+  if (!store) throw new Error("Missing AppContext.Provider in the tree");
+  const { time, trackStatus, setTrackStatus } = useStore(store);
 
   // find track status closest to time
   useEffect(() => {
