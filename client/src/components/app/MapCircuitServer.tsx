@@ -1,6 +1,15 @@
 import { apiService } from "@/services/api.service";
 import { CircuitPoints, SessionGp, Trackstatus } from "@/types";
-import MapCircuitClient from "@/components/app/MapCircuitClient";
+import dynamic from "next/dynamic";
+// import MapCircuitClient from "@/components/app/MapCircuitClient";
+
+const MapCircuitClient = dynamic(
+  () => import("@/components/app/MapCircuitClient"),
+  {
+    loading: () => <p>Loading...</p>,
+    ssr: false,
+  },
+);
 
 const MapCircuitServer = async ({
   sessionInfo,

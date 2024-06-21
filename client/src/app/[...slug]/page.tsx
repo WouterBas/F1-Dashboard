@@ -6,26 +6,37 @@ import { apiService } from "@/services/api.service";
 import AppInitializer from "@/components/app/AppInitializer";
 import { HTTPError } from "ky";
 import Link from "next/link";
-import slugify from "slugify";
 
 export async function generateStaticParams() {
   const response = await apiService.get(`session/all`, {});
   const data: SessionList[] = await response.json();
   return data.map((session) => ({
-    slug: [
-      slugify(session.name, { lower: true }),
-      slugify(session.type, { lower: true }),
-      session.year.toString(),
-      session.sessionKey.toString(),
-    ],
+    slug: session.slug.split("/"),
   }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string[] };
+}) {
+  const slug = params.slug.join("/");
+  const response = await apiService.get(`session/${slug}`, {
+    next: { revalidate: 600 },
+  });
+  const sessionInfo: SessionGp = await response.json();
+
+  return {
+    title: `F1 Dashboard | ${sessionInfo.name} | ${new Date(sessionInfo.startDate).getFullYear()} | ${sessionInfo.type}`,
+    description: "",
+  };
+}
+
 async function Page({ params }: { params: { slug: string[] } }) {
-  const sessionkey = params.slug[3];
+  const slug = params.slug.join("/");
 
   try {
-    const response = await apiService.get(`session/${sessionkey}`, {
+    const response = await apiService.get(`session/${slug}`, {
       next: { revalidate: 600 },
     });
     const sessionInfo: SessionGp = await response.json();
@@ -44,9 +55,9 @@ async function Page({ params }: { params: { slug: string[] } }) {
       error as HTTPError
     ).response.json();
     return (
-      <div className="flex h-[calc(100dvh-100px)] flex-col items-center justify-center">
+      <div className="col-span-2 flex h-[calc(100dvh-100px)] flex-col items-center justify-center">
         <h2 className="text-3xl">{status}</h2>
-        <h3 className="mb-4 text-xl">{message}</h3>
+        <h3 className="mb-4 text-lg">{message}</h3>
         <Link className="rounded border-2 px-2 py-1" href="/">
           Home Page
         </Link>

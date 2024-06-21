@@ -11,6 +11,13 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  metadataBase: new URL("https://f1-dashboard.app"),
+  alternates: {
+    canonical: "./",
+    languages: {
+      en: "/en",
+    },
+  },
 };
 
 export default function RootLayout({

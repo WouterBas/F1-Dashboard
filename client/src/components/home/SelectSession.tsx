@@ -3,7 +3,6 @@ import { SessionList } from "@/types";
 import Dropdown from "@/components/home/Dropdown";
 import { useHomeStore } from "@/store/homeStore";
 import Link from "next/link";
-import slugify from "slugify";
 
 const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
   const { selected } = useHomeStore();
@@ -35,7 +34,7 @@ const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
       session.type === selected.type
     );
   });
-  const { year, name, type, sessionKey } = selectedSession as SessionList;
+  const { slug } = selectedSession as SessionList;
 
   return (
     <div className="mx-auto grid w-fit justify-center gap-4 lg:grid-cols-3">
@@ -43,7 +42,7 @@ const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
       <Dropdown options={availableGp} value="gp" label="Grand Prix" />
       <Dropdown options={availableTypes} value="type" label="Type" />
       <Link
-        href={`/${slugify(name, { lower: true })}/${slugify(type, { lower: true })}/${year}/${sessionKey}`}
+        href={slug}
         className="mx-auto mt-4 block w-full rounded-md border-2 border-white py-1 text-center font-mono sm:text-lg lg:col-start-2"
       >
         View

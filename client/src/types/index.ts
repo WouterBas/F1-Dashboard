@@ -51,6 +51,7 @@ export type SessionList = {
     | "Sprint Qualifying"
     | "Sprint Shootout";
   year: number;
+  slug: string;
 };
 
 export type Position = {
