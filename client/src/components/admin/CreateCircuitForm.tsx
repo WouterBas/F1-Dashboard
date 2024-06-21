@@ -4,7 +4,7 @@ import Dropdown from "@/components/admin/Dropdown";
 import { useAdminStore } from "@/store/adminStore";
 import useSWR from "swr";
 import fetcher, { sendRequest } from "@/utils/fetcher";
-import MapCircuitClient from "@/components/app/MapCircuitClient";
+import MapCircuit from "@/components/app/MapCircuit";
 import Button from "@/components/admin/Button";
 import TimeInput from "@/components/admin/TimeInput";
 import { FaSpinner } from "react-icons/fa6";
@@ -149,7 +149,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
           {error && <p>No circuit points found</p>}
         </div>
         {circuitPoints && !error && (
-          <MapCircuitClient
+          <MapCircuit
             circuitPoints={circuitPoints}
             closed={closed}
             points={points}

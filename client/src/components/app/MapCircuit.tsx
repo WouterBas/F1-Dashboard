@@ -13,7 +13,7 @@ import TrackStatus from "@/components/app/TrackStatus";
 import { FaRegCircleCheck, FaRegCircle } from "react-icons/fa6";
 import { useAppStore } from "@/store/appStore";
 
-const MapCircuitClient = ({
+const MapCircuit = ({
   circuitPoints,
   sessionInfo,
   trackStatus,
@@ -35,7 +35,7 @@ const MapCircuitClient = ({
   const [circuitDimensions, setCircuitDimensions] = useState<CircuitDimensions>(
     {} as CircuitDimensions,
   );
-  const [dpr, setDpr] = useState<number>(1);
+  const [dpr, setDpr] = useState<number>(3);
   const [deviceWidth, setDeviceWidth] = useState<number>(1);
   const { showLabels, toggleShowLabels } = useAppStore();
 
@@ -80,6 +80,7 @@ const MapCircuitClient = ({
         dpr,
         deviceWidth,
       );
+
       setCircuitDimensions(circuitDim);
     }
   }, [circuitPoints, circuitRef, width, dpr, closed, points, deviceWidth]);
@@ -121,4 +122,4 @@ const MapCircuitClient = ({
     </div>
   );
 };
-export default MapCircuitClient;
+export default MapCircuit;

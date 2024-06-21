@@ -185,6 +185,8 @@ const MapDrivers = ({
       <canvas
         className="absolute top-0 mx-auto max-h-[calc(100dvh-82px)] max-w-full"
         ref={circuitDriverssRef}
+        width={circuitDimensions.calcWidth}
+        height={circuitDimensions.calcHeight}
       ></canvas>
     </>
   );

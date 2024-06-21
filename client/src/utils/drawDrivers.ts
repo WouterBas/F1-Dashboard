@@ -35,7 +35,11 @@ export function drawDrivers(
       ({ abbreviation, teamColor, X, Y, retired, stopped }) => {
         ctx.beginPath();
         ctx.globalAlpha =
-          retired || (stopped && (sessionInfo.type === "Race" || sessionInfo.type === "Sprint")) ? 0.5 : 1;
+          retired ||
+          (stopped &&
+            (sessionInfo.type === "Race" || sessionInfo.type === "Sprint"))
+            ? 0.5
+            : 1;
 
         ctx.arc(X, Y, 4 * deviceWidth, 0, 2 * Math.PI, false);
         ctx.fillStyle = teamColor ? teamColor : "white";

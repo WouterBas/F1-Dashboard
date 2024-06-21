@@ -1,11 +1,17 @@
 import GP from "@/components/app/Gp";
-import { SessionGp, SessionList } from "@/types";
-import LeaderBoardServer from "@/components/app/LeaderBoardServer";
-import MapCircuitServer from "@/components/app/MapCircuitServer";
+import {
+  CircuitPoints,
+  SessionGp,
+  SessionList,
+  TimgingData,
+  Trackstatus,
+} from "@/types";
 import { apiService } from "@/services/api.service";
 import AppInitializer from "@/components/app/AppInitializer";
 import { HTTPError } from "ky";
 import Link from "next/link";
+import MapCircuit from "@/components/app/MapCircuit";
+import LeaderBoardClient from "@/components/app/LeaderBoardClient";
 
 export async function generateStaticParams() {
   const response = await apiService.get(`session/all`, {});
@@ -28,7 +34,15 @@ export async function generateMetadata({
 
   return {
     title: `F1 Dashboard | ${sessionInfo.name} | ${new Date(sessionInfo.startDate).getFullYear()} | ${sessionInfo.type}`,
-    description: "",
+    description: `Relive the ${sessionInfo.name} ${new Date(sessionInfo.startDate).getFullYear()} on F1 Dashboard. Explore detailed telemetry data, track driver positions, rankings, and track status through an interactive timeline. Analyze key race moments and performance insights to enhance your Formula 1 experience.`,
+    openGraph: {
+      title: `F1 Dashboard | ${sessionInfo.name} | ${new Date(sessionInfo.startDate).getFullYear()} | ${sessionInfo.type}`,
+      description: `Relive the ${sessionInfo.name} ${new Date(sessionInfo.startDate).getFullYear()} on F1 Dashboard. Explore detailed telemetry data, track driver positions, rankings, and track status through an interactive timeline. Analyze key race moments and performance insights to enhance your Formula 1 experience.`,
+      url: `https://f1-dashboard.app/${params.slug.join("/")}`,
+      siteName: "F1 Dashboard",
+      locale: "en-US",
+      type: "website",
+    },
   };
 }
 
@@ -40,12 +54,35 @@ async function Page({ params }: { params: { slug: string[] } }) {
       next: { revalidate: 600 },
     });
     const sessionInfo: SessionGp = await response.json();
+    const circuitPointsRes = await apiService.get(
+      `circuit/points/${sessionInfo.circuitKey}`,
+    );
+    const circuitPoints: CircuitPoints[] = await circuitPointsRes.json();
+
+    const trackStatusRes = await apiService.get(
+      `trackstatus/${sessionInfo.sessionKey}`,
+      {},
+    );
+    const trackStatus: Trackstatus[] = await trackStatusRes.json();
+    const timingDataRes = await apiService.get(
+      `timingdata/${sessionInfo.sessionKey}`,
+      {},
+    );
+    const timingData: TimgingData[] = await timingDataRes.json();
+
     return (
       <AppInitializer sessionInfo={sessionInfo}>
         <GP sessionInfo={sessionInfo} />
         <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
-          <LeaderBoardServer sessionInfo={sessionInfo} />
-          <MapCircuitServer sessionInfo={sessionInfo} />
+          <LeaderBoardClient
+            timingData={timingData}
+            sessionInfo={sessionInfo}
+          />
+          <MapCircuit
+            circuitPoints={circuitPoints}
+            sessionInfo={sessionInfo}
+            trackStatus={trackStatus}
+          />
         </main>
       </AppInitializer>
     );

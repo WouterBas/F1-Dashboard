@@ -37,7 +37,7 @@ const SelectSession = ({ sessions }: { sessions: SessionList[] }) => {
   const { slug } = selectedSession as SessionList;
 
   return (
-    <div className="mx-auto grid w-fit justify-center gap-4 lg:grid-cols-3">
+    <div className="mx-auto grid w-fit justify-center gap-4 self-start lg:grid-cols-3">
       <Dropdown options={availableYears} value="year" label="Year" />
       <Dropdown options={availableGp} value="gp" label="Grand Prix" />
       <Dropdown options={availableTypes} value="type" label="Type" />
