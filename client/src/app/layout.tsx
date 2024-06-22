@@ -8,7 +8,7 @@ const mono = Noto_Sans_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "F1 Dashboard",
   description:
-    "Explore F1 Dashboard, the premier web app for replaying Formula 1 telemetry data. Track driver positions, rankings, and track status through an interactive timeline. Analyze past sessions with detailed insights into race progress and performance. Enhance your Formula 1 experience today!",
+    "Explore F1 Dashboard, the web app for replaying Formula 1 telemetry data. Track driver positions, rankings, and track status through an interactive timeline.",
   icons: {
     icon: "/favicon.ico",
   },

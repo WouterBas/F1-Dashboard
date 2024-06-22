@@ -15,7 +15,7 @@ async function getF1Data(schedule: Schedule, session: Session, type: string) {
     return data;
   } catch (error) {
     console.error("Error fetching data:", url, error);
-    process.exit(1);
+    return null;
   }
 }
 
@@ -31,7 +31,7 @@ export async function getF1DataWithUrl(url: string, feed: string) {
   }
 }
 export async function getF1StreamData(url: string, feed: string) {
-  const fullUrl = `https://livetiming.formula1.com/static/${url}${feed}.jsonStream`;
+  const fullUrl = `${url}${feed}.jsonStream`;
   try {
     const response = await fetch(fullUrl);
     const data = await response.text();

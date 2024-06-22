@@ -55,16 +55,23 @@ async function seeder() {
       });
     });
 
-    const result = await client
-      .db("f1dashboard")
-      .collection("timingdata")
-      .insertMany(convertedTimingData);
+    if (convertedTimingData.length === 0) {
+      console.log(
+        `${startDate.getFullYear()} - ${name} - ${type} - no timing data was found`
+      );
+      continue;
+    } else {
+      const result = await client
+        .db("f1dashboard")
+        .collection("timingdata")
+        .insertMany(convertedTimingData);
 
-    console.log(
-      `${startDate.getFullYear()} - ${name} - ${type} - #${
-        result.insertedCount
-      } timingdata were inserted`
-    );
+      console.log(
+        `${startDate.getFullYear()} - ${name} - ${type} - #${
+          result.insertedCount
+        } timingdata were inserted`
+      );
+    }
   }
 
   await client.close();

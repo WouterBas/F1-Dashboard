@@ -81,11 +81,25 @@ async function seeder() {
         "SessionInfo"
       )) as F1Meeting;
 
+      if (data === null) {
+        console.log(
+          `skipping ${schedule.year} ${schedule.name} ${session.type}`
+        );
+        continue;
+      }
+
       const SessionData: SessionData = (await getF1Data(
         schedule,
         session,
         "SessionData"
       )) as SessionData;
+
+      if (SessionData === null) {
+        console.log(
+          `skipping ${schedule.year} ${schedule.name} ${session.type}`
+        );
+        continue;
+      }
       const { startDate, endDate } = getStartAndEndDates(SessionData);
 
       const convertedData: Meeting = convertData(data, startDate, endDate);
