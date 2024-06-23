@@ -210,10 +210,10 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
             {isLoading && <FaSpinner className="animate-spin text-2xl" />}
             {error && <p>No circuit points found</p>}
           </div>
-          <p className="absolute left-0 top-0">
-            AspectRatio: {Math.round(aspectRatio * 100) / 100}
+          <p className="absolute bottom-0 left-0 rounded-sm bg-neutral-800/75 pr-1 pt-0.5 text-xs sm:text-sm">
+            AR:{Math.round(aspectRatio * 100) / 100}
             <br />
-            Average:
+            AVG:
             {Math.round(
               (newCircuits.reduce((a, b) => a + (b.aspectRatio || 1), 0) /
                 newCircuits.length) *
@@ -222,7 +222,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
           </p>
 
           <canvas
-            className="mx-auto max-h-[calc(100dvh-242px)] max-w-full sm:max-h-[calc(100dvh-252px)] md:max-h-[calc(100dvh-232px)]  lg:max-h-[calc(100dvh-200px)] 2xl:max-h-[calc(100dvh-156px)]"
+            className=" mx-auto max-h-[calc(100dvh-242px)] max-w-full sm:max-h-[calc(100dvh-252px)] md:max-h-[calc(100dvh-232px)]  lg:max-h-[calc(100dvh-200px)] 2xl:max-h-[calc(100dvh-156px)]"
             ref={circuitRef}
           ></canvas>
         </div>

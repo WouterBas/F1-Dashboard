@@ -24,16 +24,16 @@ type State = {
 
 export const useAdminStore = create<State>((set) => ({
   selected: {
-    circuitKey: 147,
-    sessionKey: 6397,
-    driverKey: 3,
+    circuitKey: 9,
+    sessionKey: 9213,
+    driverKey: 1,
   },
   closed: false,
   points: true,
-  startTime: new Date("2021-05-02T14:00:00.000Z"),
-  duration: 60000,
+  startTime: new Date("2023-10-22T19:33:11.000Z"),
+  duration: 101000,
   saved: false,
-  angle: 0,
+  angle: 4,
 
   setSelected: (selected: State["selected"]) => set({ selected }),
   setClosed: () => set((state) => ({ closed: !state.closed })),

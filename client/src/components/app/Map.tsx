@@ -100,14 +100,14 @@ const Map = ({
   }, [isPlaying]);
 
   return (
-    <div className="w-full" ref={mapRef}>
-      <div className="relative mx-auto w-full">
-        {circuitDimensions.calcWidth < 1 && (
-          <div
-            className=" h-full max-h-[calc(100dvh-76px)] sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"
-            style={{ aspectRatio: circuitInfo.aspectRatio }}
-          ></div>
-        )}
+    <div className="relative w-full" ref={mapRef}>
+      {circuitDimensions.calcWidth < 1 && (
+        <div
+          className=" h-full max-h-[calc(100dvh-76px)] sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"
+          style={{ aspectRatio: circuitInfo.aspectRatio }}
+        ></div>
+      )}
+      <div className=" mx-auto w-fit">
         <MapCircuit
           circuitInfo={circuitInfo}
           dpr={dpr}
