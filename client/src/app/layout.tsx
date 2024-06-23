@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Noto_Sans_Mono } from "next/font/google";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const mono = Noto_Sans_Mono({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <GoogleAnalytics />
       <body
         className={`${mono.className} mx-auto grid h-dvh max-w-[1920px] grid-rows-[auto_1fr] gap-1 bg-neutral-900 p-1 text-white sm:gap-2 sm:p-2 md:gap-3 md:p-3 lg:p-4`}
       >
