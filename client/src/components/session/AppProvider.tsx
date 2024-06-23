@@ -1,9 +1,9 @@
 "use client";
-import { createAppStore, AppContext } from "@/store/appStore";
+import { createSessionStore, sessionContext } from "@/store/sessionStore";
 import { SessionGp } from "@/types";
 import { useRef } from "react";
 
-export default function AppProvider({
+export default function SessionProvider({
   sessionInfo,
   children,
 }: {
@@ -11,7 +11,7 @@ export default function AppProvider({
   children: React.ReactNode;
 }) {
   const store = useRef(
-    createAppStore({
+    createSessionStore({
       isPlaying: false,
       time: new Date(sessionInfo.startDate),
       driverList: sessionInfo.drivers.map((driver) => ({
@@ -36,5 +36,7 @@ export default function AppProvider({
     }),
   ).current;
 
-  return <AppContext.Provider value={store}>{children}</AppContext.Provider>;
+  return (
+    <sessionContext.Provider value={store}>{children}</sessionContext.Provider>
+  );
 }

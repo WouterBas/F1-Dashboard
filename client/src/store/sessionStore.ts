@@ -2,7 +2,7 @@ import { CircuitDimensions, DriverTimingList } from "@/types";
 import { createStore } from "zustand";
 import { createContext } from "react";
 
-type AppProps = {
+type SessionProps = {
   isPlaying: boolean;
   time: Date;
   driverList: DriverTimingList[];
@@ -14,7 +14,7 @@ type AppProps = {
   circuitDimensions: CircuitDimensions;
 };
 
-interface AppState extends AppProps {
+interface SessionState extends SessionProps {
   setTime: (time: Date) => void;
   toggleIsPlaying: () => void;
   setDriverList: (driverList: DriverTimingList[]) => void;
@@ -26,10 +26,10 @@ interface AppState extends AppProps {
   setCircuitDimensions: (CircuitDimensions: CircuitDimensions) => void;
 }
 
-export type AppStore = ReturnType<typeof createAppStore>;
+export type SessionStore = ReturnType<typeof createSessionStore>;
 
-export const createAppStore = (initProps?: Partial<AppProps>) => {
-  const DEFAULT_PROPS: AppProps = {
+export const createSessionStore = (initProps?: Partial<SessionProps>) => {
+  const DEFAULT_PROPS: SessionProps = {
     isPlaying: false,
     time: new Date("1970-01-01T00:00:00.000Z"),
     driverList: [],
@@ -46,7 +46,7 @@ export const createAppStore = (initProps?: Partial<AppProps>) => {
       minY: 0,
     },
   };
-  return createStore<AppState>()((set) => ({
+  return createStore<SessionState>()((set) => ({
     ...DEFAULT_PROPS,
     ...initProps,
     setTime: (time: Date) => set({ time }),
@@ -62,4 +62,4 @@ export const createAppStore = (initProps?: Partial<AppProps>) => {
   }));
 };
 
-export const AppContext = createContext<AppStore | null>(null);
+export const sessionContext = createContext<SessionStore | null>(null);

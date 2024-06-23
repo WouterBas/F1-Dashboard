@@ -18,9 +18,11 @@ const Main = async ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   const trackStatus: Trackstatus[] = await trackStatusRes.json();
 
   return (
-    <div className="relative max-h-[calc(100dvh-46px)] rounded-md bg-neutral-800 p-1 sm:max-h-[calc(100dvh-64px)] sm:p-2 md:max-h-[calc(100dvh-78px)] md:p-3 lg:max-h-[calc(100dvh-98px)]">
-      <Labels />
-      <TrackStatus trackStatusAll={trackStatus} />
+    <div className="grid rounded-md bg-neutral-800 p-1 sm:p-2 md:p-3">
+      <div className="relative flex items-start justify-between">
+        <Labels />
+        <TrackStatus trackStatusAll={trackStatus} />
+      </div>
       <Map sessionInfo={sessionInfo} circuitInfo={circuitInfo} />
       <MediaControls sessionInfo={sessionInfo} trackStatusAll={trackStatus} />
     </div>

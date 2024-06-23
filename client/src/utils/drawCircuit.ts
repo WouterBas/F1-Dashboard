@@ -45,8 +45,8 @@ export function drawCircuit(
 
   // scale points
   points.forEach((point) => {
-    (point.x = (point.x + Math.abs(minX)) / scale + width / 20),
-      (point.y = (point.y + Math.abs(minY)) / scale + width / 20);
+    point.x = (point.x + Math.abs(minX)) / scale + width / 20;
+    point.y = (point.y + Math.abs(minY)) / scale + width / 20 - 8;
   });
 
   // flip points vertically

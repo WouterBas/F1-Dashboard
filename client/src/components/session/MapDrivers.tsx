@@ -11,7 +11,7 @@ import useSWR from "swr";
 import { drawDrivers } from "@/utils/drawDrivers";
 import { FaSpinner } from "react-icons/fa6";
 import { useStore } from "zustand";
-import { AppContext } from "@/store/appStore";
+import { sessionContext } from "@/store/sessionStore";
 
 const MapDrivers = ({
   sessionInfo,
@@ -28,7 +28,7 @@ const MapDrivers = ({
 }) => {
   const circuitDriverssRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
-  const store = useContext(AppContext);
+  const store = useContext(sessionContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const {
     time,

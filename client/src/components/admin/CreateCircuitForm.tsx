@@ -147,8 +147,8 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
   }, [circuitPoints, circuitRef, width, dpr, scale, closed, angle, points]);
 
   return (
-    <main className="col-span-2">
-      <div className="mb-1 grid gap-1 text-sm sm:mb-2 sm:grid-cols-[auto,1fr] sm:gap-2 sm:text-base">
+    <div className="grid grid-rows-[auto,1fr] gap-1 ">
+      <div className=" grid gap-1 text-sm  sm:grid-cols-[auto,1fr] sm:gap-2 sm:text-base">
         <div className="flex flex-wrap gap-1 sm:gap-2">
           <Dropdown
             options={availableCircuits}
@@ -204,30 +204,20 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
           {saved ? "Saved" : "Save"}
         </button>
       </div>
-      <div className="relative max-h-[calc(100dvh-46px)] rounded-md bg-neutral-800 p-1 sm:max-h-[calc(100dvh-64px)] sm:p-2 md:max-h-[calc(100dvh-78px)] md:p-3 lg:max-h-[calc(100dvh-98px)]">
-        <div className="relative" ref={mapRef}>
+      <div className="relative h-full rounded-md bg-neutral-800  sm:max-h-[calc(100dvh-64px)] md:max-h-[calc(100dvh-78px)]  lg:max-h-[calc(100dvh-98px)]">
+        <div className="grid h-full items-center" ref={mapRef}>
           <div className="absolute left-4 top-4 z-10">
             {isLoading && <FaSpinner className="animate-spin text-2xl" />}
             {error && <p>No circuit points found</p>}
           </div>
-          <p className="absolute bottom-0 left-0 rounded-sm bg-neutral-800/75 pr-1 pt-0.5 text-xs sm:text-sm">
-            AR:{Math.round(aspectRatio * 100) / 100}
-            <br />
-            AVG:
-            {Math.round(
-              (newCircuits.reduce((a, b) => a + (b.aspectRatio || 1), 0) /
-                newCircuits.length) *
-                100,
-            ) / 100}
-          </p>
 
           <canvas
-            className=" mx-auto max-h-[calc(100dvh-242px)] max-w-full sm:max-h-[calc(100dvh-252px)] md:max-h-[calc(100dvh-232px)]  lg:max-h-[calc(100dvh-200px)] 2xl:max-h-[calc(100dvh-156px)]"
+            className="mx-auto max-h-[calc(100dvh-264px)] max-w-full  sm:max-h-[calc(100dvh-232px)] md:max-h-[calc(100dvh-210px)] lg:max-h-[calc(100dvh-176px)]"
             ref={circuitRef}
           ></canvas>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 export default CreateCircuitForm;

@@ -9,7 +9,7 @@ import {
 import MapCircuit from "./MapCircuit";
 import { CircuitInfo, SessionGp } from "@/types";
 import MapDrivers from "./MapDrivers";
-import { AppContext } from "@/store/appStore";
+import { sessionContext } from "@/store/sessionStore";
 import { useStore } from "zustand";
 
 const Map = ({
@@ -23,7 +23,7 @@ const Map = ({
   const [width, setWidth] = useState<number>(0);
   const [dpr, setDpr] = useState<number>(3);
   const [scale, setScale] = useState<number>(1);
-  const store = useContext(AppContext);
+  const store = useContext(sessionContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const {
     time,
@@ -103,11 +103,12 @@ const Map = ({
     <div className="relative w-full" ref={mapRef}>
       {circuitDimensions.calcWidth < 1 && (
         <div
-          className=" h-full max-h-[calc(100dvh-76px)] sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"
+          className=" max-h-[calc(100dvh-92px)] max-w-full sm:max-h-[calc(100dvh-122px)] md:max-h-[calc(100dvh-160px)] lg:max-h-[calc(100dvh-186px)]"
           style={{ aspectRatio: circuitInfo.aspectRatio }}
         ></div>
       )}
-      <div className=" mx-auto w-fit">
+
+      <div className="mx-auto w-fit ">
         <MapCircuit
           circuitInfo={circuitInfo}
           dpr={dpr}

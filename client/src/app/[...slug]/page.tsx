@@ -1,11 +1,12 @@
-import GP from "@/components/app/Gp";
+import GP from "@/components/session/Gp";
 import { SessionGp, SessionList, TimgingData } from "@/types";
 import { apiService } from "@/services/api.service";
-import AppProvider from "@/components/app/AppProvider";
+import AppProvider from "@/components/session/AppProvider";
 import { HTTPError } from "ky";
 import Link from "next/link";
-import Main from "@/components/app/Main";
-import LeaderBoard from "@/components/app/LeaderBoard";
+import Main from "@/components/session/Main";
+import LeaderBoard from "@/components/session/LeaderBoard";
+import Header from "@/components/Header";
 
 export async function generateStaticParams() {
   const response = await apiService.get(`session/all`, {});
@@ -57,8 +58,11 @@ async function Page({ params }: { params: { slug: string[] } }) {
 
     return (
       <AppProvider sessionInfo={sessionInfo}>
-        <GP sessionInfo={sessionInfo} />
-        <main className="col-span-2 grid h-[calc(100dvh-100px)] grid-cols-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
+        <header className="flex justify-between">
+          <Header />
+          <GP sessionInfo={sessionInfo} />
+        </header>
+        <main className="grid grid-cols-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
           <LeaderBoard timingData={timingData} sessionInfo={sessionInfo} />
           <Main sessionInfo={sessionInfo} />
         </main>

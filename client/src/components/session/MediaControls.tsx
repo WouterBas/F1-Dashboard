@@ -1,5 +1,5 @@
 "use client";
-import { AppContext } from "@/store/appStore";
+import { sessionContext } from "@/store/sessionStore";
 import { SessionGp, Trackstatus } from "@/types";
 import { useContext, useEffect, useState } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
@@ -12,7 +12,7 @@ const MediaControls = ({
   sessionInfo: SessionGp;
   trackStatusAll: Trackstatus[];
 }) => {
-  const store = useContext(AppContext);
+  const store = useContext(sessionContext);
   const [isClient, setIsClient] = useState(false);
 
   if (!store) throw new Error("Missing AppContext.Provider in the tree");

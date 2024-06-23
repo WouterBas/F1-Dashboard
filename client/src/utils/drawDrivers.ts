@@ -43,7 +43,7 @@ export function drawDrivers(
   // scale driver positions
   driverPositions.forEach((driver) => {
     driver.X = (driver.X + Math.abs(minX)) / scale + width / 20;
-    driver.Y = (driver.Y + Math.abs(minY)) / scale + width / 20;
+    driver.Y = (driver.Y + Math.abs(minY)) / scale + width / 20 - 8;
   });
 
   // flip points vertically
@@ -70,7 +70,7 @@ export function drawDrivers(
         if (showLabels) {
           ctx.beginPath();
           ctx.roundRect(
-            X,
+            X - 6 * deviceWidth,
             Y - 4 * deviceWidth,
             16 * deviceWidth,
             -8 * deviceWidth,
@@ -83,7 +83,7 @@ export function drawDrivers(
           ctx.fillStyle = "white";
           ctx.fillText(
             abbreviation ? abbreviation : "",
-            X + 1 * deviceWidth,
+            X - 5 * deviceWidth,
             Y - 5 * deviceWidth,
           );
         }

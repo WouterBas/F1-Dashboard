@@ -1,8 +1,8 @@
 "use client";
-import { AppContext } from "@/store/appStore";
+import { sessionContext } from "@/store/sessionStore";
 import { SessionGp, TimgingData } from "@/types";
 import { useContext, useEffect } from "react";
-import DriverList from "@/components/app/DriverList";
+import DriverList from "@/components/session/DriverList";
 import { useStore } from "zustand";
 
 const LeaderBoard = ({
@@ -12,7 +12,7 @@ const LeaderBoard = ({
   timingData: TimgingData[];
   sessionInfo: SessionGp;
 }) => {
-  const store = useContext(AppContext);
+  const store = useContext(sessionContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const { time, driverList, setDriverList } = useStore(store, (s) => s);
 

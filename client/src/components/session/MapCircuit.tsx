@@ -2,7 +2,7 @@
 import { drawCircuit } from "@/utils/drawCircuit";
 import { CircuitInfo } from "@/types";
 import { RefObject, useContext, useEffect, useRef } from "react";
-import { AppContext } from "@/store/appStore";
+import { sessionContext } from "@/store/sessionStore";
 import { useStore } from "zustand";
 
 const MapCircuit = ({
@@ -18,7 +18,7 @@ const MapCircuit = ({
 }) => {
   const circuitRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
-  const store = useContext(AppContext);
+  const store = useContext(sessionContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const { setCircuitDimensions, circuitDimensions } = useStore(store);
 
@@ -40,7 +40,7 @@ const MapCircuit = ({
   return (
     <>
       <canvas
-        className={`${circuitDimensions.calcWidth > 0 ? "block" : "hidden"} max-h-[calc(100dvh-76px)] max-w-full sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]`}
+        className={`${circuitDimensions.calcWidth > 0 ? "block" : "hidden"} max-h-[calc(100dvh-92px)] max-w-full sm:max-h-[calc(100dvh-122px)] md:max-h-[calc(100dvh-160px)] lg:max-h-[calc(100dvh-186px)]`}
         ref={circuitRef}
       ></canvas>
     </>

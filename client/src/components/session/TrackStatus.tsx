@@ -2,12 +2,12 @@
 import { Trackstatus } from "@/types";
 import { useContext, useEffect } from "react";
 import { FaFlag, FaFlagCheckered, FaCarOn } from "react-icons/fa6";
-import TrackSatusBanner from "@/components/app/TrackSatusBanner";
+import TrackSatusBanner from "@/components/session/TrackSatusBanner";
 import { useStore } from "zustand";
-import { AppContext } from "@/store/appStore";
+import { sessionContext } from "@/store/sessionStore";
 
 const TrackStatus = ({ trackStatusAll }: { trackStatusAll: Trackstatus[] }) => {
-  const store = useContext(AppContext);
+  const store = useContext(sessionContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const { time, trackStatus, setTrackStatus } = useStore(store);
 
