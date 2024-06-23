@@ -20,6 +20,7 @@ export default function AppInitializer({
     startTime: new Date(circuitList[0].startTime || "2023-10-22T19:00:00.000Z"),
     duration: circuitList[0].duration || 60000,
     saved: false,
+    angle: circuitList[0].angle || 0,
   });
 
   return children;

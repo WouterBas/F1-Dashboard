@@ -1,17 +1,17 @@
 "use client";
 import { drawCircuit } from "@/utils/drawCircuit";
-import { CircuitPoints } from "@/types";
+import { CircuitInfo } from "@/types";
 import { RefObject, useContext, useEffect, useRef } from "react";
 import { AppContext } from "@/store/appStore";
 import { useStore } from "zustand";
 
 const MapCircuit = ({
-  circuitPoints,
+  circuitInfo,
   dpr,
   scale,
   width,
 }: {
-  circuitPoints: CircuitPoints[];
+  circuitInfo: CircuitInfo;
   dpr: number;
   scale: number;
   width: number;
@@ -20,27 +20,30 @@ const MapCircuit = ({
     useRef<HTMLCanvasElement>(null);
   const store = useContext(AppContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
-  const { setCircuitDimensions } = useStore(store);
+  const { setCircuitDimensions, circuitDimensions } = useStore(store);
 
   // draw circuit
   useEffect(() => {
-    if (circuitPoints && circuitPoints.length > 0) {
+    if (circuitInfo && circuitInfo.circuitPoints.length > 0) {
       const circuitDim = drawCircuit(
         circuitRef,
-        circuitPoints,
+        circuitInfo.circuitPoints,
         width,
         dpr,
         scale,
+        circuitInfo.angle,
       );
       setCircuitDimensions(circuitDim);
     }
-  }, [circuitPoints, circuitRef, width, dpr, scale, setCircuitDimensions]);
+  }, [circuitInfo, circuitRef, width, dpr, scale, setCircuitDimensions]);
 
   return (
-    <canvas
-      className="max-h-[calc(100dvh-76px)] max-w-full sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"
-      ref={circuitRef}
-    ></canvas>
+    <>
+      <canvas
+        className={`${circuitDimensions.calcWidth > 0 ? "block" : "hidden"} max-h-[calc(100dvh-76px)] max-w-full sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]`}
+        ref={circuitRef}
+      ></canvas>
+    </>
   );
 };
 export default MapCircuit;

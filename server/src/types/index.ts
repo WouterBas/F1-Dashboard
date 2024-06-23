@@ -26,6 +26,8 @@ export type PatchCircuit = {
   circuitKey: number;
   sessionKey: number;
   driverKey: number;
+  angle: number;
+  aspectRatio: number;
 };
 
 export type Session = {

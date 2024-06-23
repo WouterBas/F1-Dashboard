@@ -13,8 +13,14 @@ const Dropdown = ({
   label: string;
   circuitList?: CircuitList[];
 }) => {
-  const { selected, setSelected, setStartTime, setSaved, setDuration } =
-    useAdminStore();
+  const {
+    selected,
+    setSelected,
+    setStartTime,
+    setSaved,
+    setDuration,
+    setAngle,
+  } = useAdminStore();
   const selectedObj: { [key: string]: string | number } = selected;
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,6 +38,7 @@ const Dropdown = ({
         driverKey: dbDriverKey,
         duration,
         startTime,
+        angle,
       } = circuitList.filter((circuit) => circuit.circuitKey === key)[0];
 
       const filteredSessionKey = filteredCircuitKey.sessionKey;
@@ -47,6 +54,7 @@ const Dropdown = ({
         ? setStartTime(new Date(startTime))
         : setStartTime(new Date(time));
       duration && setDuration(duration);
+      angle ? setAngle(angle) : setAngle(0);
 
       // Change Session
     } else if (value === "sessionKey" && circuitList) {

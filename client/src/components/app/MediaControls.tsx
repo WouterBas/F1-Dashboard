@@ -1,7 +1,7 @@
 "use client";
 import { AppContext } from "@/store/appStore";
 import { SessionGp, Trackstatus } from "@/types";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
 import { useStore } from "zustand";
 
@@ -13,6 +13,8 @@ const MediaControls = ({
   trackStatusAll: Trackstatus[];
 }) => {
   const store = useContext(AppContext);
+  const [isClient, setIsClient] = useState(false);
+
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const {
     isPlaying,
@@ -45,6 +47,9 @@ const MediaControls = ({
     );
     setMinute(minute);
   };
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <div className="flex items-center gap-1 text-[10px] sm:gap-2 sm:text-xs md:gap-3 md:text-sm lg:text-base">
@@ -109,7 +114,7 @@ const MediaControls = ({
         </div>
       </div>
 
-      <p>{`${time.toLocaleTimeString("en-GB")}`}</p>
+      <p>{isClient ? time.toLocaleTimeString("en-GB") : "00:00:00"}</p>
     </div>
   );
 };

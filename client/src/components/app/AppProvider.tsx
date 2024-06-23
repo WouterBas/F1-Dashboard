@@ -27,8 +27,8 @@ export default function AppProvider({
       minute: 0,
       wasPlaying: false,
       circuitDimensions: {
-        calcWidth: 300,
-        calcHeight: 150,
+        calcWidth: 0,
+        calcHeight: 0,
         scale: 1,
         minX: 0,
         minY: 0,

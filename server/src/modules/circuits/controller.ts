@@ -9,13 +9,16 @@ export const getCircuitPoints = async (c: Context) => {
   const result = await client
     .db("f1dashboard")
     .collection("circuits")
-    .findOne({ circuitKey: key }, { projection: { _id: 0, circuitPoints: 1 } });
+    .findOne(
+      { circuitKey: key },
+      { projection: { _id: 0, angle: 1, aspectRatio: 1, circuitPoints: 1 } }
+    );
 
   if (!result) {
     c.status(404);
     return c.json({ message: "Circuit not found" });
   }
-  return c.json(result.circuitPoints);
+  return c.json(result);
 };
 
 export const getAllCircuits = async (c: Context) => {
@@ -58,6 +61,8 @@ export const getAllCircuits = async (c: Context) => {
           sessionKey: 1,
           driverKey: 1,
           sessions: 1,
+          angle: 1,
+          aspectRatio: 1,
         },
       },
     ])
@@ -68,13 +73,14 @@ export const getAllCircuits = async (c: Context) => {
 
 export const patchCircuit = async (c: Context) => {
   const key: number = parseInt(c.req.param("key"));
-
   const {
     sessionKey,
     driverKey,
     startTime,
     duration,
     circuitPoints,
+    angle,
+    aspectRatio,
   }: PatchCircuit = await c.req.json();
 
   const result = await client
@@ -89,6 +95,8 @@ export const patchCircuit = async (c: Context) => {
           driverKey,
           startTime,
           duration,
+          angle,
+          aspectRatio,
         },
       }
     );

@@ -8,6 +8,7 @@ export function drawDrivers(
   width: number,
   dpr: number,
   deviceWidth: number,
+  angle: number,
   sessionInfo: SessionGp,
   showLabels: boolean,
 ) {
@@ -21,13 +22,33 @@ export function drawDrivers(
 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-  // scale driver positions
-  const driverPositions: SortedDriverPosition[] = drivers.map((driver) => {
+  // rotate points by angle degrees around center
+  const center = {
+    x: width / 2,
+    y: width / 2,
+  };
+  const driverPositions = drivers.map((driver) => {
+    const dx = driver.X - center.x;
+    const dy = driver.Y - center.y;
+    const angleRad = (angle * Math.PI) / 180;
+    const nx = center.x + Math.cos(angleRad) * dx - Math.sin(angleRad) * dy;
+    const ny = center.y + Math.sin(angleRad) * dx + Math.cos(angleRad) * dy;
     return {
       ...driver,
-      X: (driver.X + Math.abs(minX)) / scale + width / 20,
-      Y: (driver.Y + Math.abs(minY)) / scale + width / 15,
+      X: nx,
+      Y: ny,
     };
+  });
+
+  // scale driver positions
+  driverPositions.forEach((driver) => {
+    driver.X = (driver.X + Math.abs(minX)) / scale + width / 20;
+    driver.Y = (driver.Y + Math.abs(minY)) / scale + width / 20;
+  });
+
+  // flip points vertically
+  driverPositions.forEach((driver) => {
+    driver.Y = calcHeight - driver.Y;
   });
 
   if (driverPositions.length > 0) {

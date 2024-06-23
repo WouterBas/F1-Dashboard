@@ -1,5 +1,5 @@
 "use client";
-import { CircuitList, CircuitPoints } from "@/types";
+import { CircuitList } from "@/types";
 import Dropdown from "@/components/admin/Dropdown";
 import { useAdminStore } from "@/store/adminStore";
 import useSWR from "swr";
@@ -10,6 +10,7 @@ import { FaSpinner } from "react-icons/fa6";
 import useSWRMutation from "swr/mutation";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { drawCircuit } from "@/utils/drawCircuit";
+import NumberInput from "./NumberInput";
 
 const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
   const circuitRef: RefObject<HTMLCanvasElement> =
@@ -28,8 +29,10 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     startTime,
     saved,
     setSaved,
+    angle,
   } = useAdminStore();
   const [newCircuits, setNewCircuits] = useState<CircuitList[]>(circuitList);
+  const [aspectRatio, setAspectRatio] = useState<number>(1);
 
   // set dpr
   useEffect(() => {
@@ -107,7 +110,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     data: circuitPoints,
     isLoading,
     error,
-  } = useSWR<CircuitPoints[]>(
+  } = useSWR<{ x: number; y: number }[]>(
     `position/${selected.driverKey}/${selected.sessionKey}?starttime=${startTime?.toISOString()}&duration=${duration}`,
     fetcher,
     {
@@ -126,9 +129,22 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
   // draw circuit
   useEffect(() => {
     if (circuitPoints && circuitPoints.length > 0) {
-      drawCircuit(circuitRef, circuitPoints, width, dpr, scale, closed, points);
+      drawCircuit(
+        circuitRef,
+        circuitPoints,
+        width,
+        dpr,
+        scale,
+        angle,
+        closed,
+        points,
+      );
     }
-  }, [circuitPoints, circuitRef, width, dpr, scale, closed, points]);
+    if (circuitRef.current) {
+      const aspect = circuitRef.current?.width / circuitRef.current?.height;
+      setAspectRatio(aspect);
+    }
+  }, [circuitPoints, circuitRef, width, dpr, scale, closed, angle, points]);
 
   return (
     <main className="col-span-2">
@@ -163,6 +179,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
             label="Duration"
             step={60}
           />
+          <NumberInput />
           <div className="flex gap-1 sm:gap-2">
             <Button value={closed} label="Close" setValue={setClosed} />
             <Button value={points} label="Points" setValue={setPoints} />
@@ -179,6 +196,8 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
               startTime: startTime,
               duration: duration,
               circuitPoints: circuitPoints,
+              angle: angle,
+              aspectRatio: aspectRatio,
             })
           }
         >
@@ -191,6 +210,16 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
             {isLoading && <FaSpinner className="animate-spin text-2xl" />}
             {error && <p>No circuit points found</p>}
           </div>
+          <p className="absolute left-0 top-0">
+            AspectRatio: {Math.round(aspectRatio * 100) / 100}
+            <br />
+            Average:
+            {Math.round(
+              (newCircuits.reduce((a, b) => a + (b.aspectRatio || 1), 0) /
+                newCircuits.length) *
+                100,
+            ) / 100}
+          </p>
 
           <canvas
             className="mx-auto max-h-[calc(100dvh-242px)] max-w-full sm:max-h-[calc(100dvh-252px)] md:max-h-[calc(100dvh-232px)]  lg:max-h-[calc(100dvh-200px)] 2xl:max-h-[calc(100dvh-156px)]"

@@ -7,17 +7,17 @@ import {
   useState,
 } from "react";
 import MapCircuit from "./MapCircuit";
-import { CircuitPoints, SessionGp } from "@/types";
+import { CircuitInfo, SessionGp } from "@/types";
 import MapDrivers from "./MapDrivers";
 import { AppContext } from "@/store/appStore";
 import { useStore } from "zustand";
 
 const Map = ({
   sessionInfo,
-  circuitPoints,
+  circuitInfo,
 }: {
   sessionInfo: SessionGp;
-  circuitPoints: CircuitPoints[];
+  circuitInfo: CircuitInfo;
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
@@ -25,8 +25,15 @@ const Map = ({
   const [scale, setScale] = useState<number>(1);
   const store = useContext(AppContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
-  const { time, setTime, isPlaying, setMinute, toggleIsPlaying, speed } =
-    useStore(store);
+  const {
+    time,
+    setTime,
+    isPlaying,
+    setMinute,
+    toggleIsPlaying,
+    speed,
+    circuitDimensions,
+  } = useStore(store);
 
   // set dpr
   useEffect(() => {
@@ -94,15 +101,22 @@ const Map = ({
 
   return (
     <div className="w-full" ref={mapRef}>
-      <div className="relative mx-auto w-fit">
+      <div className="relative mx-auto w-full">
+        {circuitDimensions.calcWidth < 1 && (
+          <div
+            className=" h-full max-h-[calc(100dvh-76px)] sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"
+            style={{ aspectRatio: circuitInfo.aspectRatio }}
+          ></div>
+        )}
         <MapCircuit
-          circuitPoints={circuitPoints}
+          circuitInfo={circuitInfo}
           dpr={dpr}
           scale={scale}
           width={width}
         />
         <MapDrivers
           sessionInfo={sessionInfo}
+          circuitInfo={circuitInfo}
           dpr={dpr}
           scale={scale}
           width={width}

@@ -1,6 +1,11 @@
 "use client";
 import fetcher from "@/utils/fetcher";
-import { SortedDriverPosition, DriverPosition, SessionGp } from "@/types";
+import {
+  SortedDriverPosition,
+  DriverPosition,
+  SessionGp,
+  CircuitInfo,
+} from "@/types";
 import { RefObject, useContext, useLayoutEffect, useRef } from "react";
 import useSWR from "swr";
 import { drawDrivers } from "@/utils/drawDrivers";
@@ -10,11 +15,13 @@ import { AppContext } from "@/store/appStore";
 
 const MapDrivers = ({
   sessionInfo,
+  circuitInfo,
   width,
   dpr,
   scale,
 }: {
   sessionInfo: SessionGp;
+  circuitInfo: CircuitInfo;
   width: number;
   dpr: number;
   scale: number;
@@ -120,6 +127,7 @@ const MapDrivers = ({
       width,
       dpr,
       scale,
+      circuitInfo.angle,
       sessionInfo,
       showLabels,
     );
@@ -134,14 +142,13 @@ const MapDrivers = ({
     scale,
     sessionInfo,
     showLabels,
+    circuitInfo,
   ]);
-
   return (
     <>
-      {isLoading && !isPlaying && circuitDimensions.calcWidth && (
+      {isLoading && !isPlaying && (
         <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin text-3xl" />
       )}
-
       {data && (
         <canvas
           className="absolute top-0 max-h-[calc(100dvh-76px)] max-w-full sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"

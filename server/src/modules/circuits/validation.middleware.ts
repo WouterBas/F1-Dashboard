@@ -12,6 +12,8 @@ const circuitShema = object().shape({
   startTime: date().required(),
   duration: number().min(60000).max(180000).required(),
   circuitPoints: array().of(pointsSchema).required(),
+  angle: number().min(0).max(360).required(),
+  aspectRatio: number().min(0).max(5).required(),
 });
 
 export const validateCircuit = createMiddleware(async (c, next) => {

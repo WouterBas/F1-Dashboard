@@ -23,7 +23,7 @@ export default async function Home() {
         <HomeProvider sessions={sessions}>
           <SelectSession sessions={sessions} />
         </HomeProvider>
-        <p className=" font-sans text-[10px] text-neutral-700">
+        <p className=" text-center font-sans text-[10px] text-neutral-600">
           This project/website is unofficial and is not associated in any way
           with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA
           ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks

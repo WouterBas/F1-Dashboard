@@ -81,9 +81,10 @@ export type SortedDriverPosition = {
   stopped: boolean;
 };
 
-export type CircuitPoints = {
-  x: number;
-  y: number;
+export type CircuitInfo = {
+  circuitPoints: { x: number; y: number }[];
+  angle: number;
+  aspectRatio: number;
 };
 
 export type CircuitList = {
@@ -93,25 +94,14 @@ export type CircuitList = {
   startTime?: string;
   sessionKey?: number;
   driverKey?: number;
+  angle?: number;
+  aspectRatio?: number;
   sessions: {
     startDate: string;
     type: string;
     sessionKey: number;
     drivers: driverList[];
   }[];
-};
-
-export type CircuitInfo = {
-  _id: string;
-  name: string;
-  duration?: number;
-  selectedDriver?: number;
-  startTime?: string;
-  sessionInfo: {
-    sessionKey: number;
-    startDate: string;
-    drivers: { racingNumber: number; abbreviation: string }[];
-  };
 };
 
 export type CircuitDimensions = {

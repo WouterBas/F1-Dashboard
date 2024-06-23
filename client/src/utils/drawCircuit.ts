@@ -1,20 +1,37 @@
-import { CircuitPoints } from "@/types";
 import { RefObject } from "react";
 import { circuitSize } from "@/utils/helpers";
 
 export function drawCircuit(
   ref: RefObject<HTMLCanvasElement>,
-  circuitPoints: CircuitPoints[],
+  circuitPoints: { x: number; y: number }[],
   width: number,
   dpr: number,
   deviceWidth: number,
+  angle: number,
   close = true,
   drawPoints?: boolean,
 ) {
-  const minX = Math.min(...circuitPoints.map((loc) => loc.x));
-  const minY = Math.min(...circuitPoints.map((loc) => loc.y));
-  const maxX = Math.max(...circuitPoints.map((loc) => loc.x)) + Math.abs(minX);
-  const maxY = Math.max(...circuitPoints.map((loc) => loc.y)) + Math.abs(minY);
+  // rotate points by angle degrees around center
+  const center = {
+    x: width / 2,
+    y: width / 2,
+  };
+  const points = circuitPoints.map((point) => {
+    const dx = point.x - center.x;
+    const dy = point.y - center.y;
+    const angleRad = (angle * Math.PI) / 180;
+    const nx = center.x + Math.cos(angleRad) * dx - Math.sin(angleRad) * dy;
+    const ny = center.y + Math.sin(angleRad) * dx + Math.cos(angleRad) * dy;
+    return {
+      x: nx,
+      y: ny,
+    };
+  });
+
+  const minX = Math.min(...points.map((loc) => loc.x));
+  const minY = Math.min(...points.map((loc) => loc.y));
+  const maxX = Math.max(...points.map((loc) => loc.x)) + Math.abs(minX);
+  const maxY = Math.max(...points.map((loc) => loc.y)) + Math.abs(minY);
 
   const canvas = ref.current as HTMLCanvasElement;
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -27,11 +44,14 @@ export function drawCircuit(
   ctx.scale(dpr, dpr);
 
   // scale points
-  const points = circuitPoints.map((loc) => {
-    return {
-      x: (loc.x + Math.abs(minX)) / scale + width / 20,
-      y: (loc.y + Math.abs(minY)) / scale + width / 15,
-    };
+  points.forEach((point) => {
+    (point.x = (point.x + Math.abs(minX)) / scale + width / 20),
+      (point.y = (point.y + Math.abs(minY)) / scale + width / 20);
+  });
+
+  // flip points vertically
+  points.forEach((point) => {
+    point.y = calcHeight - point.y;
   });
 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);

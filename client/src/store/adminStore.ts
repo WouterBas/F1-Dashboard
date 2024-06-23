@@ -11,6 +11,7 @@ type State = {
   startTime: Date;
   duration: number;
   saved: boolean;
+  angle: number;
 
   setSelected: (selected: State["selected"]) => void;
   setClosed: () => void;
@@ -18,6 +19,7 @@ type State = {
   setDuration: (duration: number) => void;
   setStartTime: (startTime: Date) => void;
   setSaved: (saved: boolean) => void;
+  setAngle: (angle: number) => void;
 };
 
 export const useAdminStore = create<State>((set) => ({
@@ -31,6 +33,7 @@ export const useAdminStore = create<State>((set) => ({
   startTime: new Date("2021-05-02T14:00:00.000Z"),
   duration: 60000,
   saved: false,
+  angle: 0,
 
   setSelected: (selected: State["selected"]) => set({ selected }),
   setClosed: () => set((state) => ({ closed: !state.closed })),
@@ -38,4 +41,5 @@ export const useAdminStore = create<State>((set) => ({
   setDuration: (duration: number) => set({ duration }),
   setStartTime: (startTime: Date) => set({ startTime }),
   setSaved: (saved: boolean) => set({ saved }),
+  setAngle: (angle: number) => set({ angle }),
 }));

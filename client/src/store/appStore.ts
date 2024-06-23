@@ -39,8 +39,8 @@ export const createAppStore = (initProps?: Partial<AppProps>) => {
     trackStatus: "Started",
     showLabels: true,
     circuitDimensions: {
-      calcWidth: 300,
-      calcHeight: 150,
+      calcWidth: 0,
+      calcHeight: 0,
       scale: 1,
       minX: 0,
       minY: 0,
