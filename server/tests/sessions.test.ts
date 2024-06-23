@@ -20,36 +20,28 @@ describe("Sessions", () => {
   });
 
   test("should get session by key", async () => {
-    const response = await fetch("http://localhost:4000/api/v1/session/9515");
+    const response = await fetch(
+      "http://localhost:4000/api/v1/session/canadian-grand-prix/2024/race"
+    );
     const data: any = await response.json();
     expect(response.status).toBe(200);
     expect(data).not.toBeNull();
     expect(data).toBeInstanceOf(Object);
-    expect(data.name).toEqual("Emilia Romagna Grand Prix");
-    expect(data.sessionKey).toEqual(9515);
-    expect(data.circuitKey).toEqual(6);
-    expect(data.circuitName).toEqual("Imola");
+    expect(data.name).toEqual("Canadian Grand Prix");
+    expect(data.sessionKey).toEqual(9531);
+    expect(data.circuitKey).toEqual(23);
     expect(data.drivers).toBeArray();
     expect(data.drivers).toHaveLength(20);
   });
 
   test("should not found session", async () => {
-    const response = await fetch("http://localhost:4000/api/v1/session/9999");
+    const response = await fetch(
+      "http://localhost:4000/api/v1/session/canadian-grand-prix/1995/race"
+    );
     const data: any = await response.json();
     expect(response.status).toBe(404);
     expect(data).not.toBeNull();
     expect(data).toBeInstanceOf(Object);
     expect(data.message).toEqual("Session not found");
-  });
-
-  test("should error on invalid key", async () => {
-    const response = await fetch("http://localhost:4000/api/v1/session/abc");
-    const data: any = await response.json();
-    expect(response.status).toBe(400);
-    expect(data).not.toBeNull();
-    expect(data).toBeInstanceOf(Object);
-    expect(data.message).toEqual(
-      "key is required and must be a number greater than 0"
-    );
   });
 });

@@ -20,13 +20,18 @@ describe("Circuits", () => {
     );
     const data: any = await response.json();
     expect(data).not.toBeNull();
-    expect(data).toBeInstanceOf(Array);
-    expect(data.length).toBeGreaterThan(0);
-    expect(data[0]).toBeObject();
-    expect(data[0]).toHaveProperty("x");
-    expect(data[0]).toHaveProperty("y");
-    expect(data[0].x).toBeNumber();
-    expect(data[0].y).toBeNumber();
+    expect(data).toBeInstanceOf(Object);
+    expect(data).toHaveProperty("angle");
+    expect(data).toHaveProperty("aspectRatio");
+    expect(data).toHaveProperty("circuitPoints");
+    expect(data.circuitPoints.length).toBeGreaterThan(0);
+    expect(data.angle).toBeNumber();
+    expect(data.aspectRatio).toBeNumber();
+    expect(data.circuitPoints[0]).toBeObject();
+    expect(data.circuitPoints[0]).toHaveProperty("x");
+    expect(data.circuitPoints[0]).toHaveProperty("y");
+    expect(data.circuitPoints[0].x).toBeNumber();
+    expect(data.circuitPoints[0].y).toBeNumber();
   });
 
   test("should not found circuit", async () => {

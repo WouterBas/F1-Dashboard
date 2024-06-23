@@ -25,7 +25,7 @@ export const getAllSessions = async (c: Context) => {
   return c.json(result);
 };
 
-export const getSessionByKey = async (c: Context) => {
+export const getSessionBySlug = async (c: Context) => {
   const name: string = c.req.param("name");
   const year: string = c.req.param("year");
   const type: string = c.req.param("type");
