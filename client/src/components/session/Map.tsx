@@ -100,7 +100,7 @@ const Map = ({
   }, [isPlaying]);
 
   return (
-    <div className="w-full" ref={mapRef}>
+    <div className="relative w-full" ref={mapRef}>
       {circuitDimensions.calcWidth < 1 && (
         <div
           className=" max-h-[calc(100dvh-92px)] max-w-full sm:max-h-[calc(100dvh-122px)] md:max-h-[calc(100dvh-160px)] lg:max-h-[calc(100dvh-186px)]"
@@ -108,7 +108,7 @@ const Map = ({
         ></div>
       )}
 
-      <div className="relative mx-auto w-fit ">
+      <div className="mx-auto w-fit ">
         <MapCircuit
           circuitInfo={circuitInfo}
           dpr={dpr}

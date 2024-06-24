@@ -6,7 +6,6 @@ import { HTTPError } from "ky";
 import Link from "next/link";
 import Main from "@/components/session/Main";
 import LeaderBoard from "@/components/session/LeaderBoard";
-import Header from "@/components/Header";
 
 export async function generateStaticParams() {
   const response = await apiService.get(`session/all`, {});
@@ -58,11 +57,8 @@ async function Page({ params }: { params: { slug: string[] } }) {
 
     return (
       <AppProvider sessionInfo={sessionInfo}>
-        <header className="flex justify-between">
-          <Header />
-          <GP sessionInfo={sessionInfo} />
-        </header>
-        <main className="grid grid-cols-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
+        <GP sessionInfo={sessionInfo} />
+        <main className="col-span-2 grid grid-cols-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
           <LeaderBoard timingData={timingData} sessionInfo={sessionInfo} />
           <Main sessionInfo={sessionInfo} />
         </main>

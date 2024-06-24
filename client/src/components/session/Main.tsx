@@ -3,7 +3,12 @@ import { CircuitInfo, SessionGp, Trackstatus } from "@/types";
 import MediaControls from "./MediaControls";
 import Labels from "./Labels";
 import TrackStatus from "./TrackStatus";
-import Map from "./Map";
+
+const Map = dynamic(() => import("./Map"), {
+  loading: () => <p>Loading...</p>,
+});
+
+import dynamic from "next/dynamic";
 
 const Main = async ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   const circuitPointsRes = await apiService.get(

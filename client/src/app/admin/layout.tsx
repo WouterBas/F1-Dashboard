@@ -1,12 +1,7 @@
-import Header from "@/components/Header";
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <header>
-        <Header />
-      </header>
-      <main className="grid grid-rows-[1fr_auto]">{children}</main>
+      <main className="col-span-2 grid grid-rows-[1fr_auto]">{children}</main>
     </>
   );
 }
