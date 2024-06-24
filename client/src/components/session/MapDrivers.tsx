@@ -151,7 +151,7 @@ const MapDrivers = ({
       )}
       {data && (
         <canvas
-          className="absolute top-0 max-h-[calc(100dvh-76px)] max-w-full sm:max-h-[calc(100dvh-102px)] md:max-h-[calc(100dvh-130px)] lg:max-h-[calc(100dvh-158px)]"
+          className="absolute top-0 max-h-[calc(100dvh-92px)] max-w-full sm:max-h-[calc(100dvh-122px)] md:max-h-[calc(100dvh-160px)] lg:max-h-[calc(100dvh-186px)]"
           ref={circuitDriverssRef}
           width={circuitDimensions.calcWidth}
           height={circuitDimensions.calcHeight}

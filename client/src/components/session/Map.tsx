@@ -108,7 +108,7 @@ const Map = ({
         ></div>
       )}
 
-      <div className="mx-auto w-fit ">
+      <div className="mx-auto w-fit">
         <MapCircuit
           circuitInfo={circuitInfo}
           dpr={dpr}
