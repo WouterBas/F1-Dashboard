@@ -83,6 +83,7 @@ const MapDrivers = ({
       new Date(driverPositoins[index + 1].timestamp).getTime() -
       new Date(driverPositoins[index].timestamp).getTime();
 
+    // progress is the percentage between the last position and the next
     let progress =
       (time.getTime() - new Date(closestPosition.timestamp).getTime()) /
       duration;
@@ -90,6 +91,7 @@ const MapDrivers = ({
     const currentEntries = driverPositoins[index].entries;
     const nextEntries = driverPositoins[index + 1].entries;
 
+    // interpolate between the current and next positions
     const inbetweenPositions: { [key: string]: { X: number; Y: number } } = {};
     Object.keys(currentEntries).forEach((key) => {
       inbetweenPositions[key] = {

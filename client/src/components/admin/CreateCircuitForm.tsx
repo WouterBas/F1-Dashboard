@@ -126,6 +126,10 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
   }
 
+  if (error !== undefined) {
+    console.log(error);
+  }
+
   // draw circuit
   useEffect(() => {
     if (circuitPoints && circuitPoints.length > 0) {
@@ -144,10 +148,20 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       const aspect = circuitRef.current?.width / circuitRef.current?.height;
       setAspectRatio(aspect);
     }
-  }, [circuitPoints, circuitRef, width, dpr, scale, closed, angle, points]);
+  }, [
+    circuitPoints,
+    circuitRef,
+    width,
+    dpr,
+    scale,
+    closed,
+    angle,
+    points,
+    error,
+  ]);
 
   return (
-    <div className="grid grid-rows-[auto,1fr] gap-1 ">
+    <div className="grid grid-rows-[auto,1fr] gap-1 sm:gap-2  lg:gap-3">
       <div className=" grid gap-1 text-sm  sm:grid-cols-[auto,1fr] sm:gap-2 sm:text-base">
         <div className="flex flex-wrap gap-1 sm:gap-2">
           <Dropdown
@@ -188,14 +202,14 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
 
         <button
           className="h-fit w-full self-center justify-self-end rounded border-2 bg-neutral-800 px-3 py-1 text-center text-base disabled:opacity-50 sm:w-fit"
-          disabled={saved}
+          disabled={saved || error}
           onClick={() =>
             trigger({
               sessionKey: selected.sessionKey,
               driverKey: selected.driverKey,
               startTime: startTime,
               duration: duration,
-              circuitPoints: circuitPoints,
+              circuitPoints: error ? [] : circuitPoints,
               angle: angle,
               aspectRatio: aspectRatio,
             })
@@ -212,7 +226,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
           </div>
 
           <canvas
-            className="mx-auto max-h-[calc(100dvh-264px)] max-w-full  sm:max-h-[calc(100dvh-232px)] md:max-h-[calc(100dvh-210px)] lg:max-h-[calc(100dvh-176px)]"
+            className={`${error ? "hidden" : "block"} mx-auto max-h-[calc(100dvh-264px)] max-w-full  sm:max-h-[calc(100dvh-232px)] md:max-h-[calc(100dvh-210px)] lg:max-h-[calc(100dvh-176px)]`}
             ref={circuitRef}
           ></canvas>
         </div>

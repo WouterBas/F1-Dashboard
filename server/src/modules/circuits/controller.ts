@@ -83,23 +83,25 @@ export const patchCircuit = async (c: Context) => {
     aspectRatio,
   }: PatchCircuit = await c.req.json();
 
-  const result = await client
-    .db("f1dashboard")
-    .collection("circuits")
-    .updateOne(
-      { circuitKey: key },
-      {
-        $set: {
-          circuitPoints,
-          sessionKey,
-          driverKey,
-          startTime,
-          duration,
-          angle,
-          aspectRatio,
-        },
-      }
-    );
+  if (circuitPoints.length < 200) {
+    c.status(400);
+    return c.json({ message: "Circuit must have at least 200 points" });
+  }
+
+  await client.db("f1dashboard").collection("circuits").updateOne(
+    { circuitKey: key },
+    {
+      $set: {
+        circuitPoints,
+        sessionKey,
+        driverKey,
+        startTime,
+        duration,
+        angle,
+        aspectRatio,
+      },
+    }
+  );
 
   return await getAllCircuits(c);
 };

@@ -48,6 +48,11 @@ export const getPositionOneDriver = async (c: Context) => {
     })
     .toArray()) as unknown as Position[];
 
+  if (result.length === 0) {
+    c.status(404);
+    return c.json({ message: "Points not found" });
+  }
+
   // check if driver exists in array
   if (!result[0].entries[driverNumber]) {
     c.status(404);
@@ -58,11 +63,6 @@ export const getPositionOneDriver = async (c: Context) => {
     x: position.entries[driverNumber].X,
     y: position.entries[driverNumber].Y,
   }));
-
-  if (filterDriver.length === 0) {
-    c.status(404);
-    return c.json({ message: "Points not found" });
-  }
 
   return c.json(filterDriver);
 };

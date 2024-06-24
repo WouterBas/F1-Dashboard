@@ -66,10 +66,9 @@ const Map = ({
 
   // main clock animation
   useLayoutEffect(() => {
+    let animationFrameId: number;
     if (isPlaying) {
-      let animationFrameId: number;
       const startTime = performance.now();
-
       const render = () => {
         const timeDifference =
           performance.now() - new Date(startTime).getTime();
@@ -88,14 +87,13 @@ const Map = ({
             1000 /
             60,
         );
-
         setMinute(minute);
 
         animationFrameId = requestAnimationFrame(render);
       };
-      animationFrameId = requestAnimationFrame(render);
-      return () => cancelAnimationFrame(animationFrameId);
+      render();
     }
+    return () => cancelAnimationFrame(animationFrameId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying]);
 
