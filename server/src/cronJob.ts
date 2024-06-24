@@ -8,5 +8,5 @@ cron.schedule("*/15 * * * 5,6,0", function () {
   console.log("---------------------");
   shell.exec("bun seed");
   console.log("---------------------");
-  console.log("Cron Job Completed " + new Date().toLocaleString());
+  console.log("Cron Job Completed" + new Date().toLocaleString());
 });

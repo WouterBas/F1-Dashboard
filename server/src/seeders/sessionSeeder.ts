@@ -129,17 +129,12 @@ async function seeder() {
 
 // convert session info from f1 to the format of the database
 function convertData(data: F1Meeting, startDate: Date, endDate: Date) {
-  const offset =
-    data.GmtOffset[0] !== "-"
-      ? (data.GmtOffset = "+" + data.GmtOffset.slice(0, -3))
-      : (data.GmtOffset = data.GmtOffset.slice(0, -3));
   return {
     name: data.Meeting.Name,
     sessionKey: data.Key,
     type: data.Name,
     startDate,
     endDate,
-    gmtOffset: data.GmtOffset,
     url: "https://livetiming.formula1.com/static/" + data.Path,
     slug: `${slugify(data.Meeting.Name, {
       lower: true,

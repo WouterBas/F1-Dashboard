@@ -81,7 +81,6 @@ export type Meeting = {
   type: string;
   startDate: Date;
   endDate: Date;
-  gmtOffset: string;
   url: string;
   circuitKey: number;
   circuitName: string;
