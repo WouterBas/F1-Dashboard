@@ -28,6 +28,14 @@ export const metadata: Metadata = {
     siteName: "F1 Dashboard",
     locale: "en-US",
     type: "website",
+    images: [
+      {
+        url: "https://f1-dashboard.app/og.png",
+        width: 1200,
+        height: 630,
+        alt: "F1 Dashboard",
+      },
+    ],
   },
 };
 
