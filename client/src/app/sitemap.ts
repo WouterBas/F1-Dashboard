@@ -1,7 +1,7 @@
 import { apiService } from "@/services/api.service";
 import { SessionList } from "@/types";
 
-const baseUrl = "https://f1-dashboard.app/";
+const baseUrl = "https://f1-dashboard.app";
 
 export default async function sitemap(): Promise<
   {
