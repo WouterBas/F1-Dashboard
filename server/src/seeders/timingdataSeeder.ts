@@ -28,6 +28,12 @@ async function seeder() {
     }
 
     const timingData = await getF1StreamData(url, "TimingData");
+    if (!timingData) {
+      console.log(
+        `${startDate.getFullYear()} - ${name} - ${type} - no timing data was found`
+      );
+      continue;
+    }
     const LinesArr: [Lines, string][] = timingData
       .split("\n")
       .map((str: string) => [str.substring(12), str.substring(0, 12)])
@@ -129,7 +135,6 @@ function convertLines(
       };
     });
   }
-
   return convertedLines;
 }
 
@@ -167,6 +172,12 @@ function extendLines(line: ConvertedLines, previousLine: ConvertedLines) {
 
 async function findTimeOffset(url: string) {
   const sessionData = await getF1StreamData(url, "SessionData");
+  if (!sessionData) {
+    return {
+      timeOffset: 0,
+      startTime: new Date(),
+    };
+  }
   const sessionDataArr: string[][] = sessionData
     .split("\n")
     .map((str: string) => [str.substring(0, 12), str.substring(12)])

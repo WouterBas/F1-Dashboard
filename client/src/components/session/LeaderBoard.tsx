@@ -34,15 +34,17 @@ const LeaderBoard = ({
     const newDriverList = sessionInfo.drivers
       .map((driver) => {
         const driverTiming = timingData[index].lines[driver.racingNumber];
+
+        // TODO: temp fix for when driver is not in the timing data
         return {
           racingNumber: driver.racingNumber,
           teamColor: driver.teamColor,
           abbreviation: driver.abbreviation,
-          inPit: driverTiming.inPit,
-          pitOut: driverTiming.pitOut,
-          retired: driverTiming.retired,
-          position: driverTiming.position,
-          stopped: driverTiming.stopped,
+          inPit: driverTiming?.inPit || false,
+          pitOut: driverTiming?.pitOut || false,
+          retired: driverTiming?.retired || false,
+          position: driverTiming?.position || 20,
+          stopped: driverTiming?.stopped || false,
         };
       })
       .sort((a, b) => a.position - b.position);
