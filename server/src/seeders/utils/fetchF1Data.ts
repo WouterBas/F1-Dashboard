@@ -34,6 +34,10 @@ export async function getF1StreamData(url: string, feed: string) {
   const fullUrl = `${url}${feed}.jsonStream`;
   try {
     const response = await fetch(fullUrl);
+    if (response.status !== 200) {
+      console.error("Error fetching data:", response.status, fullUrl);
+      return null;
+    }
     const data = await response.text();
     return data;
   } catch (error) {

@@ -21,9 +21,7 @@ export async function generateMetadata({
   params: { slug: string[] };
 }) {
   const slug = params.slug.join("/");
-  const response = await apiService.get(`session/${slug}`, {
-    next: { revalidate: 600 },
-  });
+  const response = await apiService.get(`session/${slug}`);
   const sessionInfo: SessionGp = await response.json();
 
   return {
@@ -44,9 +42,7 @@ async function Page({ params }: { params: { slug: string[] } }) {
   const slug = params.slug.join("/");
 
   try {
-    const response = await apiService.get(`session/${slug}`, {
-      next: { revalidate: 600 },
-    });
+    const response = await apiService.get(`session/${slug}`);
     const sessionInfo: SessionGp = await response.json();
 
     const timingDataRes = await apiService.get(

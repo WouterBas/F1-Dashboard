@@ -29,6 +29,12 @@ async function seeder() {
     }
 
     const positions = await getF1StreamData(url, "Position.z");
+    if (!positions) {
+      console.log(
+        `${startDate.getFullYear()} - ${name} - ${type} - positions not found`
+      );
+      continue;
+    }
     const positionsArr: string[] = positions
       .split("\n")
       .map((str) => str.substring(13, str.length - 2));
