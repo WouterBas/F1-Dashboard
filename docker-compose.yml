@@ -1,18 +1,18 @@
 services:
 
-  next-app:
-    container_name: F1-Dashboard-Client
-    depends_on:
-      - server
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    volumes:
-      - ./client/src:/app/src
-      - ./client/public:/app/public
-    restart: always
-    ports:
-      - 3000:3000
+  # next-app:
+  #   container_name: F1-Dashboard-Client
+  #   depends_on:
+  #     - server
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./client/src:/app/src
+  #     - ./client/public:/app/public
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
 
   mongodb:
     container_name: F1-Dashboard-MongoDB
