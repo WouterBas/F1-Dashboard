@@ -47,7 +47,7 @@ services:
       - 4000
     environment:
       - BUN_PORT=4000
-      - DB_HOST=mongodb
+      - DB_HOST=$MONGODB_HOST
       - DB_USER=$MONGODB_USER
       - DB_PASSWORD=$MONGODB_PASSWORD
       - DB_NAME=$MONGODB_DATABASE
