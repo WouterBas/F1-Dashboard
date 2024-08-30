@@ -1,4 +1,21 @@
 services:
+
+  next-app:
+    container_name: F1-Dashboard-Client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+
+    # Set environment variables based on the .env file
+    # env_file:
+    #   - .env
+    volumes:
+      - ./client/src:/app/src
+      - ./client/public:/app/public
+    restart: always
+    ports:
+      - 3000:3000
+
   mongodb:
     container_name: F1-Dashboard-MongoDB
     image: mongo:latest
