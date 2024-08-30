@@ -1,5 +1,5 @@
 import ky from "ky";
 
 export const apiService = ky.create({
-  prefixUrl: `${process.env.NEXT_PUBLIC_API_URL}/api/v1`,
+  prefixUrl: `http://localhost:4000/api/v1`,
 });

@@ -2,13 +2,11 @@ services:
 
   next-app:
     container_name: F1-Dashboard-Client
+    depends_on:
+      - server
     build:
       context: ./client
       dockerfile: Dockerfile
-
-    # Set environment variables based on the .env file
-    # env_file:
-    #   - .env
     volumes:
       - ./client/src:/app/src
       - ./client/public:/app/public
