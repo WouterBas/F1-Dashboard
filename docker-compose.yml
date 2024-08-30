@@ -43,6 +43,8 @@ services:
     env_file: ./.env
     ports:
       - 4000:4000
+    expose:
+      - 4000
     environment:
       - BUN_PORT=4000
       - DB_HOST=mongodb
