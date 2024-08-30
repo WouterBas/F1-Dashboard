@@ -21,6 +21,8 @@ app.use(
   })
 );
 
+console.log("server is running");
+
 app.get("/status", async (c) => {
   return c.text("server is running");
 });
