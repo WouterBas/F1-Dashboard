@@ -1,5 +1,5 @@
 import GP from "@/components/session/Gp";
-import { SessionGp, TimgingData } from "@/types";
+import { SessionGp, SessionList, TimgingData } from "@/types";
 import { apiService } from "@/services/api.service";
 import AppProvider from "@/components/session/AppProvider";
 import { HTTPError } from "ky";
@@ -7,36 +7,36 @@ import Link from "next/link";
 import Main from "@/components/session/Main";
 import LeaderBoard from "@/components/session/LeaderBoard";
 
-// export async function generateStaticParams() {
-//   const response = await apiService.get(`session/all`, {});
-//   const data: SessionList[] = await response.json();
-//   return data.map((session) => ({
-//     slug: session.slug.split("/"),
-//   }));
-// }
+export async function generateStaticParams() {
+  const response = await apiService.get(`session/all`, {});
+  const data: SessionList[] = await response.json();
+  return data.map((session) => ({
+    slug: session.slug.split("/"),
+  }));
+}
 
-// export async function generateMetadata({
-//   params,
-// }: {
-//   params: { slug: string[] };
-// }) {
-//   const slug = params.slug.join("/");
-//   const response = await apiService.get(`session/${slug}`);
-//   const sessionInfo: SessionGp = await response.json();
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string[] };
+}) {
+  const slug = params.slug.join("/");
+  const response = await apiService.get(`session/${slug}`);
+  const sessionInfo: SessionGp = await response.json();
 
-//   return {
-//     title: `F1 Dashboard | ${sessionInfo.name} | ${new Date(sessionInfo.startDate).getFullYear()} | ${sessionInfo.type}`,
-//     description: `Relive the ${sessionInfo.name} ${new Date(sessionInfo.startDate).getFullYear()} on F1 Dashboard. Explore detailed telemetry data, track driver positions, rankings, and track status through an interactive timeline.`,
-//     openGraph: {
-//       title: `F1 Dashboard | ${sessionInfo.name} | ${new Date(sessionInfo.startDate).getFullYear()} | ${sessionInfo.type}`,
-//       description: `Relive the ${sessionInfo.name} ${new Date(sessionInfo.startDate).getFullYear()} on F1 Dashboard. Explore detailed telemetry data, track driver positions, rankings, and track status through an interactive timeline.`,
-//       url: `https://f1-dashboard.app/${params.slug.join("/")}`,
-//       siteName: "F1 Dashboard",
-//       locale: "en-US",
-//       type: "website",
-//     },
-//   };
-// }
+  return {
+    title: `F1 Dashboard | ${sessionInfo.name} | ${new Date(sessionInfo.startDate).getFullYear()} | ${sessionInfo.type}`,
+    description: `Relive the ${sessionInfo.name} ${new Date(sessionInfo.startDate).getFullYear()} on F1 Dashboard. Explore detailed telemetry data, track driver positions, rankings, and track status through an interactive timeline.`,
+    openGraph: {
+      title: `F1 Dashboard | ${sessionInfo.name} | ${new Date(sessionInfo.startDate).getFullYear()} | ${sessionInfo.type}`,
+      description: `Relive the ${sessionInfo.name} ${new Date(sessionInfo.startDate).getFullYear()} on F1 Dashboard. Explore detailed telemetry data, track driver positions, rankings, and track status through an interactive timeline.`,
+      url: `https://f1-dashboard.app/${params.slug.join("/")}`,
+      siteName: "F1 Dashboard",
+      locale: "en-US",
+      type: "website",
+    },
+  };
+}
 
 async function Page({ params }: { params: { slug: string[] } }) {
   const slug = params.slug.join("/");
