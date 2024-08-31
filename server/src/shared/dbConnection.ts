@@ -5,7 +5,8 @@ import { MongoClient } from "mongodb";
 const userName = process.env.MONGODB_USER;
 const password = process.env.MONGODB_PASSWORD;
 const host = process.env.MONGODB_HOST;
-const uri = `mongodb://${userName}:${password}@${host}:27017/`;
+const port = process.env.MONGODB_PORT;
+const uri = `mongodb://${userName}:${password}@${host}:${port}/`;
 
 // create new MongoClient instance and export it
 const client = new MongoClient(uri);
