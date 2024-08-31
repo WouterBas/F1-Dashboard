@@ -14,7 +14,7 @@ async function getF1Data(schedule: Schedule, session: Session, type: string) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching data:", url, error);
+    console.error("Error fetching data:", url);
     return null;
   }
 }

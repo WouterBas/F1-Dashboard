@@ -1,23 +1,7 @@
 import client from "../shared/dbConnection";
 import slugify from "slugify";
-import {
-  Meeting,
-  F1Meeting,
-  Schedule,
-  SessionData,
-  StatusSery,
-} from "../types/index";
+import { Meeting, F1Meeting, Schedule, SessionData } from "../types/index";
 import getF1Data from "./utils/fetchF1Data";
-
-async function getLastSeedingDate() {
-  const result = (await client
-    .db("f1dashboard")
-    .collection("seeding")
-    .findOne({})) as unknown as { lastSeedingDate: Date };
-  return result.lastSeedingDate;
-}
-
-// const lastSeedingDate = await getLastSeedingDate();
 
 // get schedule from database
 const getSchedule = async () => {
@@ -74,6 +58,21 @@ async function seeder() {
 
   for (const schedule of schedules) {
     for (const session of schedule.sessions) {
+      const existInDb = await client
+        .db("f1dashboard")
+        .collection("sessions")
+        .findOne({
+          slug: `${slugify(schedule.name, { lower: true })}/${
+            schedule.year
+          }/${slugify(session.type.replace("_", "-"), { lower: true })}`,
+        });
+      if (existInDb) {
+        console.log(
+          `${schedule.year} ${schedule.name} ${session.type} - session already exists`
+        );
+        continue;
+      }
+
       console.log(`fetching ${schedule.year} ${schedule.name} ${session.type}`);
       const data = (await getF1Data(
         schedule,
@@ -81,7 +80,7 @@ async function seeder() {
         "SessionInfo"
       )) as F1Meeting;
 
-      if (data === null) {
+      if (data === null || data.ArchiveStatus.Status != "Complete") {
         console.log(
           `skipping ${schedule.year} ${schedule.name} ${session.type}`
         );

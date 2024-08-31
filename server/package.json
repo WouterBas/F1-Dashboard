@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "bun run src/index.ts",
+    "dev": "bun run --watch src/index.ts",
     "seed": "bun src/seeders/scheduleSeeder.ts && bun src/seeders/usersSeeder.ts && bun src/seeders/circuitSeeder.ts && bun src/seeders/sessionSeeder.ts && bun src/seeders/driverSeeder.ts && bun src/seeders/timingdataSeeder.ts && bun src/seeders/trackStatusSeeder.ts && bun src/seeders/positionSeeder.ts"
   },
   "dependencies": {

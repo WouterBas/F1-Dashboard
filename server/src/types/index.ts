@@ -5,13 +5,6 @@ export type circuitPoints = {
   y: number;
 };
 
-// export type Position = {
-//   _id: string;
-//   timestamp: Date;
-//   entries: { [key: string]: Entry };
-//   sessionKey: number;
-// };
-
 export type Entry = {
   Status: string;
   X: number;
@@ -65,7 +58,7 @@ export type F1Meeting = {
       ShortName: string;
     };
   };
-  ArchiveStatus: string;
+  ArchiveStatus: { Status: string };
   Key: number;
   Type: string;
   Name: string;
