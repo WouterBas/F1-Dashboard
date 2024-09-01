@@ -25,7 +25,9 @@ const Login = () => {
         router.refresh();
       }
     } catch (error) {
-      const data = await (error as HTTPError).response.json();
+      const data: { message: string } = await (
+        error as HTTPError
+      ).response.json();
       setServerError(data.message);
     }
   };
