@@ -13,7 +13,7 @@ const getSchedule = async () => {
         sessions: {
           $elemMatch: {
             date: {
-              $lt: new Date().toISOString().split("T")[0],
+              $lte: new Date().toISOString().split("T")[0],
             },
           },
         },
