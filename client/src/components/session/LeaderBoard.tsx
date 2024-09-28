@@ -28,28 +28,21 @@ const LeaderBoard = ({
       }
       return prev;
     });
-    const index = timingData.indexOf(closestTiming);
 
-    // create new driver list
-    const newDriverList = sessionInfo.drivers
+    const newDriverList = driverList
       .map((driver) => {
-        const driverTiming = timingData[index].lines[driver.racingNumber];
-
-        // TODO: temp fix for when driver is not in the timing data
+        const match = closestTiming.lines.find(
+          (data) => data.driverNumber === driver.racingNumber,
+        );
         return {
-          racingNumber: driver.racingNumber,
-          teamColor: driver.teamColor,
-          abbreviation: driver.abbreviation,
-          inPit: driverTiming?.inPit || false,
-          pitOut: driverTiming?.pitOut || false,
-          retired: driverTiming?.retired || false,
-          position: driverTiming?.position || 20,
-          stopped: driverTiming?.stopped || false,
+          ...driver,
+          ...match,
         };
       })
       .sort((a, b) => a.position - b.position);
     setDriverList(newDriverList);
-  }, [timingData, sessionInfo, time, setDriverList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timingData, sessionInfo, time]);
 
   return (
     <div className="rounded-md bg-neutral-800 p-1 font-mono text-xs tracking-wider text-white sm:p-2 sm:text-sm md:px-3 md:text-base lg:text-lg">

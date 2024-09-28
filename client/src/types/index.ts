@@ -115,14 +115,13 @@ export type CircuitDimensions = {
 export type TimgingData = {
   timestamp: Date;
   lines: {
-    [key: string]: {
-      inPit: boolean;
-      pitOut: boolean;
-      retired: boolean;
-      position: number;
-      stopped: boolean;
-    };
-  };
+    driverNumber: number;
+    inPit: boolean;
+    pitOut: boolean;
+    retired: boolean;
+    position: number;
+    stopped: boolean;
+  }[];
 };
 
 export type DriverTimingList = {

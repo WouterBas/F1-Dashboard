@@ -11,7 +11,9 @@ const Gp = ({
         {name}
       </h2>
       <h3 className="border-none pr-2 ">{type}</h3>
-      <h3 className="pl-2">{new Date(startDate).toLocaleDateString()}</h3>
+      <h3 className="pl-2">
+        {new Date(startDate).toLocaleDateString("en-GB")}
+      </h3>
     </section>
   );
 };

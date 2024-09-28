@@ -126,7 +126,7 @@ export type Position = {
   sessionKey: number;
 };
 
-export type Lines = {
+export type RawObject = {
   [key: string]: {
     Position?: string;
     Retired?: boolean;
@@ -145,20 +145,37 @@ export type Lines = {
   };
 };
 
-export type ConvertedLines = {
-  [key: string]: {
-    position?: number;
-    retired?: boolean;
-    inPit?: boolean;
-    pitOut?: boolean;
-    stopped?: boolean;
+export type DriverObject = {
+  driverNumber: number;
+  Position?: string;
+  Retired?: boolean;
+  InPit?: boolean;
+  PitOut?: boolean;
+  Stopped?: boolean;
+  GapToLeader?: string;
+  IntervalToPositionAhead?: {
+    Value: number;
+    Catching: boolean;
   };
+  RacingNumber?: string;
+  Status?: number;
+  NumberOfLaps?: number;
+  Sectors?: object[];
+};
+
+export type DriverClean = {
+  driverNumber: number;
+  position?: number;
+  retired?: boolean;
+  inPit?: boolean;
+  pitOut?: boolean;
+  stopped?: boolean;
 };
 
 export type TimingData = {
   timestamp: Date;
   sessionKey: number;
-  lines: ConvertedLines;
+  lines: DriverClean[];
 };
 
 export type SessionData = {
