@@ -14,7 +14,11 @@ import {
 } from "./modules";
 
 export const app = new Hono().basePath("/api/v1");
-app.use(logger());
+
+if (process.env.NODE_ENV === "development") {
+  app.use(logger());
+}
+
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "*",
