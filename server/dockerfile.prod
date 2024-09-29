@@ -11,4 +11,8 @@ RUN bun install --frozen-lockfile
 # If only files in the src folder changed, this is the only step that gets executed!
 COPY src ./src 
 
-CMD ["bun", "src/index.ts"]
+# Build your application
+RUN bun build --entrypoints ./src/index.ts --outdir ./dist --target bun
+
+
+CMD ["bun", "dist/index.js"]
