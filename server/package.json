@@ -5,18 +5,14 @@
     "seed": "bun src/seeders/scheduleSeeder.ts && bun src/seeders/usersSeeder.ts && bun src/seeders/circuitSeeder.ts && bun src/seeders/sessionSeeder.ts && bun src/seeders/driverSeeder.ts && bun src/seeders/timingdataSeeder.ts && bun src/seeders/trackStatusSeeder.ts && bun src/seeders/positionSeeder.ts"
   },
   "dependencies": {
-    "@types/node-cron": "^3.0.11",
-    "@types/shelljs": "^0.8.15",
-    "hono": "^4.4.9",
-    "mongodb": "^6.8.0",
-    "node-cron": "^3.0.3",
-    "shelljs": "^0.8.5",
+    "hono": "^4.6.3",
+    "mongodb": "^6.9.0",
     "slugify": "^1.6.6",
     "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/node": "^20.14.9",
-    "bun-types": "^1.1.17"
+    "@types/node": "^20.16.10",
+    "bun-types": "^1.1.29"
   }
 }

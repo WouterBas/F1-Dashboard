@@ -1,15 +1,8 @@
 import client from "../shared/dbConnection";
 import { getF1StreamData } from "./utils/fetchF1Data";
-import type {
-  TimingData,
-  RawObject,
-  DriverClean,
-  SessionData,
-  DriverObject,
-} from "../types";
+import type { TimingData, RawObject, DriverClean } from "../types";
 
 import { getMeetings } from "./utils/helpers";
-import { test } from "shelljs";
 
 const meetings = await getMeetings();
 
