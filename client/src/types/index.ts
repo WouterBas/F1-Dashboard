@@ -68,7 +68,7 @@ export type Entry = {
 
 export type DriverPosition = {
   timestamp: Date;
-  entries: { [key: string]: { X: number; Y: number } };
+  entries: { driverNumber: number; X: number; Y: number }[];
 };
 
 export type SortedDriverPosition = {

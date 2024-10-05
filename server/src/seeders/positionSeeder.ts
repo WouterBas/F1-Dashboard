@@ -91,17 +91,15 @@ function convertPosition(positions: F1Position[], sessionKey: number) {
   }));
 }
 
-function convertEntries(entries: F1Entries): Entrie {
-  const convertedEntries: Entrie = {};
-  Object.keys(entries).forEach((key) => {
-    if (parseInt(key) > 100) return;
-    else {
-      convertedEntries[key] = {
-        X: entries[key].X,
-        Y: entries[key].Y,
-      };
-    }
+function convertEntries(entries: F1Entries): Entrie[] {
+  const convertedEntries = Object.keys(entries).map((key) => {
+    return {
+      driverNumber: parseInt(key),
+      X: entries[key].X,
+      Y: entries[key].Y,
+    };
   });
+
   return convertedEntries;
 }
 

@@ -108,10 +108,9 @@ export type F1Entries = {
 };
 
 export type Entrie = {
-  [key: string]: {
-    X: number;
-    Y: number;
-  };
+  driverNumber: number;
+  X: number;
+  Y: number;
 };
 
 export type F1Position = {
@@ -122,7 +121,7 @@ export type F1Position = {
 
 export type Position = {
   timestamp: Date;
-  entries: Entrie;
+  entries: Entrie[];
   sessionKey: number;
 };
 

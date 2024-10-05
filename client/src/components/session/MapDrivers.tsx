@@ -92,27 +92,26 @@ const MapDrivers = ({
     const nextEntries = driverPositoins[index + 1].entries;
 
     // interpolate between the current and next positions
-    const inbetweenPositions: { [key: string]: { X: number; Y: number } } = {};
-    Object.keys(currentEntries).forEach((key) => {
-      inbetweenPositions[key] = {
-        X:
-          currentEntries[key].X +
-          (nextEntries[key].X - currentEntries[key].X) * progress,
-        Y:
-          currentEntries[key].Y +
-          (nextEntries[key].Y - currentEntries[key].Y) * progress,
+    const inbetweenPositions = currentEntries.map((entry, i) => {
+      return {
+        driverNumber: entry.driverNumber,
+        X: entry.X + (nextEntries[i].X - entry.X) * progress,
+        Y: entry.Y + (nextEntries[i].Y - entry.Y) * progress,
       };
     });
 
     // sort inbetweenPositions based on positions in driverList
     const sortedDriverList: SortedDriverPosition[] = driverList
       .map((driver) => {
+        const match = inbetweenPositions.find(
+          (entry) => entry.driverNumber === driver.racingNumber,
+        );
         return {
           racingNumber: driver.racingNumber,
           abbreviation: driver.abbreviation,
           teamColor: driver.teamColor,
-          X: inbetweenPositions[driver.racingNumber].X || 0,
-          Y: inbetweenPositions[driver.racingNumber].Y || 0,
+          X: match?.X || 0,
+          Y: match?.Y || 0,
           retired: driver.retired,
           stopped: driver.stopped,
         };
