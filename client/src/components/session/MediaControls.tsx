@@ -1,7 +1,7 @@
 "use client";
 import { sessionContext } from "@/store/sessionStore";
 import { SessionGp, Trackstatus } from "@/types";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
 import { useStore } from "zustand";
 
@@ -47,6 +47,46 @@ const MediaControls = ({
     );
     setMinute(minute);
   };
+
+  const toggle = useCallback(
+    (func: void) => {
+      toggleIsPlaying();
+      func;
+      setTimeout(() => toggleIsPlaying(), 1);
+    },
+    [toggleIsPlaying],
+  );
+
+  const checkKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.code === "Space") {
+        toggleIsPlaying();
+      }
+      if (event.key === "ArrowLeft") {
+        toggle(setTime(new Date(new Date(time).getTime() - 1000 * 60)));
+      }
+      if (event.key === "ArrowRight") {
+        toggle(setTime(new Date(new Date(time).getTime() + 1000 * 60)));
+      }
+      if (event.key === "ArrowUp") {
+        if (speed === 32) return;
+        toggle(setSpeed(speed * 2));
+      }
+      if (event.key === "ArrowDown") {
+        if (speed === 1) return;
+        toggle(setSpeed(speed / 2));
+      }
+    },
+    [setSpeed, setTime, speed, time, toggle, toggleIsPlaying],
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", checkKeyPress);
+    return () => {
+      window.removeEventListener("keydown", checkKeyPress);
+    };
+  }, [checkKeyPress]);
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -81,6 +121,7 @@ const MediaControls = ({
         <option value="4">x4</option>
         <option value="8">x8</option>
         <option value="16">x16</option>
+        <option value="32">x32</option>
       </select>
       <div className="relative h-1 w-full rounded-s">
         <input
