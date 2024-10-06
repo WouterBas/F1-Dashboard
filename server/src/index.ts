@@ -11,6 +11,7 @@ import {
   timingDataRouter,
   authRouter,
   trackstatusRouter,
+  lapCountRouter,
 } from "./modules";
 
 export const app = new Hono().basePath("/api/v1");
@@ -39,5 +40,6 @@ app.route("/session", sessionRouter);
 app.route("/timingdata", timingDataRouter);
 app.route("/auth", authRouter);
 app.route("/trackstatus", trackstatusRouter);
+app.route("/lapcount", lapCountRouter);
 
 export default app;
