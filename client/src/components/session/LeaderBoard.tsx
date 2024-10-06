@@ -45,8 +45,12 @@ const LeaderBoard = ({
   }, [timingData, sessionInfo, time]);
 
   return (
-    <div className="rounded-md bg-neutral-800 p-1 font-mono text-xs tracking-wider text-white sm:p-2 sm:text-sm md:px-3 md:text-base lg:text-lg">
-      <ul className="divide-y divide-gray-500">
+    <div className="rounded-md bg-neutral-800 ">
+      <p className="w-auto rounded-t-md border-neutral-300  bg-neutral-700 text-center text-sm font-bold sm:text-base md:text-lg lg:py-0.5 lg:text-xl">
+        12/72
+      </p>
+
+      <ul className="divide-y divide-gray-500 p-1 font-mono text-xs tracking-wider text-white sm:p-2 sm:text-sm md:px-3 md:text-base lg:text-lg">
         <DriverList driverList={driverList} sessionInfo={sessionInfo} />
       </ul>
     </div>
