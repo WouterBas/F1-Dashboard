@@ -139,3 +139,8 @@ export type Trackstatus = {
   timestamp: string;
   status: string;
 };
+
+export type LapCount = {
+  timestamp: Date;
+  lap: number;
+};

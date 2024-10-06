@@ -1,5 +1,5 @@
 import GP from "@/components/session/Gp";
-import { SessionGp, SessionList, TimgingData } from "@/types";
+import { LapCount, SessionGp, SessionList, TimgingData } from "@/types";
 import { apiService } from "@/services/api.service";
 import AppProvider from "@/components/session/AppProvider";
 import { HTTPError } from "ky";
@@ -51,11 +51,25 @@ async function Page({ params }: { params: { slug: string[] } }) {
     );
     const timingData: TimgingData[] = await timingDataRes.json();
 
+    let lapCount: LapCount[] = [];
+
+    if (!sessionInfo.type.includes("Practice")) {
+      const lapCountRes = await apiService.get(
+        `lapcount/${sessionInfo.sessionKey}`,
+        {},
+      );
+      lapCount = await lapCountRes.json();
+    }
+
     return (
       <AppProvider sessionInfo={sessionInfo}>
         <GP sessionInfo={sessionInfo} />
         <main className="col-span-2 grid grid-cols-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
-          <LeaderBoard timingData={timingData} sessionInfo={sessionInfo} />
+          <LeaderBoard
+            timingData={timingData}
+            sessionInfo={sessionInfo}
+            lapCount={lapCount}
+          />
           <Main sessionInfo={sessionInfo} />
         </main>
       </AppProvider>

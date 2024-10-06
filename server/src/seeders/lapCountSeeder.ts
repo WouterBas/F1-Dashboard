@@ -27,7 +27,7 @@ async function seeder() {
     }
 
     // don't insert lapcount if it's not a race or qualifying session
-    if (type !== "Race" && type !== "Qualifying") {
+    if (type.includes("Practice")) {
       continue;
     }
 
@@ -36,25 +36,10 @@ async function seeder() {
       "SessionData"
     )) as SessionData;
 
-    let lapCount: {
-      timestamp: Date;
-      lapCount?: number;
-      QualifyingPart?: number;
-    }[] = [];
-
-    if (type === "Race") {
-      lapCount = Series.map((series) => ({
-        timestamp: new Date(series.Utc),
-        lapCount: series.Lap,
-      }));
-    }
-
-    if (type === "Qualifying") {
-      lapCount = Series.map((series) => ({
-        timestamp: new Date(series.Utc),
-        QualifyingPart: series.QualifyingPart,
-      }));
-    }
+    const lapCount = Series.map((series) => ({
+      timestamp: new Date(series.Utc),
+      lap: series.Lap || series.QualifyingPart,
+    }));
 
     const lapCountSession = {
       sessionKey: sessionKey,
