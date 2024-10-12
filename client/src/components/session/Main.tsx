@@ -3,6 +3,7 @@ import { CircuitInfo, SessionGp, Trackstatus } from "@/types";
 import MediaControls from "./MediaControls";
 import Labels from "./Labels";
 import TrackStatus from "./TrackStatus";
+import ShortCuts from "./ShortCuts";
 
 const Map = dynamic(() => import("./Map"), {
   loading: () => <p>Loading...</p>,
@@ -24,6 +25,7 @@ const Main = async ({ sessionInfo }: { sessionInfo: SessionGp }) => {
 
   return (
     <div className="grid rounded-md bg-neutral-800 p-1 sm:p-2 md:p-3">
+      <ShortCuts />
       <div className="relative flex items-start justify-between">
         <Labels />
         <TrackStatus trackStatusAll={trackStatus} />
