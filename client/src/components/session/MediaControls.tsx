@@ -45,7 +45,7 @@ const MediaControls = ({
     const minute = Math.floor(
       (time.getTime() - new Date(sessionInfo.startDate).getTime()) / 1000 / 60,
     );
-    setMinute(minute);
+    setMinute(minute < 0 ? 0 : minute);
   };
 
   useEffect(() => {
@@ -68,9 +68,7 @@ const MediaControls = ({
         name="speed"
         id="speed"
         aria-label="Playback Speed"
-        onChange={(e) => {
-          setSpeed(parseInt(e.target.value));
-        }}
+        onChange={(e) => setSpeed(parseInt(e.target.value))}
       >
         <option value="1">x1</option>
         <option value="2">x2</option>

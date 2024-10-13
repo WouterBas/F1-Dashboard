@@ -57,15 +57,15 @@ const MapDrivers = ({
 
   useEffect(() => {
     if (isPlaying) {
-      setMinute(
-        Math.floor(
-          (time.getTime() - new Date(sessionInfo.startDate).getTime()) /
-            1000 /
-            60,
-        ),
+      const newMitute = Math.floor(
+        (time.getTime() - new Date(sessionInfo.startDate).getTime()) /
+          1000 /
+          60,
       );
+      setMinute(newMitute < 0 ? 0 : newMitute);
     }
-  }, [isPlaying, sessionInfo.startDate, setMinute, time]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [time]);
 
   // Render the Drivers
   useLayoutEffect(() => {
@@ -157,7 +157,7 @@ const MapDrivers = ({
   ]);
   return (
     <>
-      {isLoading && !isPlaying && (
+      {isLoading && (
         <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin text-3xl" />
       )}
       {data && (
