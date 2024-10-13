@@ -40,31 +40,27 @@ const ShortCuts = () => {
       event.code === "ArrowDown"
     ) {
       controls.start("visible");
+      setKeyCode(event.code);
     }
 
     if (event.code === "Space") {
       setIcon(isPlaying ? <FaPause /> : <FaPlay />);
-      setKeyCode("Space");
       toggleIsPlaying();
     }
     if (event.code === "ArrowLeft") {
       setIcon(<PiClockCounterClockwiseBold />);
-      setKeyCode("ArrowLeft");
       decrementTime(1);
     }
     if (event.code === "ArrowRight") {
       setIcon(<PiClockClockwiseBold />);
-      setKeyCode("ArrowRight");
       incrementTime(1);
     }
     if (event.code === "ArrowUp") {
       setIcon(<PiFastForwardFill />);
-      setKeyCode("ArrowUp");
       incrementSpeed();
     }
     if (event.code === "ArrowDown") {
       setIcon(<PiFastForwardFill className="rotate-180" />);
-      setKeyCode("ArrowDown");
       decrementSpeed();
     }
   };
@@ -84,9 +80,9 @@ const ShortCuts = () => {
         visible: { opacity: 1, scale: 1 },
       }}
       transition={{ duration: 0.3 }}
-      className=" absolute z-10 h-fit w-fit self-center justify-self-center rounded-xl bg-neutral-700/50 p-4 backdrop-blur-sm"
+      className=" absolute z-10 h-fit w-fit self-center justify-self-center rounded-xl bg-neutral-700/50 p-4 px-6 backdrop-blur-sm"
     >
-      <div className="grid  place-items-center gap-0.5 text-5xl">
+      <div className="grid place-items-center gap-0.5 text-5xl">
         {icon}
         <p className="text-center text-sm">
           {keyCode === "Space" && isPlaying && "Play"}

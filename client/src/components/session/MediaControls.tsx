@@ -1,5 +1,5 @@
 "use client";
-import useClock from "@/app/hooks/useClock";
+import useClock from "@/hooks/useClock";
 import { sessionContext } from "@/store/sessionStore";
 import { SessionGp, Trackstatus } from "@/types";
 import { useContext, useEffect, useState } from "react";

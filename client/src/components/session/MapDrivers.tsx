@@ -18,6 +18,7 @@ import { drawDrivers } from "@/utils/drawDrivers";
 import { FaSpinner } from "react-icons/fa6";
 import { useStore } from "zustand";
 import { sessionContext } from "@/store/sessionStore";
+import { useDebounce } from "use-debounce";
 
 const MapDrivers = ({
   sessionInfo,
@@ -45,10 +46,11 @@ const MapDrivers = ({
     minute,
     setMinute,
   } = useStore(store);
+  const [debouncedMinute] = useDebounce(minute, 250);
 
   // load driver positions
   const { data, isLoading } = useSWR<DriverPosition[]>(
-    `position/${sessionInfo.sessionKey}?minute=${minute}&starttime=${sessionInfo.startDate}`,
+    `position/${sessionInfo.sessionKey}?minute=${debouncedMinute}&starttime=${sessionInfo.startDate}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -157,8 +159,8 @@ const MapDrivers = ({
   ]);
   return (
     <>
-      {isLoading && (
-        <FaSpinner className="absolute left-[calc(50%-24px)] top-[calc(50%-24px)] z-10 animate-spin text-3xl" />
+      {isLoading && !isPlaying && (
+        <FaSpinner className="absolute left-[calc(50%-12px)] top-[calc(50%-12px)] z-10 animate-spin text-3xl" />
       )}
       {data && (
         <canvas
