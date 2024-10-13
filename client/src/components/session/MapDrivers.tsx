@@ -6,7 +6,13 @@ import {
   SessionGp,
   CircuitInfo,
 } from "@/types";
-import { RefObject, useContext, useLayoutEffect, useRef } from "react";
+import {
+  RefObject,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import useSWR from "swr";
 import { drawDrivers } from "@/utils/drawDrivers";
 import { FaSpinner } from "react-icons/fa6";
@@ -34,12 +40,10 @@ const MapDrivers = ({
     time,
     isPlaying,
     driverList,
-    minute,
-    toggleIsPlaying,
-    wasPlaying,
-    setWasPlaying,
     showLabels,
     circuitDimensions,
+    minute,
+    setMinute,
   } = useStore(store);
 
   // load driver positions
@@ -48,14 +52,20 @@ const MapDrivers = ({
     fetcher,
     {
       keepPreviousData: true,
-      onSuccess: () => {
-        if (!isPlaying && wasPlaying) {
-          toggleIsPlaying();
-          setWasPlaying(false);
-        }
-      },
     },
   );
+
+  useEffect(() => {
+    if (isPlaying) {
+      setMinute(
+        Math.floor(
+          (time.getTime() - new Date(sessionInfo.startDate).getTime()) /
+            1000 /
+            60,
+        ),
+      );
+    }
+  }, [isPlaying, sessionInfo.startDate, setMinute, time]);
 
   // Render the Drivers
   useLayoutEffect(() => {

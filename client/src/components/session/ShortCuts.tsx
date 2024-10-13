@@ -2,77 +2,78 @@
 
 import { sessionContext } from "@/store/sessionStore";
 import { motion, useAnimationControls } from "framer-motion";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   PiClockClockwiseBold,
   PiClockCounterClockwiseBold,
   PiFastForwardFill,
 } from "react-icons/pi";
 import { FaPlay, FaPause } from "react-icons/fa6";
-
 import { useStore } from "zustand";
 
 const ShortCuts = () => {
   const store = useContext(sessionContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
-  const { setTime, time, toggleIsPlaying, speed, setSpeed, isPlaying } =
-    useStore(store);
+  const {
+    incrementTime,
+    decrementTime,
+    toggleIsPlaying,
+    speed,
+    incrementSpeed,
+    decrementSpeed,
+    isPlaying,
+  } = useStore(store);
   const controls = useAnimationControls();
   const [icon, setIcon] = useState<JSX.Element>();
+  const [keyCode, setKeyCode] = useState("");
 
-  const checkKeyPress = useCallback(
-    (event: KeyboardEvent) => {
-      setTimeout(() => {
-        controls.start("hidden");
-      }, 300);
+  const handlekeyPress = (event: KeyboardEvent) => {
+    setTimeout(() => {
+      controls.start("hidden");
+    }, 300);
 
-      const toggle = (func: void) => {
-        toggleIsPlaying();
-        func;
-        setTimeout(() => toggleIsPlaying(), 1);
-      };
+    if (
+      event.code === "Space" ||
+      event.code === "ArrowLeft" ||
+      event.code === "ArrowRight" ||
+      event.code === "ArrowUp" ||
+      event.code === "ArrowDown"
+    ) {
+      controls.start("visible");
+    }
 
-      if (
-        event.code === "Space" ||
-        event.code === "ArrowLeft" ||
-        event.code === "ArrowRight" ||
-        (event.code === "ArrowUp" && speed < 32) ||
-        (event.code === "ArrowDown" && speed > 1)
-      ) {
-        controls.start("visible");
-      }
-
-      if (event.code === "Space") {
-        setIcon(isPlaying ? <FaPause /> : <FaPlay />);
-        toggleIsPlaying();
-      }
-      if (event.code === "ArrowLeft") {
-        setIcon(<PiClockCounterClockwiseBold />);
-        toggle(setTime(new Date(new Date(time).getTime() - 1000 * 60)));
-      }
-      if (event.code === "ArrowRight") {
-        setIcon(<PiClockClockwiseBold />);
-        toggle(setTime(new Date(new Date(time).getTime() + 1000 * 60)));
-      }
-      if (event.code === "ArrowUp" && speed < 32) {
-        setIcon(<PiFastForwardFill />);
-        toggle(setSpeed(speed * 2));
-      }
-      if (event.code === "ArrowDown" && speed > 1) {
-        setIcon(<PiFastForwardFill className="rotate-180" />);
-        toggle(setSpeed(speed / 2));
-      }
-    },
-    [controls, isPlaying, setSpeed, setTime, speed, time, toggleIsPlaying],
-  );
+    if (event.code === "Space") {
+      setIcon(isPlaying ? <FaPause /> : <FaPlay />);
+      setKeyCode("Space");
+      toggleIsPlaying();
+    }
+    if (event.code === "ArrowLeft") {
+      setIcon(<PiClockCounterClockwiseBold />);
+      setKeyCode("ArrowLeft");
+      decrementTime(1);
+    }
+    if (event.code === "ArrowRight") {
+      setIcon(<PiClockClockwiseBold />);
+      setKeyCode("ArrowRight");
+      incrementTime(1);
+    }
+    if (event.code === "ArrowUp") {
+      setIcon(<PiFastForwardFill />);
+      setKeyCode("ArrowUp");
+      incrementSpeed();
+    }
+    if (event.code === "ArrowDown") {
+      setIcon(<PiFastForwardFill className="rotate-180" />);
+      setKeyCode("ArrowDown");
+      decrementSpeed();
+    }
+  };
 
   useEffect(() => {
-    const handler = (event: KeyboardEvent) => checkKeyPress(event);
-    window.addEventListener("keydown", handler);
-    return () => {
-      window.removeEventListener("keydown", handler);
-    };
-  }, [checkKeyPress]);
+    window.addEventListener("keydown", handlekeyPress);
+    return () => window.removeEventListener("keydown", handlekeyPress);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying]);
 
   return (
     <motion.div
@@ -85,7 +86,16 @@ const ShortCuts = () => {
       transition={{ duration: 0.3 }}
       className=" absolute z-10 h-fit w-fit self-center justify-self-center rounded-xl bg-neutral-700/50 p-4 backdrop-blur-sm"
     >
-      <span className="text-5xl">{icon}</span>
+      <div className="grid  place-items-center gap-0.5 text-5xl">
+        {icon}
+        <p className="text-center text-sm">
+          {keyCode === "Space" && isPlaying && "Play"}
+          {keyCode === "Space" && !isPlaying && "Pause"}
+          {keyCode === "ArrowLeft" && "-1 min"}
+          {keyCode === "ArrowRight" && "+1 min"}
+          {(keyCode === "ArrowUp" || keyCode === "ArrowDown") && `x${speed}`}
+        </p>
+      </div>
     </motion.div>
   );
 };

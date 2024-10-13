@@ -24,8 +24,9 @@ export default function SessionProvider({
         position: 0,
         stopped: false,
       })),
+      startTime: new Date(sessionInfo.startDate),
+      endTime: new Date(sessionInfo.endDate),
       minute: 0,
-      wasPlaying: false,
       circuitDimensions: {
         calcWidth: 0,
         calcHeight: 0,

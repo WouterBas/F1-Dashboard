@@ -1,4 +1,5 @@
 "use client";
+import useClock from "@/app/hooks/useClock";
 import { sessionContext } from "@/store/sessionStore";
 import { SessionGp, Trackstatus } from "@/types";
 import { useContext, useEffect, useState } from "react";
@@ -22,7 +23,6 @@ const MediaControls = ({
     time,
     toggleIsPlaying,
     setMinute,
-    setWasPlaying,
     speed,
     setSpeed,
   } = useStore(store);
@@ -30,18 +30,18 @@ const MediaControls = ({
     new Date(sessionInfo.endDate).getTime() -
     new Date(sessionInfo.startDate).getTime();
 
+  useClock();
+
   const changeTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isPlaying) {
-      toggleIsPlaying();
-      setWasPlaying(true);
-    }
     setTime(
-      new Date(
-        new Date(sessionInfo.startDate).getTime() + parseInt(e.target.value),
-      ),
+      (prevTime) =>
+        new Date(
+          new Date(sessionInfo.startDate).getTime() + parseInt(e.target.value),
+        ),
     );
   };
-  const sizeHandler = () => {
+
+  const handleTimeClick = () => {
     const minute = Math.floor(
       (time.getTime() - new Date(sessionInfo.startDate).getTime()) / 1000 / 60,
     );
@@ -69,11 +69,6 @@ const MediaControls = ({
         id="speed"
         aria-label="Playback Speed"
         onChange={(e) => {
-          if (isPlaying) {
-            toggleIsPlaying();
-            setSpeed(parseInt(e.target.value));
-            setTimeout(() => toggleIsPlaying(), 1);
-          }
           setSpeed(parseInt(e.target.value));
         }}
       >
@@ -95,7 +90,7 @@ const MediaControls = ({
           className="absolute z-10 h-1 w-full appearance-none rounded bg-neutral-500/0 accent-white "
           value={time.getTime() - new Date(sessionInfo.startDate).getTime()}
           onChange={changeTimeHandler}
-          onClick={sizeHandler}
+          onClick={handleTimeClick}
         />
 
         <div className="relative h-1 overflow-hidden rounded-sm">

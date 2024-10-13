@@ -1,15 +1,11 @@
 import { apiService } from "@/services/api.service";
 import { CircuitInfo, SessionGp, Trackstatus } from "@/types";
-import MediaControls from "./MediaControls";
-import Labels from "./Labels";
-import TrackStatus from "./TrackStatus";
-import ShortCuts from "./ShortCuts";
-
-const Map = dynamic(() => import("./Map"), {
-  loading: () => <p>Loading...</p>,
-});
-
 import dynamic from "next/dynamic";
+import Labels from "./Labels";
+import Map from "./Map";
+import MediaControls from "./MediaControls";
+import TrackStatus from "./TrackStatus";
+const ShortCuts = dynamic(() => import("./ShortCuts"));
 
 const Main = async ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   const circuitPointsRes = await apiService.get(
