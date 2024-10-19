@@ -17,15 +17,8 @@ const MediaControls = ({
   const [isClient, setIsClient] = useState(false);
 
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
-  const {
-    isPlaying,
-    setTime,
-    time,
-    toggleIsPlaying,
-    setMinute,
-    speed,
-    setSpeed,
-  } = useStore(store);
+  const { isPlaying, setTime, time, toggleIsPlaying, speed, setSpeed } =
+    useStore(store);
   const totalSeconds =
     new Date(sessionInfo.endDate).getTime() -
     new Date(sessionInfo.startDate).getTime();
@@ -39,13 +32,6 @@ const MediaControls = ({
           new Date(sessionInfo.startDate).getTime() + parseInt(e.target.value),
         ),
     );
-  };
-
-  const handleTimeClick = () => {
-    const minute = Math.floor(
-      (time.getTime() - new Date(sessionInfo.startDate).getTime()) / 1000 / 60,
-    );
-    setMinute(minute < 0 ? 0 : minute);
   };
 
   useEffect(() => {
@@ -88,7 +74,6 @@ const MediaControls = ({
           className="absolute z-10 h-1 w-full appearance-none rounded bg-neutral-500/0 accent-white "
           value={time.getTime() - new Date(sessionInfo.startDate).getTime()}
           onChange={changeTimeHandler}
-          onClick={handleTimeClick}
         />
 
         <div className="relative h-1 overflow-hidden rounded-sm">

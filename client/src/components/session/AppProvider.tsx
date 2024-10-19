@@ -26,7 +26,6 @@ export default function SessionProvider({
       })),
       startTime: new Date(sessionInfo.startDate),
       endTime: new Date(sessionInfo.endDate),
-      minute: 0,
       circuitDimensions: {
         calcWidth: 0,
         calcHeight: 0,

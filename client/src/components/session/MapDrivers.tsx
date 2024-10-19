@@ -44,10 +44,10 @@ const MapDrivers = ({
     driverList,
     showLabels,
     circuitDimensions,
-    minute,
-    setMinute,
+
     setPlaying,
   } = useStore(store);
+  const [minute, setMinute] = useState(0);
   const [debouncedMinute] = useDebounce(minute, 250);
   const [noData, setNoData] = useState(false);
   const [wasPlaying, setWasPlaying] = useState(false);
@@ -60,15 +60,21 @@ const MapDrivers = ({
       keepPreviousData: true,
       onSuccess: () => {
         if (wasPlaying) {
-          setWasPlaying(false);
           setPlaying(true);
+          setWasPlaying(false);
         }
       },
     },
   );
 
   useEffect(() => {
-    console.log(data?.length);
+    // set the minute
+    const newMitute = Math.floor(
+      (time.getTime() - new Date(sessionInfo.startDate).getTime()) / 1000 / 60,
+    );
+    setMinute(newMitute < 0 ? 0 : newMitute);
+
+    // no data available for current time
     const found = data?.find((item) => {
       const timestamp = new Date(item.timestamp).getTime();
       return (
@@ -80,18 +86,7 @@ const MapDrivers = ({
       isPlaying && setWasPlaying(true);
       setPlaying(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [time, data]);
 
-  useEffect(() => {
-    if (isPlaying) {
-      const newMitute = Math.floor(
-        (time.getTime() - new Date(sessionInfo.startDate).getTime()) /
-          1000 /
-          60,
-      );
-      setMinute(newMitute < 0 ? 0 : newMitute);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 

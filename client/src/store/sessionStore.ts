@@ -6,7 +6,6 @@ type SessionProps = {
   isPlaying: boolean;
   time: Date;
   driverList: DriverTimingList[];
-  minute: number;
   speed: number;
   trackStatus: string;
   showLabels: boolean;
@@ -21,7 +20,6 @@ interface SessionState extends SessionProps {
   toggleIsPlaying: () => void;
   setPlaying: (playing: boolean) => void;
   setDriverList: (driverList: DriverTimingList[]) => void;
-  setMinute: (minute: number) => void;
   setSpeed: (speed: number) => void;
   setTrackStatus: (trackStatus: string) => void;
   toggleShowLabels: () => void;
@@ -41,7 +39,6 @@ export const createSessionStore = (initProps?: Partial<SessionProps>) => {
     isPlaying: false,
     time: new Date("1970-01-01T00:00:00.000Z"),
     driverList: [],
-    minute: 0,
     speed: 1,
     trackStatus: "Started",
     showLabels: true,
@@ -78,7 +75,6 @@ export const createSessionStore = (initProps?: Partial<SessionProps>) => {
     toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
     setPlaying: (playing: boolean) => set({ isPlaying: playing }),
     setDriverList: (driverList: DriverTimingList[]) => set({ driverList }),
-    setMinute: (minute: number) => set({ minute }),
     setSpeed: (speed: number) => set({ speed }),
     incrementSpeed: () =>
       set((state) => ({
