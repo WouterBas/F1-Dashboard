@@ -19,6 +19,7 @@ type SessionProps = {
 interface SessionState extends SessionProps {
   setTime: (fn: (prev: Date) => Date) => void;
   toggleIsPlaying: () => void;
+  setPlaying: (playing: boolean) => void;
   setDriverList: (driverList: DriverTimingList[]) => void;
   setMinute: (minute: number) => void;
   setSpeed: (speed: number) => void;
@@ -75,6 +76,7 @@ export const createSessionStore = (initProps?: Partial<SessionProps>) => {
             : state.startTime,
       })),
     toggleIsPlaying: () => set((state) => ({ isPlaying: !state.isPlaying })),
+    setPlaying: (playing: boolean) => set({ isPlaying: playing }),
     setDriverList: (driverList: DriverTimingList[]) => set({ driverList }),
     setMinute: (minute: number) => set({ minute }),
     setSpeed: (speed: number) => set({ speed }),

@@ -12,6 +12,7 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
+  useState,
 } from "react";
 import useSWR from "swr";
 import { drawDrivers } from "@/utils/drawDrivers";
@@ -45,8 +46,11 @@ const MapDrivers = ({
     circuitDimensions,
     minute,
     setMinute,
+    setPlaying,
   } = useStore(store);
   const [debouncedMinute] = useDebounce(minute, 250);
+  const [noData, setNoData] = useState(false);
+  const [wasPlaying, setWasPlaying] = useState(false);
 
   // load driver positions
   const { data, isLoading } = useSWR<DriverPosition[]>(
@@ -54,8 +58,30 @@ const MapDrivers = ({
     fetcher,
     {
       keepPreviousData: true,
+      onSuccess: () => {
+        if (wasPlaying) {
+          setWasPlaying(false);
+          setPlaying(true);
+        }
+      },
     },
   );
+
+  useEffect(() => {
+    console.log(data?.length);
+    const found = data?.find((item) => {
+      const timestamp = new Date(item.timestamp).getTime();
+      return (
+        timestamp > time.getTime() - 1000 && timestamp < time.getTime() + 1000
+      );
+    });
+    setNoData(found ? true : false);
+    if (!found) {
+      isPlaying && setWasPlaying(true);
+      setPlaying(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [time, data]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -159,7 +185,7 @@ const MapDrivers = ({
   ]);
   return (
     <>
-      {isLoading && !isPlaying && (
+      {isLoading && !noData && (
         <FaSpinner className="absolute left-[calc(50%-12px)] top-[calc(50%-12px)] z-10 animate-spin text-3xl" />
       )}
       {data && (
