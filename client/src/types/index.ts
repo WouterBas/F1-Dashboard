@@ -133,6 +133,9 @@ export type DriverTimingList = {
   retired: boolean;
   position: number;
   stopped: boolean;
+  compound?: string;
+  age?: number;
+  pitStops?: number;
 };
 
 export type Trackstatus = {
@@ -143,4 +146,14 @@ export type Trackstatus = {
 export type LapCount = {
   timestamp: Date;
   lap: number;
+};
+
+export type TireStints = {
+  timestamp: Date;
+  lines: {
+    driverNumber: number;
+    compound?: string;
+    age?: number;
+    pitStops?: number;
+  }[];
 };

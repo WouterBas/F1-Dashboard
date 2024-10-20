@@ -8,6 +8,40 @@ const DriverList = ({
   driverList: DriverTimingList[];
   sessionInfo: SessionGp;
 }) => {
+  const getBorderColour = (compound: string | undefined) => {
+    switch (compound) {
+      case "soft":
+        return "border-red-600";
+      case "medium":
+        return "border-amber-400";
+      case "hard":
+        return "border-neutral-200";
+      case "intermediate":
+        return "border-green-600";
+      case "wet":
+        return "border-sky-600";
+      default:
+        return "border-neutral-500";
+    }
+  };
+
+  const getBackgroundColour = (compound: string | undefined) => {
+    switch (compound) {
+      case "soft":
+        return "bg-red-600";
+      case "medium":
+        return "bg-amber-400";
+      case "hard":
+        return "bg-neutral-200";
+      case "intermediate":
+        return "bg-green-600";
+      case "wet":
+        return "bg-sky-600";
+      default:
+        return "bg-neutral-500";
+    }
+  };
+
   return (
     <LayoutGroup key="drivers">
       {driverList.map((driver) => (
@@ -15,24 +49,35 @@ const DriverList = ({
           <motion.li
             layout="position"
             key={driver.racingNumber}
-            className={`${(driver.retired || (driver.stopped && (sessionInfo.type === "Race" || sessionInfo.type === "Sprint"))) && "opacity-30"} flex h-4 items-center justify-end sm:h-5 md:h-6 lg:h-7`}
+            className={`${(driver.retired || (driver.stopped && (sessionInfo.type === "Race" || sessionInfo.type === "Sprint"))) && "opacity-30"} flex h-4 justify-end gap-2  sm:h-5 md:h-6 lg:h-7`}
           >
-            <div className="mr-1 flex h-full w-[17px] items-center  justify-center justify-self-center text-center sm:w-[19px] md:mr-1.5 md:w-[21px]  lg:mr-2 lg:w-[23px]">
-              {driver.inPit && !driver.retired && !driver.stopped ? (
-                <div className="h-4/5 w-full rounded-sm bg-neutral-500  text-[10px] leading-3 sm:text-xs  md:text-sm  lg:text-base">
-                  P
-                </div>
-              ) : (
-                driver.position
-              )}
-            </div>
+            <p>{driver.position}</p>
+
             <div
-              className="h-4/5 w-1 bg-white/50"
+              className="mt-0.5 h-4/5 w-1 bg-white/50"
               style={{ backgroundColor: driver.teamColor }}
             ></div>
-            <span className={` pl-1 md:pl-1.5 lg:pl-2`}>
-              {driver.abbreviation}
-            </span>
+            <p className="">{driver.abbreviation}</p>
+
+            <div className="flex h-full w-11 items-center justify-between">
+              {driver.inPit && !driver.retired && !driver.stopped ? (
+                <div className="h-4/5 w-full  rounded-md bg-neutral-500 text-center  text-[10px] leading-3 sm:text-xs  md:text-sm  lg:text-base">
+                  PIT
+                </div>
+              ) : (
+                <>
+                  <div
+                    className={`${getBorderColour(driver.compound)} relative mr-1 aspect-square w-4 rounded-full border-[3px]`}
+                  >
+                    <div
+                      className={`${getBackgroundColour(driver.compound)} absolute left-1/2 top-1/2 aspect-square w-1 -translate-x-1/2 -translate-y-1/2 rounded-full`}
+                    ></div>
+                  </div>
+                  <p className=" text-neutral-400 ">{driver.age}</p>
+                </>
+              )}
+            </div>
+            <p className=" text-neutral-400 ">P{driver.pitStops}</p>
           </motion.li>
         </AnimatePresence>
       ))}

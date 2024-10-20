@@ -1,12 +1,12 @@
 import { Context } from "hono";
 import client from "../../shared/dbConnection";
 
-export const getTimingData = async (c: Context) => {
+export const getTireStints = async (c: Context) => {
   const key: number = Number(c.req.param("key"));
 
   const result = await client
     .db("f1dashboard")
-    .collection("timingdata")
+    .collection("tirestints")
     .find(
       {
         sessionKey: key,
@@ -20,7 +20,7 @@ export const getTimingData = async (c: Context) => {
 
   if (result.length === 0) {
     c.status(404);
-    return c.json({ message: "Timingdata not found" });
+    return c.json({ message: "Tire stints not found" });
   }
   return c.json(result);
 };

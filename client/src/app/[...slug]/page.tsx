@@ -1,5 +1,11 @@
 import GP from "@/components/session/Gp";
-import { LapCount, SessionGp, SessionList, TimgingData } from "@/types";
+import {
+  LapCount,
+  SessionGp,
+  SessionList,
+  TimgingData,
+  TireStints,
+} from "@/types";
 import { apiService } from "@/services/api.service";
 import AppProvider from "@/components/session/AppProvider";
 import { HTTPError } from "ky";
@@ -61,6 +67,12 @@ async function Page({ params }: { params: { slug: string[] } }) {
       lapCount = await lapCountRes.json();
     }
 
+    const tireStintsRes = await apiService.get(
+      `tirestints/${sessionInfo.sessionKey}`,
+      {},
+    );
+    const tireStints: TireStints[] = await tireStintsRes.json();
+
     return (
       <AppProvider sessionInfo={sessionInfo}>
         <GP sessionInfo={sessionInfo} />
@@ -69,6 +81,7 @@ async function Page({ params }: { params: { slug: string[] } }) {
             timingData={timingData}
             sessionInfo={sessionInfo}
             lapCount={lapCount}
+            tireStints={tireStints}
           />
           <Main sessionInfo={sessionInfo} />
         </main>

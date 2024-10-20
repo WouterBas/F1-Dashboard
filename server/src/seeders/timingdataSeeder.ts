@@ -1,6 +1,7 @@
 import client from "../shared/dbConnection";
 import { getF1StreamData } from "./utils/fetchF1Data";
-import type { TimingData, RawObject, DriverClean } from "../types";
+import type { TimingData, RawTimingDataObject, DriverClean } from "../types";
+import { findTimeOffset } from "./utils/helpers";
 
 import { getMeetings } from "./utils/helpers";
 
@@ -37,7 +38,7 @@ async function seeder() {
       continue;
     }
     // parse raw timing data to json
-    const timingDataParsed: [RawObject, string][] = timingData
+    const timingDataParsed: [RawTimingDataObject, string][] = timingData
       .split("\n")
       .map((str: string) => [str.substring(12), str.substring(0, 12)])
       .slice(0, -1)
@@ -84,7 +85,7 @@ async function seeder() {
 
 // convert data from object to array
 function convertData(
-  data: [RawObject, string][],
+  data: [RawTimingDataObject, string][],
   timeOffset: number,
   startTime: Date,
   sessionKey: number
@@ -143,7 +144,6 @@ function extendTimingData(
   startTime: Date,
   type: String
 ): TimingData[] {
-  // TODO: extend timing data
   const newTimingData: TimingData[] = [];
   timingData.forEach((data, i) => {
     const previousLines = newTimingData[i - 1]?.lines;
@@ -193,48 +193,6 @@ function extendLines(
     }
     return extendedDriverData;
   });
-}
-
-async function findTimeOffset(url: string) {
-  const sessionData = await getF1StreamData(url, "SessionData");
-  if (!sessionData) {
-    return {
-      timeOffset: 0,
-      startTime: new Date(),
-    };
-  }
-  const sessionDataArr: string[][] = sessionData
-    .split("\n")
-    .map((str: string) => [str.substring(0, 12), str.substring(12)])
-    .slice(0, -1);
-
-  // find the index of the sessionDataArr that has "Started" in the StatusSeries
-  const startIndex = sessionDataArr.findIndex((arr) => {
-    return arr[1].includes("Started");
-  });
-
-  if (startIndex === -1) {
-    return {
-      timeOffset: 0,
-      startTime: new Date(),
-    };
-  }
-
-  // find the time offset
-  const indexOfUtc = sessionDataArr[startIndex][1].indexOf("Utc");
-  const startTime = new Date(
-    sessionDataArr[startIndex][1]
-      .slice(indexOfUtc + 6, indexOfUtc + 32)
-      .split('"')[0]
-  );
-  const streamTime = new Date(
-    startTime.toISOString().split("T")[0] + "T" + sessionDataArr[startIndex][0]
-  );
-  const diff = streamTime.getTime() - startTime.getTime();
-  return {
-    timeOffset: diff,
-    startTime: startTime,
-  };
 }
 
 seeder()

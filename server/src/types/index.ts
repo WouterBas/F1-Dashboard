@@ -125,7 +125,7 @@ export type Position = {
   sessionKey: number;
 };
 
-export type RawObject = {
+export type RawTimingDataObject = {
   [key: string]: {
     Position?: string;
     Retired?: boolean;
@@ -142,6 +142,29 @@ export type RawObject = {
     NumberOfLaps?: number;
     Sectors: object[];
   };
+};
+
+export type RawTireStintObject = {
+  [key: string]: {
+    [key: string]: {
+      Compound?: string;
+      New?: string;
+      TyresNotChanged: string;
+      TotalLaps: number;
+      StartLaps: number;
+    };
+  };
+};
+
+export type Tirestints = {
+  timestamp: Date;
+  sessionKey: number;
+  lines: {
+    driverNumber: number;
+    compound?: string;
+    age?: number;
+    pitStops?: number;
+  }[];
 };
 
 export type DriverObject = {

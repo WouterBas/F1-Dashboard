@@ -1,6 +1,6 @@
 "use client";
 import { sessionContext } from "@/store/sessionStore";
-import { LapCount, SessionGp, TimgingData } from "@/types";
+import { LapCount, SessionGp, TimgingData, TireStints } from "@/types";
 import { useContext, useEffect, useState } from "react";
 import DriverList from "@/components/session/DriverList";
 import { useStore } from "zustand";
@@ -9,14 +9,16 @@ const LeaderBoard = ({
   timingData,
   sessionInfo,
   lapCount,
+  tireStints,
 }: {
   timingData: TimgingData[];
   sessionInfo: SessionGp;
   lapCount: LapCount[];
+  tireStints: TireStints[];
 }) => {
   const store = useContext(sessionContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
-  const { time, driverList, setDriverList } = useStore(store, (s) => s);
+  const { time, driverList, setDriverList } = useStore(store);
   const [lap, setLap] = useState(1);
 
   useEffect(() => {
@@ -31,21 +33,35 @@ const LeaderBoard = ({
       }
       return prev;
     });
+    const closestTireStints = tireStints.reduce((prev, curr) => {
+      const currentTime = new Date(curr.timestamp).getTime();
+      if (
+        currentTime < time.getTime() &&
+        currentTime > new Date(prev.timestamp).getTime()
+      ) {
+        return curr;
+      }
+      return prev;
+    });
 
     const newDriverList = driverList
       .map((driver) => {
-        const match = closestTiming.lines.find(
+        const matchDriver = closestTiming.lines.find(
+          (data) => data.driverNumber === driver.racingNumber,
+        );
+        const matchTireStints = closestTireStints.lines.find(
           (data) => data.driverNumber === driver.racingNumber,
         );
         return {
           ...driver,
-          ...match,
+          ...matchDriver,
+          ...matchTireStints,
         };
       })
       .sort((a, b) => a.position - b.position);
     setDriverList(newDriverList);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timingData, sessionInfo, time]);
+  }, [timingData, sessionInfo, time, tireStints]);
 
   useEffect(() => {
     if (lapCount.length === 0) return;
