@@ -126,6 +126,7 @@ const MapDrivers = ({
 
     // interpolate between the current and next positions
     const inbetweenPositions = currentEntries.map((entry, i) => {
+      if (!nextEntries[i]) return entry;
       return {
         driverNumber: entry.driverNumber,
         X: entry.X + (nextEntries[i].X - entry.X) * progress,
