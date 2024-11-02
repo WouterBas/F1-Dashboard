@@ -34,7 +34,6 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     circuitList[0].driverKey || 1,
   );
   const [angle, setAngle] = useState<number>(circuitList[0].angle || 0);
-  const [finishAngle, setFinishAngle] = useState<number>(0);
   const [duration, setDuration] = useState<number>(
     circuitList[0].duration || 60000,
   );
@@ -47,12 +46,13 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
   const [saved, setSaved] = useState<boolean>(true);
 
   const [mode, setMode] = useState<string>("draw");
-  const [points, setPoints] = useState<{ x: number; y: number }[]>();
-  const [finishPoint, setFinishPoint] = useState<{ x: number; y: number }>({
-    x: -500,
-    y: -500,
-  });
-  const [pointNumber, setPointNumber] = useState<number>(0);
+
+  const [finishAngle, setFinishAngle] = useState<number>(
+    circuitList[0].finishAngle || 0,
+  );
+  const [pointNumber, setPointNumber] = useState<number>(
+    circuitList[0].finishPoint || 0,
+  );
 
   const modeOptions = [
     { name: "Draw", value: "draw" },
@@ -93,6 +93,8 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     return drivers;
   }, [circuitKey, sessionKey, circuitList]);
 
+  console.log(circuitList);
+
   // set default values on circuit change
   const onCircuitChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setCircuitKey(Number(e.target.value));
@@ -110,6 +112,8 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       );
       setDuration(circuit.duration || 60000);
       setAngle(circuit.angle || 0);
+      setFinishAngle(circuit.finishAngle || 0);
+      setPointNumber(circuit.finishPoint || 0);
     }
   };
 
@@ -163,35 +167,19 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     console.log(error);
   }
 
-  useEffect(() => {
-    if (mode === "draw" && circuitPoints) {
-      setPoints(circuitPoints);
-    }
-  }, [circuitPoints, mode]);
-
-  useEffect(() => {
-    if (mode === "finish" && points) {
-      setFinishPoint({
-        x: points[pointNumber].x,
-        y: points[pointNumber].y,
-      });
-    }
-  }, [points, mode, pointNumber]);
-
   // draw circuit
   useEffect(() => {
-    if (points && points.length > 0) {
-      console.log(finishPoint);
+    if (circuitPoints && circuitPoints.length > 0) {
       drawCircuit(
         circuitRef,
-        points,
+        circuitPoints,
         width,
         dpr,
         scale,
         angle,
         closed,
         finishAngle,
-        finishPoint,
+        circuitPoints[pointNumber],
         drawPoints,
       );
     }
@@ -200,15 +188,15 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       setAspectRatio(aspect);
     }
   }, [
-    points,
-    finishPoint,
-    finishAngle,
-    width,
-    dpr,
-    scale,
     angle,
+    circuitPoints,
     closed,
+    dpr,
     drawPoints,
+    finishAngle,
+    pointNumber,
+    scale,
+    width,
   ]);
 
   return (
@@ -216,81 +204,82 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       <div className=" grid gap-1 text-sm  sm:grid-cols-[auto,1fr] sm:gap-2 sm:text-base">
         <div className="flex flex-wrap gap-1 sm:gap-2">
           {mode === "draw" && (
-            <Dropdown
-              options={circuitKeyOptions}
-              onChange={onCircuitChange}
-              value={circuitKey}
-              id="circuitKey"
-              label="Circuit"
-            />
-          )}
-          {sessionKeyOptions && mode === "draw" && (
-            <Dropdown
-              options={sessionKeyOptions}
-              onChange={onSessionChange}
-              value={sessionKey}
-              id="sessionKey"
-              label="Session"
-            />
-          )}
-          {driverNumberOptions && mode === "draw" && (
-            <Dropdown
-              options={driverNumberOptions}
-              onChange={onDriverChange}
-              value={driverNumber}
-              id="driverKey"
-              label="Driver"
-            />
-          )}
-          {mode === "draw" && (
-            <TimeInput
-              value={new Date(startTime).toTimeString().split(" ")[0]}
-              label="Start Time"
-              step={1}
-              startTime={startTime}
-              setSaved={setSaved}
-              setStartTime={setStartTime}
-              setDuration={setDuration}
-            />
-          )}
-          {mode === "draw" && (
-            <TimeInput
-              value={getFormattedTime(duration)}
-              label="Duration"
-              step={60}
-              startTime={startTime}
-              setSaved={setSaved}
-              setStartTime={setStartTime}
-              setDuration={setDuration}
-            />
+            <>
+              <Dropdown
+                options={circuitKeyOptions}
+                onChange={onCircuitChange}
+                value={circuitKey}
+                id="circuitKey"
+                label="Circuit"
+              />
+
+              {sessionKeyOptions && (
+                <Dropdown
+                  options={sessionKeyOptions}
+                  onChange={onSessionChange}
+                  value={sessionKey}
+                  id="sessionKey"
+                  label="Session"
+                />
+              )}
+              {driverNumberOptions && (
+                <Dropdown
+                  options={driverNumberOptions}
+                  onChange={onDriverChange}
+                  value={driverNumber}
+                  id="driverKey"
+                  label="Driver"
+                />
+              )}
+
+              <TimeInput
+                value={new Date(startTime).toTimeString().split(" ")[0]}
+                label="Start Time"
+                step={1}
+                startTime={startTime}
+                setSaved={setSaved}
+                setStartTime={setStartTime}
+                setDuration={setDuration}
+              />
+
+              <TimeInput
+                value={getFormattedTime(duration)}
+                label="Duration"
+                step={60}
+                startTime={startTime}
+                setSaved={setSaved}
+                setStartTime={setStartTime}
+                setDuration={setDuration}
+              />
+
+              <NumberInput
+                label="Angle"
+                id="angle"
+                angle={angle}
+                setAngle={setAngle}
+                setSaved={setSaved}
+              />
+            </>
           )}
 
-          {mode === "draw" && (
-            <NumberInput
-              label="Angle"
-              id="angle"
-              angle={angle}
-              setAngle={setAngle}
-              setSaved={setSaved}
-            />
-          )}
           {mode === "finish" && (
-            <NumberInput
-              label="Angle"
-              id="finishAngle"
-              angle={finishAngle}
-              setAngle={setFinishAngle}
-              setSaved={setSaved}
-            />
-          )}
-          {mode === "finish" && (
-            <NumberInput
-              label="Point Number"
-              id="pointNumber"
-              angle={pointNumber}
-              setAngle={setPointNumber}
-              setSaved={setSaved}
-            />
+            <>
+              <NumberInput
+                label="Angle"
+                id="finishAngle"
+                angle={finishAngle}
+                setAngle={setFinishAngle}
+                setSaved={setSaved}
+              />
+
+              <NumberInput
+                label="Point Number"
+                id="pointNumber"
+                angle={pointNumber}
+                setAngle={setPointNumber}
+                setSaved={setSaved}
+              />
+            </>
           )}
           <div className="flex gap-1 sm:gap-2">
             <Button value={closed} label="Close" setValue={setClosed} />
@@ -314,6 +303,8 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
               circuitPoints: error ? [] : circuitPoints,
               angle: angle,
               aspectRatio: aspectRatio,
+              finishAngle: finishAngle,
+              finishPoint: pointNumber,
             })
           }
         >
@@ -322,7 +313,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       </div>
       <div className="relative h-full rounded-md bg-neutral-800  sm:max-h-[calc(100dvh-64px)] md:max-h-[calc(100dvh-78px)]  lg:max-h-[calc(100dvh-98px)]">
         <div className="grid h-full items-center" ref={mapRef}>
-          <div className="absolute left-4 top-4 z-10">
+          <div className="absolute right-4 top-4 z-10">
             {isLoading && <FaSpinner className="animate-spin text-2xl" />}
             {error && <p>No circuit points found</p>}
           </div>

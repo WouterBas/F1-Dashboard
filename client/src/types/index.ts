@@ -85,6 +85,8 @@ export type CircuitInfo = {
   circuitPoints: { x: number; y: number }[];
   angle: number;
   aspectRatio: number;
+  finishAngle: number;
+  finishPoint: number;
 };
 
 export type CircuitList = {
@@ -96,6 +98,8 @@ export type CircuitList = {
   driverKey?: number;
   angle?: number;
   aspectRatio?: number;
+  finishAngle?: number;
+  finishPoint?: number;
   sessions: {
     startDate: string;
     type: string;

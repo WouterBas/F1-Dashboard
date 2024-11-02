@@ -10,7 +10,7 @@ export function drawCircuit(
   angle: number,
   close = true,
   finishAngle: number,
-  finishPoint?: { x: number; y: number },
+  finishPoint: { x: number; y: number },
   drawPoints?: boolean,
 ) {
   // rotate points by angle degrees around center
@@ -60,7 +60,6 @@ export function drawCircuit(
 
   // move to the first point
   ctx.moveTo(points[0].x, points[0].y);
-  ctx.beginPath();
 
   for (var i = 1; i < points.length - 2; i++) {
     var xc = (points[i].x + points[i + 1].x) / 2;
@@ -116,28 +115,33 @@ export function drawCircuit(
     });
   }
 
-  if (finishPoint) {
-    const fx = finishPoint.x - center.x;
-    const fy = finishPoint.y - center.y;
-    const angleRad = (angle * Math.PI) / 180;
-    const fnx = center.x + Math.cos(angleRad) * fx - Math.sin(angleRad) * fy;
-    const fny = center.y + Math.sin(angleRad) * fx + Math.cos(angleRad) * fy;
+  const finishPointCopy = { ...finishPoint };
+  const fx = finishPointCopy.x - center.x;
+  const fy = finishPointCopy.y - center.y;
+  const angleRad = (angle * Math.PI) / 180;
+  const fnx = center.x + Math.cos(angleRad) * fx - Math.sin(angleRad) * fy;
+  const fny = center.y + Math.sin(angleRad) * fx + Math.cos(angleRad) * fy;
 
-    finishPoint.x = fnx;
-    finishPoint.y = fny;
+  finishPointCopy.x = fnx;
+  finishPointCopy.y = fny;
 
-    finishPoint.x = (finishPoint.x + Math.abs(minX)) / scale + width / 20;
-    finishPoint.y = (finishPoint.y + Math.abs(minY)) / scale + width / 20 - 8;
+  finishPointCopy.x = (finishPointCopy.x + Math.abs(minX)) / scale + width / 20;
+  finishPointCopy.y =
+    (finishPointCopy.y + Math.abs(minY)) / scale + width / 20 - 8;
 
-    finishPoint.y = calcHeight - finishPoint.y;
+  finishPointCopy.y = calcHeight - finishPointCopy.y;
 
-    ctx.beginPath();
-    ctx.fillStyle = "whitesmoke";
-    ctx.translate(finishPoint.x, finishPoint.y);
-    ctx.rotate((finishAngle * Math.PI) / 180);
-    ctx.rect(-5, -20, 10, 40);
-    ctx.fill();
-  }
+  ctx.beginPath();
+  ctx.fillStyle = "whitesmoke";
+  ctx.translate(finishPointCopy.x, finishPointCopy.y);
+  ctx.rotate((finishAngle * Math.PI) / 180);
+  ctx.rect(
+    -1.5 * deviceWidth,
+    -6 * deviceWidth,
+    3 * deviceWidth,
+    12 * deviceWidth,
+  );
+  ctx.fill();
 
   return { scale, calcHeight, calcWidth, minX, minY };
 }

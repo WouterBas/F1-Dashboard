@@ -11,7 +11,16 @@ export const getCircuitPoints = async (c: Context) => {
     .collection("circuits")
     .findOne(
       { circuitKey: key },
-      { projection: { _id: 0, angle: 1, aspectRatio: 1, circuitPoints: 1 } }
+      {
+        projection: {
+          _id: 0,
+          angle: 1,
+          aspectRatio: 1,
+          circuitPoints: 1,
+          finishAngle: 1,
+          finishPoint: 1,
+        },
+      }
     );
 
   if (!result) {
@@ -63,6 +72,8 @@ export const getAllCircuits = async (c: Context) => {
           sessions: 1,
           angle: 1,
           aspectRatio: 1,
+          finishAngle: 1,
+          finishPoint: 1,
         },
       },
     ])
@@ -81,6 +92,8 @@ export const patchCircuit = async (c: Context) => {
     circuitPoints,
     angle,
     aspectRatio,
+    finishAngle,
+    finishPoint,
   }: PatchCircuit = await c.req.json();
 
   if (circuitPoints.length < 200) {
@@ -99,6 +112,8 @@ export const patchCircuit = async (c: Context) => {
         duration,
         angle,
         aspectRatio,
+        finishAngle,
+        finishPoint,
       },
     }
   );
