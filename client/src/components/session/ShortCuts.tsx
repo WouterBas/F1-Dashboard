@@ -80,7 +80,7 @@ const ShortCuts = () => {
         visible: { opacity: 1, scale: 1 },
       }}
       transition={{ duration: 0.3 }}
-      className=" absolute z-10 h-fit w-fit self-center justify-self-center rounded-xl bg-neutral-700/50 p-4 px-6 backdrop-blur-sm"
+      className="absolute z-10 h-fit w-fit place-self-center rounded-xl  bg-neutral-700/50 p-4 px-6 backdrop-blur-sm"
     >
       <div className="grid place-items-center gap-0.5 text-5xl">
         {icon}

@@ -32,7 +32,7 @@ export const getPositionByMinute = async (c: Context) => {
 
 export const getPositionOneDriver = async (c: Context) => {
   const key: number = Number(c.req.param("key"));
-  const driverNumber: string = c.req.param("driver");
+  const driverNumber: number = Number(c.req.param("driver"));
   const starttime: Date = new Date(c.req.query("starttime") as string);
   const duration = Number(c.req.query("duration"));
 
@@ -53,16 +53,18 @@ export const getPositionOneDriver = async (c: Context) => {
     return c.json({ message: "Points not found" });
   }
 
-  // check if driver exists in array
-  if (!result[0].entries[driverNumber]) {
-    c.status(404);
-    return c.json({ message: "Driver not found" });
-  }
+  const filteredResult = result.map((position) => {
+    const entries = position.entries.filter((entry) => {
+      return entry.driverNumber === driverNumber;
+    });
 
-  const filterDriver = result.map((position) => ({
-    x: position.entries[driverNumber].X,
-    y: position.entries[driverNumber].Y,
-  }));
+    return entries.map((entry) => {
+      return {
+        x: entry.X,
+        y: entry.Y,
+      };
+    })[0];
+  });
 
-  return c.json(filterDriver);
+  return c.json(filteredResult);
 };

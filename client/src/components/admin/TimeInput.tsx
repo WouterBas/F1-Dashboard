@@ -1,15 +1,20 @@
-import { useAdminStore } from "@/store/adminStore";
-
 const TimeInput = ({
   value,
   label,
   step,
+  startTime,
+  setSaved,
+  setStartTime,
+  setDuration,
 }: {
   value: string;
   label: string;
   step: number;
+  startTime: Date;
+  setSaved: React.Dispatch<React.SetStateAction<boolean>>;
+  setStartTime: React.Dispatch<React.SetStateAction<Date>>;
+  setDuration: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const { setDuration, setSaved, setStartTime, startTime } = useAdminStore();
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSaved(false);
     if (label === "Duration") {

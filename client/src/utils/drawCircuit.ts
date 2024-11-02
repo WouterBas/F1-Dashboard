@@ -9,6 +9,8 @@ export function drawCircuit(
   deviceWidth: number,
   angle: number,
   close = true,
+  finishAngle: number,
+  finishPoint?: { x: number; y: number },
   drawPoints?: boolean,
 ) {
   // rotate points by angle degrees around center
@@ -58,6 +60,7 @@ export function drawCircuit(
 
   // move to the first point
   ctx.moveTo(points[0].x, points[0].y);
+  ctx.beginPath();
 
   for (var i = 1; i < points.length - 2; i++) {
     var xc = (points[i].x + points[i + 1].x) / 2;
@@ -81,10 +84,14 @@ export function drawCircuit(
 
   ctx.stroke();
 
+  // draw finish line
+
   // draw dots
   if (drawPoints) {
     points.forEach((point, i, arr) => {
       ctx.beginPath();
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
 
       // first point green
       if (i === 0) {
@@ -107,6 +114,29 @@ export function drawCircuit(
       ctx.fill();
       ctx.stroke();
     });
+  }
+
+  if (finishPoint) {
+    const fx = finishPoint.x - center.x;
+    const fy = finishPoint.y - center.y;
+    const angleRad = (angle * Math.PI) / 180;
+    const fnx = center.x + Math.cos(angleRad) * fx - Math.sin(angleRad) * fy;
+    const fny = center.y + Math.sin(angleRad) * fx + Math.cos(angleRad) * fy;
+
+    finishPoint.x = fnx;
+    finishPoint.y = fny;
+
+    finishPoint.x = (finishPoint.x + Math.abs(minX)) / scale + width / 20;
+    finishPoint.y = (finishPoint.y + Math.abs(minY)) / scale + width / 20 - 8;
+
+    finishPoint.y = calcHeight - finishPoint.y;
+
+    ctx.beginPath();
+    ctx.fillStyle = "whitesmoke";
+    ctx.translate(finishPoint.x, finishPoint.y);
+    ctx.rotate((finishAngle * Math.PI) / 180);
+    ctx.rect(-5, -20, 10, 40);
+    ctx.fill();
   }
 
   return { scale, calcHeight, calcWidth, minX, minY };

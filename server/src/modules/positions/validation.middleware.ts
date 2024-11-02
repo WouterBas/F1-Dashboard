@@ -33,7 +33,7 @@ export const validatePosition = createMiddleware(async (c, next) => {
 
 export const validatePositionOneDriver = createMiddleware(async (c, next) => {
   const key: number = Number(c.req.param("key"));
-  const driverNumber: string = c.req.param("driver");
+  const driverNumber: string | undefined = c.req.param("driver");
   const starttime: Date = new Date(c.req.query("starttime") as string);
   const duration = Number(c.req.query("duration"));
 

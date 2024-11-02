@@ -20,7 +20,7 @@ const Main = async ({ sessionInfo }: { sessionInfo: SessionGp }) => {
   const trackStatus: Trackstatus[] = await trackStatusRes.json();
 
   return (
-    <div className="grid rounded-md bg-neutral-800 p-1 sm:p-2 md:p-3">
+    <div className="relative grid rounded-md bg-neutral-800 p-1 sm:p-2 md:p-3">
       <ShortCuts />
       <div className="relative flex items-start justify-between">
         <Labels />

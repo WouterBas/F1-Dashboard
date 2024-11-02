@@ -28,7 +28,7 @@ export const login = async (c: Context) => {
   let options = {};
   if (process.env.ENVIRONMENT === "dev") {
     options = {
-      maxAge: 3600,
+      maxAge: 43200,
       domain: process.env.DOMAIN,
     };
   }
