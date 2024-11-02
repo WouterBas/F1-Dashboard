@@ -81,7 +81,7 @@ const LeaderBoard = ({
   }, [lapCount, time]);
 
   return (
-    <div className="rounded-md bg-neutral-800 ">
+    <div className="w-fit rounded-md bg-neutral-800">
       {lapCount.length > 0 && (
         <p className="w-auto rounded-t-md border-neutral-300  bg-neutral-700 text-center text-sm font-bold sm:text-base md:text-lg lg:py-0.5 lg:text-xl">
           {sessionInfo.type === "Race" || sessionInfo.type === "Sprint"

@@ -76,7 +76,7 @@ async function Page({ params }: { params: { slug: string[] } }) {
     return (
       <AppProvider sessionInfo={sessionInfo}>
         <GP sessionInfo={sessionInfo} />
-        <main className="col-span-2 grid grid-cols-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
+        <main className="xs:grid-cols-[auto_1fr] col-span-2 grid grid-rows-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
           <LeaderBoard
             timingData={timingData}
             sessionInfo={sessionInfo}

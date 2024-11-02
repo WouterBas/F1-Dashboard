@@ -59,25 +59,25 @@ const DriverList = ({
             ></div>
             <p className="">{driver.abbreviation}</p>
 
-            <div className="flex h-full w-11 items-center justify-between">
+            <div className="flex h-full w-8 items-center sm:w-9 md:w-10 lg:w-12">
               {driver.inPit && !driver.retired && !driver.stopped ? (
-                <div className="h-4/5 w-full  rounded-md bg-neutral-500 text-center  text-[10px] leading-3 sm:text-xs  md:text-sm  lg:text-base">
+                <div className="h-4/5 w-full rounded-sm bg-neutral-500 text-center text-[10px] leading-3 sm:text-xs md:rounded  md:text-sm lg:text-base ">
                   PIT
                 </div>
               ) : (
                 <>
                   <div
-                    className={`${getBorderColour(driver.compound)} relative mr-1 aspect-square w-4 rounded-full border-[3px]`}
+                    className={`${getBorderColour(driver.compound)} relative mr-1 aspect-square w-3 rounded-full border-[3px] md:w-4 `}
                   >
                     <div
-                      className={`${getBackgroundColour(driver.compound)} absolute left-1/2 top-1/2 aspect-square w-1 -translate-x-1/2 -translate-y-1/2 rounded-full`}
+                      className={`${getBackgroundColour(driver.compound)} absolute left-1/2 top-1/2 aspect-square w-1 -translate-x-1/2 -translate-y-1/2 rounded-full `}
                     ></div>
                   </div>
-                  <p className=" text-neutral-400 ">{driver.age}</p>
+                  <p className=" text-center text-neutral-400">{driver.age}</p>
                 </>
               )}
             </div>
-            <p className=" text-neutral-400 ">P{driver.pitStops}</p>
+            <p className="w-4 text-neutral-400 sm:w-5">P{driver.pitStops}</p>
           </motion.li>
         </AnimatePresence>
       ))}
