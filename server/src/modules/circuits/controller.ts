@@ -19,6 +19,7 @@ export const getCircuitPoints = async (c: Context) => {
           circuitPoints: 1,
           finishAngle: 1,
           finishPoint: 1,
+          pitPoints: 1,
         },
       }
     );
@@ -74,6 +75,8 @@ export const getAllCircuits = async (c: Context) => {
           aspectRatio: 1,
           finishAngle: 1,
           finishPoint: 1,
+          pitTime: 1,
+          pitDuration: 1,
         },
       },
     ])
@@ -94,6 +97,9 @@ export const patchCircuit = async (c: Context) => {
     aspectRatio,
     finishAngle,
     finishPoint,
+    pitPoints,
+    pitTime,
+    pitDuration,
   }: PatchCircuit = await c.req.json();
 
   if (circuitPoints.length < 200) {
@@ -114,6 +120,9 @@ export const patchCircuit = async (c: Context) => {
         aspectRatio,
         finishAngle,
         finishPoint,
+        pitPoints,
+        pitTime,
+        pitDuration,
       },
     }
   );

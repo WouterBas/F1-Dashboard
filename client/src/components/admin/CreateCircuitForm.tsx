@@ -38,7 +38,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     circuitList[0].duration || 60000,
   );
   const [startTime, setStartTime] = useState<Date>(
-    new Date(circuitList[0].startTime || "2023-10-22T19:00:00.000Z"),
+    new Date(circuitList[0].startTime || new Date()),
   );
 
   const [drawPoints, setDrawPoints] = useState<boolean>(false);
@@ -52,6 +52,16 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
   );
   const [pointNumber, setPointNumber] = useState<number>(
     circuitList[0].finishPoint || 0,
+  );
+
+  const [pitTime, setPitTime] = useState<Date>(
+    new Date(
+      circuitList[0].pitTime ||
+        new Date(circuitList[0].startTime || new Date()),
+    ),
+  );
+  const [pitDuration, setPitDuration] = useState<number>(
+    circuitList[0].pitDuration || 10000,
   );
 
   const modeOptions = [
@@ -92,8 +102,6 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       }));
     return drivers;
   }, [circuitKey, sessionKey, circuitList]);
-
-  console.log(circuitList);
 
   // set default values on circuit change
   const onCircuitChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -156,6 +164,12 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     fetcher,
   );
 
+  // get pit lane points
+  const { data: pitPoints } = useSWR<{ x: number; y: number }[]>(
+    `position/${driverNumber}/${sessionKey}?starttime=${pitTime.toISOString()}&duration=${pitDuration}`,
+    fetcher,
+  );
+
   // get formatted time
   function getFormattedTime(duration: number): string {
     const minutes = Math.floor(duration / 60 / 1000);
@@ -169,7 +183,12 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
 
   // draw circuit
   useEffect(() => {
-    if (circuitPoints && circuitPoints.length > 0) {
+    if (
+      circuitPoints &&
+      circuitPoints.length > 0 &&
+      pitPoints &&
+      pitPoints.length > 0
+    ) {
       drawCircuit(
         circuitRef,
         circuitPoints,
@@ -177,9 +196,10 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
         dpr,
         scale,
         angle,
-        closed,
         finishAngle,
         circuitPoints[pointNumber],
+        pitPoints,
+        closed,
         drawPoints,
       );
     }
@@ -197,6 +217,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     pointNumber,
     scale,
     width,
+    pitPoints,
   ]);
 
   return (
@@ -251,15 +272,40 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
                 setStartTime={setStartTime}
                 setDuration={setDuration}
               />
+            </>
+          )}
 
-              <NumberInput
-                label="Angle"
-                id="angle"
-                angle={angle}
-                setAngle={setAngle}
+          {mode === "pit" && (
+            <>
+              <TimeInput
+                value={new Date(pitTime).toTimeString().split(" ")[0]}
+                label="Start Time"
+                step={1}
+                startTime={pitTime}
                 setSaved={setSaved}
+                setStartTime={setPitTime}
+                setDuration={setPitDuration}
+              />
+
+              <TimeInput
+                value={getFormattedTime(pitDuration)}
+                label="Duration"
+                step={60}
+                startTime={pitTime}
+                setSaved={setSaved}
+                setStartTime={setPitTime}
+                setDuration={setPitDuration}
               />
             </>
+          )}
+          {mode === "draw" && (
+            <NumberInput
+              label="Angle"
+              id="angle"
+              angle={angle}
+              setAngle={setAngle}
+              setSaved={setSaved}
+            />
           )}
 
           {mode === "finish" && (
@@ -305,6 +351,9 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
               aspectRatio: aspectRatio,
               finishAngle: finishAngle,
               finishPoint: pointNumber,
+              pitPoints: pitPoints,
+              pitTime: pitTime,
+              pitDuration: pitDuration,
             })
           }
         >

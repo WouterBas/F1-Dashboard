@@ -87,6 +87,7 @@ export type CircuitInfo = {
   aspectRatio: number;
   finishAngle: number;
   finishPoint: number;
+  pitPoints: { x: number; y: number }[];
 };
 
 export type CircuitList = {
@@ -100,6 +101,9 @@ export type CircuitList = {
   aspectRatio?: number;
   finishAngle?: number;
   finishPoint?: number;
+  pitPoints?: { x: number; y: number }[];
+  pitTime?: number;
+  pitDuration?: number;
   sessions: {
     startDate: string;
     type: string;

@@ -23,6 +23,9 @@ export type PatchCircuit = {
   aspectRatio: number;
   finishAngle: number;
   finishPoint: number;
+  pitPoints: circuitPoints[];
+  pitTime: number;
+  pitDuration: number;
 };
 
 export type Session = {

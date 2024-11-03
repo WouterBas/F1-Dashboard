@@ -21,7 +21,8 @@ const MapCircuit = ({
   const store = useContext(sessionContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const { setCircuitDimensions, circuitDimensions } = useStore(store);
-  const { circuitPoints, angle, finishAngle, finishPoint } = circuitInfo;
+  const { circuitPoints, angle, finishAngle, finishPoint, pitPoints } =
+    circuitInfo;
 
   // draw circuit
   useEffect(() => {
@@ -33,9 +34,9 @@ const MapCircuit = ({
         dpr,
         scale,
         angle,
-        true,
         finishAngle,
         circuitPoints[finishPoint],
+        pitPoints,
       );
       setCircuitDimensions(circuitDim);
     }

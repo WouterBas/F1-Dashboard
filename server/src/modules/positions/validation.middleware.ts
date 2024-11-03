@@ -11,7 +11,7 @@ const positionOneDriverSchema = object().shape({
   key: number().min(1).max(9999).required(),
   driverNumber: number().min(1).max(99).required(),
   starttime: date().required(),
-  duration: number().min(60000).max(180000).required(),
+  duration: number().min(1000).max(180000).required(),
 });
 
 export const validatePosition = createMiddleware(async (c, next) => {

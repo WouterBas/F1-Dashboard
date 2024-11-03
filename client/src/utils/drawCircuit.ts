@@ -8,9 +8,10 @@ export function drawCircuit(
   dpr: number,
   deviceWidth: number,
   angle: number,
-  close = true,
   finishAngle: number,
   finishPoint: { x: number; y: number },
+  pitPoints: { x: number; y: number }[],
+  close = true,
   drawPoints?: boolean,
 ) {
   // rotate points by angle degrees around center
@@ -19,6 +20,18 @@ export function drawCircuit(
     y: width / 2,
   };
   const points = circuitPoints.map((point) => {
+    const dx = point.x - center.x;
+    const dy = point.y - center.y;
+    const angleRad = (angle * Math.PI) / 180;
+    const nx = center.x + Math.cos(angleRad) * dx - Math.sin(angleRad) * dy;
+    const ny = center.y + Math.sin(angleRad) * dx + Math.cos(angleRad) * dy;
+    return {
+      x: nx,
+      y: ny,
+    };
+  });
+
+  const pitPoints2 = pitPoints.map((point) => {
     const dx = point.x - center.x;
     const dy = point.y - center.y;
     const angleRad = (angle * Math.PI) / 180;
@@ -51,14 +64,52 @@ export function drawCircuit(
     point.y = (point.y + Math.abs(minY)) / scale + width / 20 - 8;
   });
 
+  pitPoints2.forEach((pitPoint) => {
+    pitPoint.x = (pitPoint.x + Math.abs(minX)) / scale + width / 20;
+    pitPoint.y = (pitPoint.y + Math.abs(minY)) / scale + width / 20 - 8;
+  });
+
   // flip points vertically
   points.forEach((point) => {
     point.y = calcHeight - point.y;
   });
 
+  pitPoints2.forEach((pitPoint) => {
+    pitPoint.y = calcHeight - pitPoint.y;
+  });
+
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
+  //draw pit lane
+  if (pitPoints2.length > 0) {
+    ctx.beginPath();
+
+    ctx.moveTo(pitPoints2[0].x, pitPoints2[0].y);
+
+    for (var i = 1; i < pitPoints2.length - 2; i++) {
+      var xc = (pitPoints2[i].x + pitPoints2[i + 1].x) / 2;
+      var yc = (pitPoints2[i].y + pitPoints2[i + 1].y) / 2;
+      ctx.quadraticCurveTo(pitPoints2[i].x, pitPoints2[i].y, xc, yc);
+    }
+
+    // curve through the last two points
+    ctx.quadraticCurveTo(
+      pitPoints2[i].x,
+      pitPoints2[i].y,
+      pitPoints2[i + 1].x,
+      pitPoints2[i + 1].y,
+    );
+
+    ctx.lineWidth = 2 * deviceWidth;
+    ctx.strokeStyle = "grey";
+    ctx.lineJoin = "round";
+
+    ctx.stroke();
+  }
+
   // move to the first point
+  ctx.beginPath();
+
   ctx.moveTo(points[0].x, points[0].y);
 
   for (var i = 1; i < points.length - 2; i++) {
@@ -82,8 +133,6 @@ export function drawCircuit(
   }
 
   ctx.stroke();
-
-  // draw finish line
 
   // draw dots
   if (drawPoints) {
