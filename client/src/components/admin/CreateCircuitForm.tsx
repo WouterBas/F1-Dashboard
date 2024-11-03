@@ -122,6 +122,10 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       setAngle(circuit.angle || 0);
       setFinishAngle(circuit.finishAngle || 0);
       setPointNumber(circuit.finishPoint || 0);
+      setPitTime(
+        new Date(circuit?.pitTime || circuit?.startTime || new Date()),
+      );
+      setPitDuration(circuit.pitDuration || 10000);
     }
   };
 
@@ -139,6 +143,10 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       setDriverNumber(circuit.driverKey || session?.drivers[0].racingNumber);
       setStartTime(new Date(session?.startDate));
       setDuration(circuit.duration || 60000);
+      setPitTime(
+        new Date(circuit?.pitTime || session?.startDate || new Date()),
+      );
+      setPitDuration(circuit.pitDuration || 10000);
     }
   };
 
@@ -157,15 +165,19 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
   // get circuit points
   const {
     data: circuitPoints,
-    isLoading,
-    error,
+    isLoading: isLoadingCircuit,
+    error: errorCircuit,
   } = useSWR<{ x: number; y: number }[]>(
     `position/${driverNumber}/${sessionKey}?starttime=${startTime.toISOString()}&duration=${duration}`,
     fetcher,
   );
 
   // get pit lane points
-  const { data: pitPoints } = useSWR<{ x: number; y: number }[]>(
+  const {
+    data: pitPoints,
+    isLoading: isLoadingPit,
+    error: errorPit,
+  } = useSWR<{ x: number; y: number }[]>(
     `position/${driverNumber}/${sessionKey}?starttime=${pitTime.toISOString()}&duration=${pitDuration}`,
     fetcher,
   );
@@ -177,8 +189,8 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
     return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
   }
 
-  if (error !== undefined) {
-    console.log(error);
+  if (errorCircuit !== undefined || errorPit !== undefined) {
+    console.log(errorCircuit, errorPit);
   }
 
   // draw circuit
@@ -339,14 +351,14 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
 
         <button
           className="h-fit w-full self-center justify-self-end rounded border-2 bg-neutral-800 px-3 py-1 text-center text-base disabled:opacity-50 sm:w-fit"
-          disabled={saved || error}
+          disabled={saved || errorCircuit || errorPit}
           onClick={() =>
             trigger({
               sessionKey: sessionKey,
               driverKey: driverNumber,
               startTime: startTime,
               duration: duration,
-              circuitPoints: error ? [] : circuitPoints,
+              circuitPoints: errorCircuit ? [] : circuitPoints,
               angle: angle,
               aspectRatio: aspectRatio,
               finishAngle: finishAngle,
@@ -363,8 +375,11 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
       <div className="relative h-full rounded-md bg-neutral-800  sm:max-h-[calc(100dvh-64px)] md:max-h-[calc(100dvh-78px)]  lg:max-h-[calc(100dvh-98px)]">
         <div className="grid h-full items-center" ref={mapRef}>
           <div className="absolute right-4 top-4 z-10">
-            {isLoading && <FaSpinner className="animate-spin text-2xl" />}
-            {error && <p>No circuit points found</p>}
+            {(isLoadingCircuit || isLoadingPit) && (
+              <FaSpinner className="animate-spin text-2xl" />
+            )}
+            {errorCircuit && <p>No circuit points found</p>}
+            {errorPit && <p>No pit lane points found</p>}
           </div>
           <div className="absolute left-2 top-2 flex gap-2 rounded-md bg-neutral-800 px-1 py-1 pl-2">
             <label htmlFor="mode">Mode</label>
@@ -386,7 +401,7 @@ const CreateCircuitForm = ({ circuitList }: { circuitList: CircuitList[] }) => {
           </div>
 
           <canvas
-            className={`${error ? "hidden" : "block"} mx-auto max-h-[calc(100dvh-264px)] max-w-full  sm:max-h-[calc(100dvh-232px)] md:max-h-[calc(100dvh-210px)] lg:max-h-[calc(100dvh-176px)]`}
+            className={`${errorCircuit || errorPit ? "hidden" : "block"} mx-auto max-h-[calc(100dvh-264px)] max-w-full  sm:max-h-[calc(100dvh-232px)] md:max-h-[calc(100dvh-210px)] lg:max-h-[calc(100dvh-176px)]`}
             ref={circuitRef}
           ></canvas>
         </div>
