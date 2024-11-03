@@ -105,6 +105,7 @@ function convertData(
         inPit: driverData[key].InPit,
         pitOut: driverData[key].PitOut,
         stopped: driverData[key].Stopped,
+        interval: driverData[key].IntervalToPositionAhead?.Value,
       };
     });
     return [convertedDrivers, line[1]];
@@ -134,7 +135,8 @@ function filterTimingData(timingData: TimingData[]): TimingData[] {
         driver.retired ||
         driver.inPit ||
         driver.pitOut ||
-        driver.stopped
+        driver.stopped ||
+        driver.interval
     );
   });
 }
@@ -184,6 +186,7 @@ function extendLines(
       inPit: cu?.inPit === undefined ? pr.inPit : cu.inPit,
       pitOut: cu?.pitOut === undefined ? pr.pitOut : cu.pitOut,
       stopped: cu?.stopped === undefined ? pr.stopped : cu.stopped,
+      interval: cu?.interval === undefined ? pr.interval : cu.interval,
     };
     if ((type === "Race" || type === "Sprint") && timestamp < startTime) {
       return {

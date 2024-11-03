@@ -139,7 +139,7 @@ export type RawTimingDataObject = {
     Stopped?: boolean;
     GapToLeader?: string;
     IntervalToPositionAhead?: {
-      Value: number;
+      Value: string;
       Catching: boolean;
     };
     RacingNumber?: string;
@@ -197,6 +197,7 @@ export type DriverClean = {
   inPit?: boolean;
   pitOut?: boolean;
   stopped?: boolean;
+  interval?: string;
 };
 
 export type TimingData = {

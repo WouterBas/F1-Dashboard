@@ -4,14 +4,14 @@ import { LapCount, SessionGp, TimgingData, TireStints } from "@/types";
 import { useContext, useEffect, useState } from "react";
 import DriverList from "@/components/session/DriverList";
 import { useStore } from "zustand";
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
 
 const LeaderBoard = ({
-  timingData,
   sessionInfo,
   lapCount,
   tireStints,
 }: {
-  timingData: TimgingData[];
   sessionInfo: SessionGp;
   lapCount: LapCount[];
   tireStints: TireStints[];
@@ -20,6 +20,15 @@ const LeaderBoard = ({
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
   const { time, driverList, setDriverList } = useStore(store);
   const [lap, setLap] = useState(1);
+
+  // load driver positions
+  const { data: timingData, isLoading } = useSWR<TimgingData>(
+    `position/${sessionInfo.sessionKey}?minute=${debouncedMinute}&starttime=${sessionInfo.startDate}`,
+    fetcher,
+    {
+      keepPreviousData: true,
+    },
+  );
 
   useEffect(() => {
     // find index of closest timing data based on current time

@@ -44,7 +44,6 @@ const MapDrivers = ({
     driverList,
     showLabels,
     circuitDimensions,
-
     setPlaying,
   } = useStore(store);
   const [minute, setMinute] = useState(0);

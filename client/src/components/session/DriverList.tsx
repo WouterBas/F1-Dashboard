@@ -49,7 +49,7 @@ const DriverList = ({
           <motion.li
             layout="position"
             key={driver.racingNumber}
-            className={`${(driver.retired || (driver.stopped && (sessionInfo.type === "Race" || sessionInfo.type === "Sprint"))) && "opacity-30"} flex h-4 justify-end gap-2  sm:h-5 md:h-6 lg:h-7`}
+            className={`${(driver.retired || (driver.stopped && (sessionInfo.type === "Race" || sessionInfo.type === "Sprint"))) && "opacity-30"}  flex h-4 justify-end gap-2  sm:h-5 md:h-6 lg:h-7`}
           >
             <p>{driver.position}</p>
 
@@ -58,6 +58,7 @@ const DriverList = ({
               style={{ backgroundColor: driver.teamColor }}
             ></div>
             <p className="">{driver.abbreviation}</p>
+            <p className=" text-neutral-400 ">__.___</p>
 
             <div className="flex h-full w-8 items-center sm:w-9 md:w-10 lg:w-12">
               {driver.inPit && !driver.retired && !driver.stopped ? (
