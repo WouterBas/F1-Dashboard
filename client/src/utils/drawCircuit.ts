@@ -1,5 +1,6 @@
 import { RefObject } from "react";
 import { circuitSize } from "@/utils/helpers";
+import { mapToCenter, scalePoints, drawPath } from "./drawHelpers";
 
 export function drawCircuit(
   ref: RefObject<HTMLCanvasElement>,
@@ -10,7 +11,7 @@ export function drawCircuit(
   angle: number,
   finishAngle: number,
   finishPoint: { x: number; y: number },
-  pitPoints: { x: number; y: number }[],
+  pitLanePoints: { x: number; y: number }[],
   close = true,
   drawPoints?: boolean,
 ) {
@@ -19,29 +20,10 @@ export function drawCircuit(
     x: width / 2,
     y: width / 2,
   };
-  const points = circuitPoints.map((point) => {
-    const dx = point.x - center.x;
-    const dy = point.y - center.y;
-    const angleRad = (angle * Math.PI) / 180;
-    const nx = center.x + Math.cos(angleRad) * dx - Math.sin(angleRad) * dy;
-    const ny = center.y + Math.sin(angleRad) * dx + Math.cos(angleRad) * dy;
-    return {
-      x: nx,
-      y: ny,
-    };
-  });
 
-  const pitPoints2 = pitPoints.map((point) => {
-    const dx = point.x - center.x;
-    const dy = point.y - center.y;
-    const angleRad = (angle * Math.PI) / 180;
-    const nx = center.x + Math.cos(angleRad) * dx - Math.sin(angleRad) * dy;
-    const ny = center.y + Math.sin(angleRad) * dx + Math.cos(angleRad) * dy;
-    return {
-      x: nx,
-      y: ny,
-    };
-  });
+  const points = mapToCenter(circuitPoints, center, angle);
+  const pitPoints = mapToCenter(pitLanePoints, center, angle);
+  const finishLine = mapToCenter([finishPoint], center, angle);
 
   const minX = Math.min(...points.map((loc) => loc.x));
   const minY = Math.min(...points.map((loc) => loc.y));
@@ -59,80 +41,15 @@ export function drawCircuit(
   ctx.scale(dpr, dpr);
 
   // scale points
-  points.forEach((point) => {
-    point.x = (point.x + Math.abs(minX)) / scale + width / 20;
-    point.y = (point.y + Math.abs(minY)) / scale + width / 20 - 8;
-  });
-
-  pitPoints2.forEach((pitPoint) => {
-    pitPoint.x = (pitPoint.x + Math.abs(minX)) / scale + width / 20;
-    pitPoint.y = (pitPoint.y + Math.abs(minY)) / scale + width / 20 - 8;
-  });
-
-  // flip points vertically
-  points.forEach((point) => {
-    point.y = calcHeight - point.y;
-  });
-
-  pitPoints2.forEach((pitPoint) => {
-    pitPoint.y = calcHeight - pitPoint.y;
-  });
+  scalePoints(points, scale, minX, minY, width, calcHeight);
+  scalePoints(pitPoints, scale, minX, minY, width, calcHeight);
+  scalePoints(finishLine, scale, minX, minY, width, calcHeight);
 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-  //draw pit lane
-  if (pitPoints2.length > 0) {
-    ctx.beginPath();
-
-    ctx.moveTo(pitPoints2[0].x, pitPoints2[0].y);
-
-    for (var i = 1; i < pitPoints2.length - 2; i++) {
-      var xc = (pitPoints2[i].x + pitPoints2[i + 1].x) / 2;
-      var yc = (pitPoints2[i].y + pitPoints2[i + 1].y) / 2;
-      ctx.quadraticCurveTo(pitPoints2[i].x, pitPoints2[i].y, xc, yc);
-    }
-
-    // curve through the last two points
-    ctx.quadraticCurveTo(
-      pitPoints2[i].x,
-      pitPoints2[i].y,
-      pitPoints2[i + 1].x,
-      pitPoints2[i + 1].y,
-    );
-
-    ctx.lineWidth = 2 * deviceWidth;
-    ctx.strokeStyle = "grey";
-    ctx.lineJoin = "round";
-
-    ctx.stroke();
-  }
-
-  // move to the first point
-  ctx.beginPath();
-
-  ctx.moveTo(points[0].x, points[0].y);
-
-  for (var i = 1; i < points.length - 2; i++) {
-    var xc = (points[i].x + points[i + 1].x) / 2;
-    var yc = (points[i].y + points[i + 1].y) / 2;
-    ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
-  }
-
-  // curve through the last two points
-  ctx.quadraticCurveTo(
-    points[i].x,
-    points[i].y,
-    points[i + 1].x,
-    points[i + 1].y,
-  );
-
-  ctx.lineWidth = 3 * deviceWidth;
-  ctx.strokeStyle = "whitesmoke";
-  if (close) {
-    ctx.closePath();
-  }
-
-  ctx.stroke();
+  //draw pit lane and circuit
+  drawPath(ctx, pitPoints, deviceWidth, "grey");
+  drawPath(ctx, points, deviceWidth, "whitesmoke", close);
 
   // draw dots
   if (drawPoints) {
@@ -164,25 +81,10 @@ export function drawCircuit(
     });
   }
 
-  const finishPointCopy = { ...finishPoint };
-  const fx = finishPointCopy.x - center.x;
-  const fy = finishPointCopy.y - center.y;
-  const angleRad = (angle * Math.PI) / 180;
-  const fnx = center.x + Math.cos(angleRad) * fx - Math.sin(angleRad) * fy;
-  const fny = center.y + Math.sin(angleRad) * fx + Math.cos(angleRad) * fy;
-
-  finishPointCopy.x = fnx;
-  finishPointCopy.y = fny;
-
-  finishPointCopy.x = (finishPointCopy.x + Math.abs(minX)) / scale + width / 20;
-  finishPointCopy.y =
-    (finishPointCopy.y + Math.abs(minY)) / scale + width / 20 - 8;
-
-  finishPointCopy.y = calcHeight - finishPointCopy.y;
-
+  // draw finish line
   ctx.beginPath();
   ctx.fillStyle = "whitesmoke";
-  ctx.translate(finishPointCopy.x, finishPointCopy.y);
+  ctx.translate(finishLine[0].x, finishLine[0].y);
   ctx.rotate((finishAngle * Math.PI) / 180);
   ctx.rect(
     -1.5 * deviceWidth,
