@@ -58,7 +58,13 @@ const DriverList = ({
               style={{ backgroundColor: driver.teamColor }}
             ></div>
             <p className="">{driver.abbreviation}</p>
-            <p className=" text-neutral-400 ">__.___</p>
+            {(sessionInfo.type === "Race" || sessionInfo.type === "Sprint") && (
+              <p className="w-[82px] text-right text-neutral-400">
+                {driver.retired || driver.stopped
+                  ? "__.___"
+                  : driver.interval || "__.___"}
+              </p>
+            )}
 
             <div className="flex h-full w-8 items-center sm:w-9 md:w-10 lg:w-12">
               {driver.inPit && !driver.retired && !driver.stopped ? (

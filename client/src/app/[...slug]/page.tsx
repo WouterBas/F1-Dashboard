@@ -1,11 +1,5 @@
 import GP from "@/components/session/Gp";
-import {
-  LapCount,
-  SessionGp,
-  SessionList,
-  TimgingData,
-  TireStints,
-} from "@/types";
+import { LapCount, SessionGp, SessionList, TireStints } from "@/types";
 import { apiService } from "@/services/api.service";
 import AppProvider from "@/components/session/AppProvider";
 import { HTTPError } from "ky";
@@ -51,12 +45,6 @@ async function Page({ params }: { params: { slug: string[] } }) {
     const response = await apiService.get(`session/${slug}`);
     const sessionInfo: SessionGp = await response.json();
 
-    const timingDataRes = await apiService.get(
-      `timingdata/${sessionInfo.sessionKey}`,
-      {},
-    );
-    const timingData: TimgingData[] = await timingDataRes.json();
-
     let lapCount: LapCount[] = [];
 
     if (!sessionInfo.type.includes("Practice")) {
@@ -76,9 +64,8 @@ async function Page({ params }: { params: { slug: string[] } }) {
     return (
       <AppProvider sessionInfo={sessionInfo}>
         <GP sessionInfo={sessionInfo} />
-        <main className="xs:grid-cols-[auto_1fr] col-span-2 grid grid-rows-[auto_1fr] items-start gap-1 sm:gap-2 md:gap-3">
+        <main className="col-span-2 grid grid-rows-[auto_1fr] items-start gap-1 xs:grid-cols-[auto_1fr] sm:gap-2 md:gap-3">
           <LeaderBoard
-            timingData={timingData}
             sessionInfo={sessionInfo}
             lapCount={lapCount}
             tireStints={tireStints}
