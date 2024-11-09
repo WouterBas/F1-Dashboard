@@ -72,8 +72,6 @@ const LeaderBoard = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timingData, sessionInfo, time, tireStints]);
 
-  console.log(driverList);
-
   useEffect(() => {
     if (lapCount.length === 0) return;
     // find index of closest lap based on current time
