@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import FeatureCard from './FeatureCard.svelte';
 	import Option from './SelectOption.svelte';
 </script>
@@ -7,20 +7,33 @@
 	<h1 class="text-3xl font-bold">F1 DASHBOARD</h1>
 </header>
 
-<main class="mx-2">
-	<section class="mx-auto mb-8 mt-4 p-2">
-		<h2 class="text-2xl font-bold">Pick a Session</h2>
-		<div class="mx-auto grid max-w-72 gap-3">
-			<Option />
-			<Option />
-			<Option />
-			<button class="rounded border bg-neutral-900 px-4 py-1 shadow">View</button>
-			<button class="rounded border bg-neutral-900 px-4 py-1 shadow">Go live</button>
+<main>
+	<section class="mx-auto mb-12 mt-8 p-2">
+		<div class="mb-12">
+			<h2 class="text-center text-2xl font-bold uppercase">live telemetry</h2>
+			<p class="font-sans text-sm">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet
+				egestas nisi. Donec varius justo eleifend.
+			</p>
+		</div>
+
+		<button
+			class="mx-auto mb-12 block w-64 rounded-md border border-emerald-500 bg-neutral-900 px-4 py-2 font-bold uppercase text-emerald-500"
+			>Go live</button
+		>
+		<h2 class="mb-4 text-center text-2xl font-bold uppercase">Pick a session</h2>
+
+		<div class="mx-auto grid max-w-64 gap-4">
+			<Option label="Year" />
+			<Option label="Grand Prix" />
+			<Option label="Session" />
+			<button class="mt-4 rounded-md border bg-neutral-900 px-4 py-2 font-bold uppercase"
+				>View</button
+			>
 		</div>
 	</section>
 
 	<section>
-		<h2 class="text-2xl font-bold">Features</h2>
 		<div class="grid gap-2">
 			<FeatureCard
 				title="Live Telemetry"

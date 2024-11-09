@@ -1,11 +1,13 @@
-<script>
+<script lang="ts">
 	import { ChevronDown } from 'lucide-svelte';
+
+	let { label }: { label: string } = $props();
 </script>
 
 <div>
-	<label for="id" class="text-base sm:text-lg"> label </label>
+	<label for={label} class="text-base sm:text-lg">{label}</label>
 	<div class="relative">
-		<select id="id" class="w-full appearance-none rounded bg-neutral-800 px-2 py-1">
+		<select id={label} class="w-full appearance-none rounded bg-neutral-700 px-3 py-1.5">
 			<option value="">choose a pet</option>
 			<option value="dog">Dog</option>
 			<option value="cat">Cat</option>
