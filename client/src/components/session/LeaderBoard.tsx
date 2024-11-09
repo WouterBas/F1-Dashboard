@@ -18,12 +18,11 @@ const LeaderBoard = ({
 }) => {
   const store = useContext(sessionContext);
   if (!store) throw new Error("Missing AppContext.Provider in the tree");
-  const { time, driverList, setDriverList } = useStore(store);
+  const { time, driverList, setDriverList, minute } = useStore(store);
   const [lap, setLap] = useState(1);
 
-  // load driver positions
-  const { data: timingData, isLoading } = useSWR<TimgingData>(
-    `position/${sessionInfo.sessionKey}?minute=${debouncedMinute}&starttime=${sessionInfo.startDate}`,
+  const { data: timingData } = useSWR<TimgingData[]>(
+    `timingdata/${sessionInfo.sessionKey}?minute=${minute}&starttime=${sessionInfo.startDate}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -31,6 +30,7 @@ const LeaderBoard = ({
   );
 
   useEffect(() => {
+    if (!timingData) return;
     // find index of closest timing data based on current time
     const closestTiming = timingData.reduce((prev, curr) => {
       const currentTime = new Date(curr.timestamp).getTime();

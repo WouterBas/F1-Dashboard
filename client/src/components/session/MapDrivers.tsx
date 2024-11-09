@@ -45,8 +45,9 @@ const MapDrivers = ({
     showLabels,
     circuitDimensions,
     setPlaying,
+    setMinute,
   } = useStore(store);
-  const [minute, setMinute] = useState(0);
+  const [minute, setLocalMinute] = useState(0);
   const [debouncedMinute] = useDebounce(minute, 250);
   const [noData, setNoData] = useState(false);
   const [wasPlaying, setWasPlaying] = useState(false);
@@ -67,11 +68,15 @@ const MapDrivers = ({
   );
 
   useEffect(() => {
+    setMinute(debouncedMinute);
+  }, [debouncedMinute, setMinute]);
+
+  useEffect(() => {
     // set the minute
     const newMitute = Math.floor(
       (time.getTime() - new Date(sessionInfo.startDate).getTime()) / 1000 / 60,
     );
-    setMinute(newMitute < 0 ? 0 : newMitute);
+    setLocalMinute(newMitute < 0 ? 0 : newMitute);
 
     // no data available for current time
     const found = data?.find((item) => {

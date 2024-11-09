@@ -13,6 +13,8 @@ type SessionProps = {
 
   startTime: Date;
   endTime: Date;
+
+  minute: number;
 };
 
 interface SessionState extends SessionProps {
@@ -30,6 +32,8 @@ interface SessionState extends SessionProps {
 
   incrementSpeed: () => void;
   decrementSpeed: () => void;
+
+  setMinute: (minute: number) => void;
 }
 
 export type SessionStore = ReturnType<typeof createSessionStore>;
@@ -52,6 +56,7 @@ export const createSessionStore = (initProps?: Partial<SessionProps>) => {
 
     startTime: new Date("1970-01-01T00:00:00.000Z"),
     endTime: new Date("1970-01-01T00:00:00.000Z"),
+    minute: 0,
   };
   return createStore<SessionState>()((set) => ({
     ...DEFAULT_PROPS,
@@ -65,6 +70,8 @@ export const createSessionStore = (initProps?: Partial<SessionProps>) => {
             ? new Date(state.time.getTime() + minutes * 60 * 1000)
             : state.endTime,
       })),
+    setMinute: (minute: number) => set({ minute }),
+
     decrementTime: (minutes: number) =>
       set((state) => ({
         time:

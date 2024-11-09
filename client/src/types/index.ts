@@ -144,6 +144,7 @@ export type DriverTimingList = {
   compound?: string;
   age?: number;
   pitStops?: number;
+  interval?: string;
 };
 
 export type Trackstatus = {
