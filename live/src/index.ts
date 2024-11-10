@@ -1,13 +1,13 @@
 import { Hono } from "hono";
 import { SSEStreamingApi } from "hono/streaming";
-
-let state = "";
+import { EventEmitter } from "events";
 
 const socket = new WebSocket("ws://localhost:8000/ws");
+const eventEmitter = new EventEmitter();
 
 // message is received
 socket.addEventListener("message", (event) => {
-  state = event.data;
+  eventEmitter.emit("update", event.data);
 });
 
 // socket opened
@@ -36,14 +36,14 @@ app.get("/", async (c) => {
   c.header("Cache-Control", "no-cache");
   c.header("Connection", "keep-alive");
 
-  setInterval(() => {
+  eventEmitter.on("update", (data) => {
     counter++;
     stream.writeSSE({
       id: counter.toString(),
-      event: "message",
-      data: JSON.stringify(state),
+      event: "update",
+      data: JSON.stringify(data),
     });
-  }, 1000);
+  });
 
   return c.newResponse(stream.responseReadable);
 });
