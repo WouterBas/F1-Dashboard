@@ -6,4 +6,3 @@ export { default as authRouter } from "./auth";
 export { default as trackstatusRouter } from "./trackstatus";
 export { default as lapCountRouter } from "./lapCount";
 export { default as tireStintsRouter } from "./tireStints";
-export { default as sseRouter } from "./live";

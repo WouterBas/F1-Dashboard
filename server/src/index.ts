@@ -13,7 +13,6 @@ import {
   trackstatusRouter,
   lapCountRouter,
   tireStintsRouter,
-  sseRouter,
 } from "./modules";
 
 export const app = new Hono().basePath("/api/v1");
@@ -44,6 +43,5 @@ app.route("/auth", authRouter);
 app.route("/trackstatus", trackstatusRouter);
 app.route("/lapcount", lapCountRouter);
 app.route("/tirestints", tireStintsRouter);
-app.route("/live", sseRouter);
 
 export default app;
