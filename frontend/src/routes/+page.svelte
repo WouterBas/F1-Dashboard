@@ -1,5 +1,4 @@
 <script lang="ts">
-	import FeatureCard from './FeatureCard.svelte';
 	import Option from './SelectOption.svelte';
 
 	const yearOptions = $state([
@@ -62,22 +61,32 @@
 		<h2 class="mb-2 text-center text-2xl font-bold uppercase">Features</h2>
 
 		<div class="mx-auto grid max-w-4xl gap-2 sm:grid-cols-2">
-			<FeatureCard
-				title="Live Telemetry"
-				text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet egestas nisi. Donec varius justo eleifend."
-			/>
-			<FeatureCard
-				title="Leaderboard"
-				text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet egestas nisi. Donec varius justo eleifend."
-			/>
-			<FeatureCard
-				title="Tire compound and pit stops"
-				text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet egestas nisi. Donec varius justo eleifend."
-			/>
-			<FeatureCard
-				title="Time intervals"
-				text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet egestas nisi. Donec varius justo eleifend."
-			/>
+			{#snippet featureCard(title: string, text: string)}
+				<div class="rounded bg-neutral-800 px-3 py-2">
+					<h3 class="text-lg font-bold uppercase">{title}</h3>
+					<p class="font-sans text-sm">
+						{text}
+					</p>
+				</div>
+			{/snippet}
+
+			{@render featureCard(
+				'Live Telemetry',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet egestas nisi. Donec varius justo eleifend.'
+			)}
+			{@render featureCard(
+				'Leaderboard',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet egestas nisi. Donec varius justo eleifend.'
+			)}
+			{@render featureCard(
+				'Tire compound and pit stops',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet egestas nisi. Donec varius justo eleifend.'
+			)}
+			{@render featureCard(
+				'Time intervals',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet egestas nisi. Donec varius justo eleifend.'
+			)}
+
 			<div class="grid"></div>
 		</div>
 	</section>
