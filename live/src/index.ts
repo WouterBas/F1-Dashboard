@@ -7,7 +7,13 @@ const eventEmitter = new EventEmitter();
 
 // message is received
 socket.addEventListener("message", (event) => {
-  eventEmitter.emit("update", event.data);
+  const message = JSON.parse(event.data).M;
+  if (message) {
+    eventEmitter.emit("update", {
+      type: message[0].A[0],
+      date: message[0].A[2],
+    });
+  }
 });
 
 // socket opened
