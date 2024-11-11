@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { SSEStreamingApi } from "hono/streaming";
 import { EventEmitter } from "events";
+import { cors } from "hono/cors";
 
 const socket = new WebSocket("ws://localhost:8000/ws");
 const eventEmitter = new EventEmitter();
@@ -34,6 +35,14 @@ socket.addEventListener("error", (event) => {
 const app = new Hono();
 let counter = 0;
 
+app.use(
+  cors({
+    origin: "*",
+    allowMethods: ["POST", "GET", "PATCH"],
+    credentials: true,
+  })
+);
+
 app.get("/", async (c) => {
   const { readable, writable } = new TransformStream();
   const stream = new SSEStreamingApi(writable, readable);
@@ -46,7 +55,7 @@ app.get("/", async (c) => {
     counter++;
     stream.writeSSE({
       id: counter.toString(),
-      event: "update",
+      event: "message",
       data: JSON.stringify(data),
     });
   });

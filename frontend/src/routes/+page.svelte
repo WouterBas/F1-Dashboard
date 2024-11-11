@@ -23,9 +23,7 @@
 	let selectedType = $state(typeOptions[typeOptions.length - 1].value);
 </script>
 
-<header>
-	<h1 class="text-3xl font-bold">F1 DASHBOARD</h1>
-</header>
+<svelte:head><title>F1 Dashboard</title></svelte:head>
 
 <main>
 	<section class="mx-auto mb-16 mt-8 p-2">
@@ -37,10 +35,13 @@
 			</p>
 		</div>
 
-		<button
-			class="mx-auto mb-16 block w-64 rounded-md border border-emerald-500 bg-neutral-900 px-4 py-2 font-bold uppercase text-emerald-500"
-			>Go live</button
+		<a href="/live">
+			<button
+				class="mx-auto mb-16 block w-64 rounded-md border border-emerald-500 bg-neutral-900 px-4 py-2 font-bold uppercase text-emerald-500"
+				>Go live</button
+			></a
 		>
+
 		<h2 class="text-center text-2xl font-bold uppercase">Pick a session</h2>
 		<p class=" mx-auto mb-4 max-w-md font-sans text-sm">
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non accumsan orci, sit amet
