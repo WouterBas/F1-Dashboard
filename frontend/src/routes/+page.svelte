@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Option from './SelectOption.svelte';
 
+	let { data } = $props();
+
 	const yearOptions = $state([
 		{ name: '2023', value: 2023 },
 		{ name: '2024', value: 2024 }
@@ -92,6 +94,10 @@
 		</div>
 	</section>
 </main>
+
+{#each data.sessions as session}
+	<p>{session.sessionKey}</p>
+{/each}
 
 <footer class="self-end">
 	<p class="text-center font-sans text-[10px] text-neutral-500">
