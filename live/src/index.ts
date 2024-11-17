@@ -1,66 +1,68 @@
-import { Hono } from "hono";
-import { SSEStreamingApi } from "hono/streaming";
 import { EventEmitter } from "events";
-import { cors } from "hono/cors";
+import { connectF1 } from "./f1-webhook";
 
-const socket = new WebSocket("ws://localhost:8000/ws");
-const eventEmitter = new EventEmitter();
+let initialState = {};
 
-// message is received
-socket.addEventListener("message", (event) => {
-  const message = JSON.parse(event.data).M;
-  if (message) {
-    eventEmitter.emit("update", {
-      type: message[0].A[0],
-      date: message[0].A[2],
-    });
+let counter = 0;
+
+const emitter = new EventEmitter();
+
+emitter.on("update", (data) => {
+  if (data.R) {
+    initialState = data.R;
   }
 });
 
-// socket opened
-socket.addEventListener("open", (event) => {
-  console.log("Socket opened");
+await connectF1(emitter);
+
+function sendSSEMessage(
+  controller: ReadableStreamDefaultController,
+  data: string | object
+) {
+  controller.enqueue(`data: ${JSON.stringify(data)}\n\n`);
+}
+
+function sse(req: Request) {
+  const { signal } = req;
+  return new Response(
+    new ReadableStream({
+      start(controller) {
+        counter++;
+        console.log("Client connected", counter);
+
+        // Send initial state immediately
+        sendSSEMessage(controller, initialState);
+
+        // const interval = setInterval(() => {
+        //   sendSSEMessage(controller, initialState);
+        // }, 1000);
+
+        signal.onabort = () => {
+          counter--;
+          console.log("Client disconnected", counter);
+          // clearInterval(interval);
+          controller.close();
+        };
+      },
+    }),
+    {
+      status: 200,
+      headers: {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+      },
+    }
+  );
+}
+
+Bun.serve({
+  fetch(req) {
+    if (new URL(req.url).pathname === "/sse") {
+      return sse(req);
+    }
+    return new Response("Not Found", { status: 404 });
+  },
 });
-
-// socket closed
-socket.addEventListener("close", (event) => {
-  console.log("Socket closed");
-});
-
-// error handler
-socket.addEventListener("error", (event) => {
-  console.log("Socket error");
-});
-
-const app = new Hono();
-let counter = 0;
-
-app.use(
-  cors({
-    origin: "*",
-    allowMethods: ["POST", "GET", "PATCH"],
-    credentials: true,
-  })
-);
-
-app.get("/", async (c) => {
-  const { readable, writable } = new TransformStream();
-  const stream = new SSEStreamingApi(writable, readable);
-
-  c.header("Content-Type", "text/event-stream");
-  c.header("Cache-Control", "no-cache");
-  c.header("Connection", "keep-alive");
-
-  eventEmitter.on("update", (data) => {
-    counter++;
-    stream.writeSSE({
-      id: counter.toString(),
-      event: "message",
-      data: JSON.stringify(data),
-    });
-  });
-
-  return c.newResponse(stream.responseReadable);
-});
-
-export default app;

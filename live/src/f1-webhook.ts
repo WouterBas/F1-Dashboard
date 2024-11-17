@@ -1,3 +1,6 @@
+import { sleep } from "bun";
+import { EventEmitter } from "events";
+
 type NegotiationResponse = {
   Url: string;
   ConnectionToken: string;
@@ -23,7 +26,7 @@ export let state: any = {
   Heartbeat: "null",
 };
 
-async function main() {
+export async function connectF1(emitter: EventEmitter): Promise<WebSocket> {
   const { ConnectionToken } = await negotiate();
   const hub = encodeURIComponent(JSON.stringify([{ name: "Streaming" }]));
 
@@ -33,12 +36,7 @@ async function main() {
 
   // message is received
   socket.addEventListener("message", (event) => {
-    if (event.data === "{}") {
-      console.log("message received empty");
-    } else {
-      state = event.data;
-      console.log("state updated", state);
-    }
+    emitter.emit("update", JSON.parse(event.data));
   });
 
   // socket opened
@@ -48,7 +46,7 @@ async function main() {
       JSON.stringify({
         H: "Streaming", // The hub to invoke the method on
         M: "Subscribe", // The method to invoke
-        A: [["Heartbeat"]], // The arguments to pass to the method
+        A: [["SessionInfo", "DriverList", "WeatherData", "LapCount"]], // The arguments to pass to the method
         I: 1, // Client side id for the request/response
       })
     );
@@ -57,12 +55,15 @@ async function main() {
   // socket closed
   socket.addEventListener("close", (event) => {
     console.log("socket closed");
+    sleep(1000).then(() => {
+      connectF1(emitter);
+    });
   });
 
   // error handler
   socket.addEventListener("error", (event) => {
     console.log("socket error");
   });
-}
 
-main();
+  return socket;
+}
