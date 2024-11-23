@@ -1,11 +1,8 @@
-type Session = {
-	name: string;
-	sessionKey: string;
-};
+import { getAllSessions } from '$lib/modules/api/sessions';
+import type { Session } from '$lib/types';
 
 export const load = async (): Promise<{ sessions: Session[] }> => {
-	const res = await fetch(`http://localhost:4000/api/v1/session/all`);
-	const data = await res.json();
+	const data = await getAllSessions();
 
 	return { sessions: data };
 };

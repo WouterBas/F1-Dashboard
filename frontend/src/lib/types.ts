@@ -77,11 +77,16 @@ export type LapCount = {
 	_kf: boolean;
 };
 
-export type CircuitPoints = {
+export type CircuitInfo = {
 	circuitPoints: { x: number; y: number }[];
 	pitPoints: { x: number; y: number }[];
 	angle: number;
 	aspectRatio: number;
 	finishAngle: number;
 	finishPoint: number;
+};
+
+export type Session = {
+	name: string;
+	sessionKey: string;
 };

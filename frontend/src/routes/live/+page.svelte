@@ -3,12 +3,17 @@
 	import type { SSE } from '$lib/types';
 	import Leaderboard from '$lib/components/Leaderboard.svelte';
 	import Weather from '$lib/components/Weather.svelte';
-	import type { CircuitPoints } from '$lib/types';
+	import type { CircuitInfo } from '$lib/types';
+	import { drawCircuit } from '$lib/utils/drawCircuit';
 
 	let data: SSE | undefined = $state();
 	const circuitKey = $derived(data?.SessionInfo.Meeting.Circuit.Key);
-	let circuitPoints: CircuitPoints | undefined = $state();
+	let circuit: CircuitInfo | undefined = $state();
 	let canvas: HTMLCanvasElement | undefined = $state();
+
+	let width = $state(0);
+	let dpr = $state(1);
+	let lineWidth = $state(3);
 
 	onMount(() => {
 		const source = new EventSource('http://localhost:3000/sse');
@@ -26,16 +31,45 @@
 		if (!circuitKey) return;
 		fetch(`http://localhost:4000/api/v1/circuit/points/${circuitKey}`)
 			.then((response) => response.json())
-			.then((data) => (circuitPoints = data));
+			.then((data) => (circuit = data));
 	});
 
 	$effect(() => {
-		if (!canvas) return;
-		const ctx = canvas.getContext('2d');
+		dpr = window.devicePixelRatio;
+	});
 
-		if (!ctx) return;
-		ctx.fillStyle = 'green';
-		ctx.fillRect(10, 10, 150, 100);
+	onMount(() => {
+		handleResize();
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	});
+
+	function handleResize() {
+		const width = window.innerWidth;
+		if (width < 640) {
+			lineWidth = 1.25;
+		} else if (width < 768) {
+			lineWidth = 2;
+		} else if (width < 1024) {
+			lineWidth = 2.5;
+		} else {
+			lineWidth = 3;
+		}
+	}
+
+	$effect(() => {
+		if (!circuit || !canvas) return;
+		drawCircuit(
+			canvas,
+			circuit.circuitPoints,
+			width,
+			dpr,
+			lineWidth,
+			circuit.angle,
+			circuit.finishAngle,
+			circuit.circuitPoints[circuit.finishPoint],
+			circuit.pitPoints
+		);
 	});
 </script>
 
@@ -55,14 +89,14 @@
 			<p class="col-start-3 text-center text-[10px]">00:00</p>
 		</section>
 	{/if}
-	<section class="relative h-64 rounded bg-neutral-800/60">
+	<section class="relative rounded bg-neutral-800/60">
 		<div
 			class="absolute right-1 top-1 rounded border border-green-500 px-1 text-[10px] text-green-500"
 		>
 			track Clear
 		</div>
 
-		<canvas bind:this={canvas} class="h-full w-full border"></canvas>
+		<canvas bind:this={canvas} bind:clientWidth={width} class="w-full"></canvas>
 
 		{#if data?.WeatherData}
 			<Weather weather={data.WeatherData} />
