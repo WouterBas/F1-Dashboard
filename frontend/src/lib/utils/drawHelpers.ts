@@ -46,17 +46,16 @@ export function drawPath(
 		const xc = (points[i].x + points[i + 1].x) / 2;
 		const yc = (points[i].y + points[i + 1].y) / 2;
 		ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
-
-		// curve through the last two points
-		ctx.quadraticCurveTo(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
 	}
+
+	// curve through the last two points
+	const l = points.length - 2;
+	ctx.quadraticCurveTo(points[l].x, points[l].y, points[l + 1].x, points[l + 1].y);
 
 	ctx.lineWidth = 2 * deviceWidth;
 	ctx.strokeStyle = color;
 
-	if (close) {
-		ctx.closePath();
-	}
+	if (close) ctx.closePath();
 
 	ctx.stroke();
 }

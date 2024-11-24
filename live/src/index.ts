@@ -50,7 +50,7 @@ function sse(req: Request) {
       headers: {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
-        "Connection": "keep-alive",
+        Connection: "keep-alive",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET",
       },
@@ -59,6 +59,7 @@ function sse(req: Request) {
 }
 
 Bun.serve({
+  idleTimeout: 120,
   fetch(req) {
     if (new URL(req.url).pathname === "/sse") {
       return sse(req);

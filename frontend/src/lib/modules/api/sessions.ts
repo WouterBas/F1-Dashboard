@@ -1,6 +1,6 @@
 import client from '../db';
 
-import type { Session } from '$lib/types';
+import type { Session } from '$lib/types/types';
 
 export const getAllSessions = async () => {
 	const result = await client

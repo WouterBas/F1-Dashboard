@@ -46,7 +46,16 @@ export async function connectF1(emitter: EventEmitter): Promise<WebSocket> {
       JSON.stringify({
         H: "Streaming", // The hub to invoke the method on
         M: "Subscribe", // The method to invoke
-        A: [["SessionInfo", "DriverList", "WeatherData", "LapCount"]], // The arguments to pass to the method
+        A: [
+          [
+            "SessionInfo",
+            "DriverList",
+            "WeatherData",
+            "LapCount",
+            "TimingData",
+            "TyreStintSeries",
+          ],
+        ], // The arguments to pass to the method
         I: 1, // Client side id for the request/response
       })
     );
@@ -55,7 +64,7 @@ export async function connectF1(emitter: EventEmitter): Promise<WebSocket> {
   // socket closed
   socket.addEventListener("close", (event) => {
     console.log("socket closed");
-    sleep(1000).then(() => {
+    sleep(100).then(() => {
       connectF1(emitter);
     });
   });

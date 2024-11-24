@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { MousePointer2, CloudRainWind } from 'lucide-svelte';
-	import type { WeatherData } from '$lib/types';
+	import type { WeatherData } from '$lib/types/weather';
 
 	const { weather }: { weather: WeatherData } = $props();
 </script>

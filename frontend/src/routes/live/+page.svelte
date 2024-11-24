@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { SSE } from '$lib/types';
+	import type { SSE, CircuitInfo } from '$lib/types/';
 	import Leaderboard from '$lib/components/Leaderboard.svelte';
 	import Weather from '$lib/components/Weather.svelte';
-	import type { CircuitInfo } from '$lib/types';
 	import { drawCircuit } from '$lib/utils/drawCircuit';
+	import { handleResize } from '$lib/utils/resize';
 
 	let data: SSE | undefined = $state();
 	const circuitKey = $derived(data?.SessionInfo.Meeting.Circuit.Key);
@@ -13,7 +13,7 @@
 
 	let width = $state(0);
 	let dpr = $state(1);
-	let lineWidth = $state(3);
+	let lineWidth = $derived(handleResize(width));
 
 	onMount(() => {
 		const source = new EventSource('http://localhost:3000/sse');
@@ -35,29 +35,6 @@
 	});
 
 	$effect(() => {
-		dpr = window.devicePixelRatio;
-	});
-
-	onMount(() => {
-		handleResize();
-		window.addEventListener('resize', handleResize);
-		return () => window.removeEventListener('resize', handleResize);
-	});
-
-	function handleResize() {
-		const width = window.innerWidth;
-		if (width < 640) {
-			lineWidth = 1.25;
-		} else if (width < 768) {
-			lineWidth = 2;
-		} else if (width < 1024) {
-			lineWidth = 2.5;
-		} else {
-			lineWidth = 3;
-		}
-	}
-
-	$effect(() => {
 		if (!circuit || !canvas) return;
 		drawCircuit(
 			canvas,
@@ -76,6 +53,8 @@
 <svelte:head>
 	<title>F1 Dashboard | Live</title>
 </svelte:head>
+
+<svelte:window bind:innerWidth={width} bind:devicePixelRatio={dpr} />
 
 <main class="mt-1 grid grid-rows-[auto_auto_1fr] gap-2 text-xs">
 	{#if data?.SessionInfo}
@@ -106,6 +85,10 @@
 	</section>
 
 	{#if data?.DriverList}
-		<Leaderboard driverList={data.DriverList} />
+		<Leaderboard
+			driverList={data.DriverList}
+			timingData={data.TimingData}
+			tyreStintSeries={data.TyreStintSeries}
+		/>
 	{/if}
 </main>
