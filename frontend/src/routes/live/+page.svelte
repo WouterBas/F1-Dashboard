@@ -18,9 +18,17 @@
 	onMount(() => {
 		const source = new EventSource('http://localhost:3000/sse');
 
-		source.onmessage = function (event) {
+		source.addEventListener('init', (event) => {
 			data = JSON.parse(event.data);
-		};
+		});
+
+		// source.addEventListener('update', (event) => {
+		// 	const update = JSON.parse(event.data);
+
+		// 	const entries = new Map([[update[0], update[1]]]);
+
+		// 	const obj = Object.fromEntries(entries);
+		// });
 
 		return () => {
 			source.close();

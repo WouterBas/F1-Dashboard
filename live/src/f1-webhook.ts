@@ -26,7 +26,7 @@ export let state: any = {
   Heartbeat: "null",
 };
 
-export async function connectF1(emitter: EventEmitter): Promise<WebSocket> {
+export async function connectF1(emitter: EventEmitter) {
   const { ConnectionToken } = await negotiate();
   const hub = encodeURIComponent(JSON.stringify([{ name: "Streaming" }]));
 
@@ -64,15 +64,11 @@ export async function connectF1(emitter: EventEmitter): Promise<WebSocket> {
   // socket closed
   socket.addEventListener("close", (event) => {
     console.log("socket closed");
-    sleep(100).then(() => {
-      connectF1(emitter);
-    });
+    connectF1(emitter);
   });
 
   // error handler
   socket.addEventListener("error", (event) => {
     console.log("socket error");
   });
-
-  return socket;
 }

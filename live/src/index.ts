@@ -1,7 +1,8 @@
 import { EventEmitter } from "events";
 import { connectF1 } from "./f1-webhook";
+import { connectSim } from "./simulator";
 
-let initialState = {};
+let state = {};
 
 let counter = 0;
 
@@ -9,17 +10,30 @@ const emitter = new EventEmitter();
 
 emitter.on("update", (data) => {
   if (data.R) {
-    initialState = data.R;
+    state = data.R;
+  }
+  if (data.M) {
+    data.M.forEach((m: any) => {
+      broadcastMessage(m.A);
+    });
   }
 });
 
 await connectF1(emitter);
+// await connectSim(emitter);
 
-function sendSSEMessage(
-  controller: ReadableStreamDefaultController,
-  data: string | object
-) {
-  controller.enqueue(`data: ${JSON.stringify(data)}\n\n`);
+// Store active SSE clients
+const sseClients: Set<ReadableStreamDefaultController<any>> = new Set();
+
+// Function to broadcast WebSocket messages to all SSE clients
+function broadcastMessage(message: any) {
+  sseClients.forEach((controller) => {
+    try {
+      controller.enqueue(`event: update\ndata: ${JSON.stringify(message)}\n\n`);
+    } catch {
+      sseClients.delete(controller); // Clean up broken streams
+    }
+  });
 }
 
 function sse(req: Request) {
@@ -30,17 +44,16 @@ function sse(req: Request) {
         counter++;
         console.log("Client connected", counter);
 
-        // Send initial state immediately
-        sendSSEMessage(controller, initialState);
+        // Send initial full data
+        controller.enqueue(`event: init\ndata: ${JSON.stringify(state)}\n\n`);
 
-        // const interval = setInterval(() => {
-        //   sendSSEMessage(controller, initialState);
-        // }, 1000);
+        // Add the client to active SSE clients
+        sseClients.add(controller);
 
         signal.onabort = () => {
           counter--;
           console.log("Client disconnected", counter);
-          // clearInterval(interval);
+          sseClients.delete(controller);
           controller.close();
         };
       },

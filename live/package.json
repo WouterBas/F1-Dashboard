@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "^1.1.13"
   },
   "scripts": {
     "dev": "bun run --watch src/index.ts"
