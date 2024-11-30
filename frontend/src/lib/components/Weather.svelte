@@ -5,7 +5,9 @@
 	const { weather }: { weather: WeatherData } = $props();
 </script>
 
-<div class="absolute left-1 top-1 grid grid-flow-col items-center gap-2 rounded text-[8px]">
+<div
+	class="absolute left-1 top-1 grid grid-flow-col items-center gap-2 rounded bg-neutral-700 px-1 text-[8px]"
+>
 	<div class="grid">
 		<span>{weather.AirTemp}</span>
 		<span class="-mt-2 text-center text-[6px]">AIR</span>
@@ -16,13 +18,13 @@
 		<span class="-mt-2 text-center text-[6px]">TRC</span>
 	</div>
 
-	<div class="grid">
+	<div class=" grid h-fit">
 		<MousePointer2
 			fill="#fff"
-			class="h-3 w-3 justify-self-center"
+			class="mt-[1px] h-2.5 w-2.5 justify-self-center"
 			style={`transform: rotate(${weather.WindDirection}deg)`}
 		/>
-		<span class="-mt-1 text-[6px]">{weather.WindSpeed}m/s</span>
+		<span class="-mt-1 h-3 text-[6px]">{weather.WindSpeed}m/s</span>
 	</div>
 
 	{#if weather.Rainfall === '1'}

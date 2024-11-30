@@ -1,6 +1,8 @@
 import { EventEmitter } from "events";
 import { connectF1 } from "./f1-webhook";
 import { connectSim } from "./simulator";
+import merge from "lodash/merge";
+import zlib from "zlib";
 
 let state = {};
 
@@ -10,11 +12,31 @@ const emitter = new EventEmitter();
 
 emitter.on("update", (data) => {
   if (data.R) {
-    state = data.R;
+    const newObject = {};
+    delete Object.assign(newObject, data.R, {
+      ["Position"]: data.R["Position.z"],
+    })["Position.z"];
+    state = newObject;
   }
   if (data.M) {
     data.M.forEach((m: any) => {
-      broadcastMessage(m.A);
+      let [path, dataUpdate] = m.A;
+
+      if (path === "Position.z") {
+        const decodedData = Buffer.from(dataUpdate, "base64");
+        const uint8Array = new Uint8Array(decodedData);
+        const decompressedData = zlib.inflateRawSync(uint8Array);
+        const jsonData = JSON.parse(
+          decompressedData.toString("utf-8")
+        ).Position;
+
+        path = "Position";
+        dataUpdate = jsonData[jsonData.length - 1];
+      }
+
+      broadcastMessage([path, dataUpdate]);
+
+      merge(state[path as keyof typeof state], dataUpdate);
     });
   }
 });

@@ -33,6 +33,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/lodash": "^4.17.13",
+		"lodash": "^4.17.21",
 		"lucide-svelte": "^0.456.0",
 		"mongodb": "^6.11.0"
 	}

@@ -4,6 +4,9 @@ import type { WeatherData } from './weather';
 import type { LapCount } from './lapcount';
 import type { TimingData } from './timingdata';
 import type { TyreStintSeries } from './tire';
+import type { TrackStatus } from './trackStatus';
+import type { ExtrapolatedClock } from './extrapolatedClock';
+import type { Position } from './position';
 
 export type SSE = {
 	SessionInfo: SessionInfo;
@@ -12,6 +15,9 @@ export type SSE = {
 	LapCount: LapCount;
 	TimingData: TimingData;
 	TyreStintSeries: TyreStintSeries;
+	TrackStatus: TrackStatus;
+	ExtrapolatedClock: ExtrapolatedClock;
+	Position: Position;
 };
 
 export type CircuitInfo = {

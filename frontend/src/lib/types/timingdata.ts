@@ -2,11 +2,12 @@ export type TimingData = {
 	Lines: {
 		[key: string]: {
 			GapToLeader: string;
-			IntervalToPositionAhead: {
+			IntervalToPositionAhead?: {
 				Value: string;
 				Catching: boolean;
 			};
 			Line: number;
+			Stats?: Stats[];
 			Position: string;
 			ShowPosition: boolean;
 			RacingNumber: string;
@@ -22,6 +23,8 @@ export type TimingData = {
 			NumberOfPitStops: number;
 		};
 	};
+	SessionPart?: number;
+	Withheld?: boolean;
 };
 
 type Sector = {
@@ -44,3 +47,5 @@ type LastLapTime = {
 	OverallFastest: boolean;
 	PersonalFastest: boolean;
 };
+
+type Stats = { TimeDiffToFastest: string; TimeDifftoPositionAhead: string };

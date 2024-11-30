@@ -54,6 +54,9 @@ export async function connectF1(emitter: EventEmitter) {
             "LapCount",
             "TimingData",
             "TyreStintSeries",
+            "TrackStatus",
+            "ExtrapolatedClock",
+            "Position.z",
           ],
         ], // The arguments to pass to the method
         I: 1, // Client side id for the request/response

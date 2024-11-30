@@ -12,6 +12,8 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "hono": "^4.6.9"
+    "@types/lodash": "^4.17.13",
+    "hono": "^4.6.9",
+    "lodash": "^4.17.21"
   }
 }

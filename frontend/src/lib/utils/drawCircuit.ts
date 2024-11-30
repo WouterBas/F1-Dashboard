@@ -86,4 +86,6 @@ export function drawCircuit(
 	ctx.rotate((finishAngle * Math.PI) / 180);
 	ctx.rect(-1.5 * lineWidth, -6 * lineWidth, 3 * lineWidth, 12 * lineWidth);
 	ctx.fill();
+
+	return { calcWidth, calcHeight, scale, minX, minY };
 }
