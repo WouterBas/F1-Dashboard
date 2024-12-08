@@ -3,11 +3,13 @@
 	let { children } = $props();
 </script>
 
-<header>
-	<a href="/"><h1 class="text-2xl font-bold">F1 DASHBOARD</h1></a>
-</header>
+<div class="m-auto max-w-[1920px]">
+	<header>
+		<a href="/"><h1 class="text-2xl font-bold md:text-3xl">F1 DASHBOARD</h1></a>
+	</header>
 
-{@render children()}
+	{@render children()}
+</div>
 
 <style lang="postcss">
 	:global(body) {

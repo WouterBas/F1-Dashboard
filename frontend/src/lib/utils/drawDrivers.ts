@@ -9,6 +9,7 @@ type CanvasStats = {
 };
 
 export function drawDrivers(
+	i: number,
 	canvas: HTMLCanvasElement,
 	canvasStats: CanvasStats,
 	driverPositions: Entries,
@@ -33,6 +34,13 @@ export function drawDrivers(
 		y: width / 2
 	};
 
+	ctx.beginPath();
+
+	ctx.arc(20, 50, 5 * Math.abs(Math.cos(i)), 0, 2 * Math.PI);
+
+	ctx.fillStyle = '#fff';
+	ctx.fill();
+
 	if (!driverPositions) return;
 	const positions = Object.keys(driverPositions).map((key) => {
 		const dx = driverPositions[key].X - center.x;
@@ -43,8 +51,9 @@ export function drawDrivers(
 		return {
 			X: nx,
 			Y: ny,
-			abbreviation: driverList[key].Tla,
-			teamColor: driverList[key].TeamColour
+			abbreviation: driverList[key]?.Tla || 'SC',
+			teamColor: driverList[key]?.TeamColour || 'fbbf24',
+			offTrack: driverPositions[key].X && driverPositions[key].Y ? false : true
 		};
 	});
 
@@ -59,7 +68,9 @@ export function drawDrivers(
 		driver.Y = canvasStats.calcHeight - driver.Y;
 	});
 
-	positions.forEach(({ abbreviation, teamColor, X, Y }) => {
+	positions.forEach(({ abbreviation, teamColor, X, Y, offTrack }) => {
+		if (offTrack) return;
+
 		ctx.beginPath();
 
 		ctx.arc(X, Y, 4 * deviceWidth, 0, 2 * Math.PI, false);

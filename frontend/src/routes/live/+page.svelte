@@ -7,6 +7,7 @@
 	import { drawDrivers } from '$lib/utils/drawDrivers';
 	import { handleResize } from '$lib/utils/resize';
 	import merge from 'lodash/merge';
+	import type { Position } from '$lib/types/position';
 
 	let data: SSE | undefined = $state();
 	const circuitKey = $derived(data?.SessionInfo.Meeting.Circuit.Key);
@@ -18,8 +19,16 @@
 	let dpr = $state(1);
 	let lineWidth = $derived(handleResize(width));
 
+	let pos = $state({
+		next: { Timestamp: '' },
+		prev: { Timestamp: '' }
+	});
+	let timeDiff = $derived(
+		new Date(pos.next.Timestamp).getTime() - new Date(pos.prev.Timestamp).getTime()
+	);
+
 	onMount(() => {
-		const source = new EventSource('http://localhost:3000/sse');
+		const source = new EventSource('http://192.168.0.153:3000/sse');
 
 		source.addEventListener('init', (event) => {
 			data = JSON.parse(event.data);
@@ -36,6 +45,7 @@
 					merge(data[path as keyof typeof data], dataUpdate);
 				}
 			} else {
+				pos = { next: dataUpdate, prev: data.Position };
 				data[path as keyof typeof data] = dataUpdate;
 			}
 		});
@@ -47,7 +57,7 @@
 
 	$effect(() => {
 		if (!circuitKey) return;
-		fetch(`http://localhost:4000/api/v1/circuit/points/${circuitKey}`)
+		fetch(`http://192.168.0.153:4000/api/v1/circuit/points/${circuitKey}`)
 			.then((response) => response.json())
 			.then((data) => (circuit = data));
 	});
@@ -59,8 +69,6 @@
 		minX: 0,
 		minY: 0
 	});
-
-	$inspect(data?.TimingData);
 
 	$effect(() => {
 		if (!circuit || !canvasCircuit) return;
@@ -77,9 +85,23 @@
 		);
 	});
 
+	let frameNumber = $state(0);
+
+	onMount(() => {
+		const loop = () => {
+			frameNumber += 0.05;
+			requestAnimationFrame(loop);
+		};
+		loop();
+		return () => {
+			cancelAnimationFrame(frameNumber);
+		};
+	});
+
 	$effect(() => {
-		if (!circuit || !canvasDrivers || !data) return;
+		if (!data || !canvasDrivers || !circuit) return;
 		drawDrivers(
+			frameNumber,
 			canvasDrivers,
 			canvasStats,
 			data.Position.Entries,
@@ -98,10 +120,12 @@
 
 <svelte:window bind:innerWidth={width} bind:devicePixelRatio={dpr} />
 
-<main class="mt-1 grid gap-2 text-xs md:grid-cols-[auto_1fr]">
+<main class="mt-1 grid gap-2 text-xs sm:grid-cols-[auto_1fr]">
 	<div>
 		{#if data?.SessionInfo}
-			<section class="grid grid-cols-[auto_1fr_auto] gap-x-1 border-t border-neutral-700 pt-1">
+			<section
+				class="grid grid-cols-[auto_1fr_auto] gap-x-1 border-t border-neutral-700 pt-1 md:text-sm lg:text-base"
+			>
 				<h2>{data?.SessionInfo.Meeting.Name}</h2>
 				<p class="col-start-3 text-right font-bold">
 					{#if data?.LapCount}
@@ -111,9 +135,11 @@
 						Q{data?.TimingData.SessionPart}
 					{/if}
 				</p>
-				<h3 class="text-[10px]">{data?.SessionInfo.Name}</h3>
+				<h3 class="text-[10px] md:text-xs lg:text-sm">{data?.SessionInfo.Name}</h3>
 
-				<p class="col-start-3 text-center text-[10px]">{data?.ExtrapolatedClock.Remaining}</p>
+				<p class="col-start-3 text-center text-[10px] md:text-xs lg:text-sm">
+					{data?.ExtrapolatedClock.Remaining}
+				</p>
 			</section>
 		{/if}
 		<section class="relative rounded bg-neutral-800/60">
