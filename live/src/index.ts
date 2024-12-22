@@ -54,8 +54,8 @@ emitter.on("update", (data) => {
   }
 });
 
-await connectF1(emitter);
-// await connectSim(emitter);
+// await connectF1(emitter);
+await connectSim(emitter);
 
 // Store active SSE clients
 const sseClients: Set<ReadableStreamDefaultController<any>> = new Set();

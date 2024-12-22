@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { SSE } from '$lib/types/';
-	import { Circuit, Leaderboard, Weather } from '$lib/components';
+	import { Circuit, Leaderboard, Weather, Clock, TrackFlags } from '$lib/components';
 	import merge from 'lodash/merge';
 	import { Tween } from 'svelte/motion';
 	import { linear } from 'svelte/easing';
@@ -11,7 +11,6 @@
 
 	let lastUpdate = $state(performance.now());
 
-	let clock = $state('00:00:00');
 	// SSE data
 	onMount(() => {
 		const source = new EventSource('http://localhost:3000/sse');
@@ -59,24 +58,6 @@
 			source.close();
 		};
 	});
-
-	onMount(() => {
-		const interval = setInterval(() => {
-			if (!data?.ExtrapolatedClock?.serverTime) return;
-			const raceStartTime = new Date(data.ExtrapolatedClock.Utc);
-			const serverStartTime = new Date(data.ExtrapolatedClock.serverTime);
-
-			const diff = serverStartTime.getTime() - raceStartTime.getTime();
-			const time = new Date(Date.now() - diff);
-
-			const secondsSinceStart = time.getTime() - raceStartTime.getTime();
-			const fakeClock = new Date('01 Jan 1970 ' + data.ExtrapolatedClock.Remaining);
-			const newClock = new Date(fakeClock.getTime() - secondsSinceStart);
-
-			clock = newClock.toTimeString().split(' ')[0];
-		}, 1000);
-		return () => clearInterval(interval);
-	});
 </script>
 
 <svelte:head>
@@ -100,17 +81,11 @@
 				</p>
 				<h3 class="text-[10px] md:text-xs lg:text-sm">{data?.SessionInfo.Name}</h3>
 
-				<p class="col-start-3 text-center text-[10px] md:text-xs lg:text-sm">
-					{clock}
-				</p>
+				<Clock extrapolatedClock={data.ExtrapolatedClock} />
 			</section>
 		{/if}
 		<section class="relative rounded bg-neutral-800/50">
-			<div
-				class="absolute right-1 top-1 rounded border border-green-500 px-1 text-[10px] text-green-500"
-			>
-				{data?.TrackStatus.Message}
-			</div>
+			<TrackFlags trackStatus={data?.TrackStatus} />
 
 			<Circuit
 				circuitKey={data?.SessionInfo.Meeting.Circuit.Key}
