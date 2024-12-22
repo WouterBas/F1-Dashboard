@@ -1,34 +1,20 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { SSE, CircuitInfo } from '$lib/types/';
-	import Leaderboard from '$lib/components/Leaderboard.svelte';
-	import Weather from '$lib/components/Weather.svelte';
-	import { drawCircuit } from '$lib/utils/drawCircuit';
-	import { drawDrivers } from '$lib/utils/drawDrivers';
-	import { handleResize } from '$lib/utils/resize';
+	import type { SSE } from '$lib/types/';
+	import { Circuit, Leaderboard, Weather } from '$lib/components';
 	import merge from 'lodash/merge';
-	import type { Position } from '$lib/types/position';
+	import { Tween } from 'svelte/motion';
+	import { linear } from 'svelte/easing';
 
 	let data: SSE | undefined = $state();
-	const circuitKey = $derived(data?.SessionInfo.Meeting.Circuit.Key);
-	let circuit: CircuitInfo | undefined = $state();
-	let canvasCircuit: HTMLCanvasElement | undefined = $state();
-	let canvasDrivers: HTMLCanvasElement | undefined = $state();
+	let driversPosition: Map<string, Tween<{ X: number; Y: number; Z: number }>> = $state(new Map());
 
-	let width = $state(0);
-	let dpr = $state(1);
-	let lineWidth = $derived(handleResize(width));
+	let lastUpdate = $state(performance.now());
 
-	let pos = $state({
-		next: { Timestamp: '' },
-		prev: { Timestamp: '' }
-	});
-	let timeDiff = $derived(
-		new Date(pos.next.Timestamp).getTime() - new Date(pos.prev.Timestamp).getTime()
-	);
-
+	let clock = $state('00:00:00');
+	// SSE data
 	onMount(() => {
-		const source = new EventSource('http://192.168.0.153:3000/sse');
+		const source = new EventSource('http://localhost:3000/sse');
 
 		source.addEventListener('init', (event) => {
 			data = JSON.parse(event.data);
@@ -45,80 +31,57 @@
 					merge(data[path as keyof typeof data], dataUpdate);
 				}
 			} else {
-				pos = { next: dataUpdate, prev: data.Position };
-				data[path as keyof typeof data] = dataUpdate;
+				const duration = performance.now() - lastUpdate;
+				lastUpdate = performance.now();
+
+				Object.keys(dataUpdate.Entries).forEach((driverId) => {
+					const driverData = dataUpdate.Entries[driverId];
+					if (!driversPosition.has(driverId)) {
+						driversPosition.set(
+							driverId,
+							new Tween(
+								{ X: driverData.X, Y: driverData.Y, Z: driverData.Z },
+								{ duration, easing: linear }
+							)
+						);
+					} else {
+						driversPosition
+							.get(driverId)
+							?.set(
+								{ X: driverData.X, Y: driverData.Y, Z: driverData.Z },
+								{ duration, easing: linear }
+							);
+					}
+				});
 			}
 		});
-
 		return () => {
 			source.close();
 		};
 	});
 
-	$effect(() => {
-		if (!circuitKey) return;
-		fetch(`http://192.168.0.153:4000/api/v1/circuit/points/${circuitKey}`)
-			.then((response) => response.json())
-			.then((data) => (circuit = data));
-	});
-
-	let canvasStats = $state({
-		calcWidth: 150,
-		calcHeight: 300,
-		scale: 1,
-		minX: 0,
-		minY: 0
-	});
-
-	$effect(() => {
-		if (!circuit || !canvasCircuit) return;
-		canvasStats = drawCircuit(
-			canvasCircuit,
-			circuit.circuitPoints,
-			width,
-			dpr,
-			lineWidth,
-			circuit.angle,
-			circuit.finishAngle,
-			circuit.circuitPoints[circuit.finishPoint],
-			circuit.pitPoints
-		);
-	});
-
-	let frameNumber = $state(0);
-
 	onMount(() => {
-		const loop = () => {
-			frameNumber += 0.05;
-			requestAnimationFrame(loop);
-		};
-		loop();
-		return () => {
-			cancelAnimationFrame(frameNumber);
-		};
-	});
+		const interval = setInterval(() => {
+			if (!data?.ExtrapolatedClock?.serverTime) return;
+			const raceStartTime = new Date(data.ExtrapolatedClock.Utc);
+			const serverStartTime = new Date(data.ExtrapolatedClock.serverTime);
 
-	$effect(() => {
-		if (!data || !canvasDrivers || !circuit) return;
-		drawDrivers(
-			frameNumber,
-			canvasDrivers,
-			canvasStats,
-			data.Position.Entries,
-			data.DriverList,
-			width,
-			dpr,
-			lineWidth,
-			circuit.angle
-		);
+			const diff = serverStartTime.getTime() - raceStartTime.getTime();
+			const time = new Date(Date.now() - diff);
+
+			const secondsSinceStart = time.getTime() - raceStartTime.getTime();
+			const fakeClock = new Date('01 Jan 1970 ' + data.ExtrapolatedClock.Remaining);
+			const newClock = new Date(fakeClock.getTime() - secondsSinceStart);
+
+			clock = newClock.toTimeString().split(' ')[0];
+		}, 1000);
+		return () => clearInterval(interval);
 	});
 </script>
 
 <svelte:head>
 	<title>F1 Dashboard | Live</title>
 </svelte:head>
-
-<svelte:window bind:innerWidth={width} bind:devicePixelRatio={dpr} />
 
 <main class="mt-1 grid gap-2 text-xs sm:grid-cols-[auto_1fr]">
 	<div>
@@ -138,19 +101,22 @@
 				<h3 class="text-[10px] md:text-xs lg:text-sm">{data?.SessionInfo.Name}</h3>
 
 				<p class="col-start-3 text-center text-[10px] md:text-xs lg:text-sm">
-					{data?.ExtrapolatedClock.Remaining}
+					{clock}
 				</p>
 			</section>
 		{/if}
-		<section class="relative rounded bg-neutral-800/60">
+		<section class="relative rounded bg-neutral-800/50">
 			<div
 				class="absolute right-1 top-1 rounded border border-green-500 px-1 text-[10px] text-green-500"
 			>
 				{data?.TrackStatus.Message}
 			</div>
 
-			<canvas bind:this={canvasCircuit} bind:clientWidth={width} class="w-full"></canvas>
-			<canvas bind:this={canvasDrivers} class="absolute top-0 w-full"></canvas>
+			<Circuit
+				circuitKey={data?.SessionInfo.Meeting.Circuit.Key}
+				{driversPosition}
+				driverList={data?.DriverList}
+			/>
 
 			{#if data?.WeatherData}
 				<Weather weather={data.WeatherData} />

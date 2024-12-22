@@ -10,6 +10,7 @@
 	<label for={label} class="text-base sm:text-lg">{label}</label>
 	<div class="relative">
 		<select
+			disabled
 			id={label}
 			bind:value
 			class="w-full appearance-none rounded bg-neutral-700 px-3 py-1.5 outline-none focus:ring-2 focus:ring-neutral-500"

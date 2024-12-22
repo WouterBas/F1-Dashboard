@@ -21,6 +21,7 @@ export type TimingData = {
 			LastLapTime: LastLapTime;
 			NumberOfLaps: number;
 			NumberOfPitStops: number;
+			TimeDiffToPositionAhead?: string;
 		};
 	};
 	SessionPart?: number;

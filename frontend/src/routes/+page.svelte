@@ -54,8 +54,9 @@
 			<Option label="Year" options={yearOptions} bind:value={selectedYear} />
 			<Option label="Grand Prix" options={grandPrixOptions} bind:value={selectedGrandPrix} />
 			<Option label="Session" options={typeOptions} bind:value={selectedType} />
-			<button class="mt-4 rounded-md border bg-neutral-900 px-4 py-2 font-bold uppercase"
-				>View</button
+			<button
+				class="mt-4 rounded-md border bg-neutral-900 px-4 py-2 font-bold uppercase disabled:opacity-50"
+				disabled>View</button
 			>
 		</div>
 	</section>
@@ -94,10 +95,6 @@
 		</div>
 	</section>
 </main>
-
-{#each data.sessions as session}
-	<p>{session.sessionKey}</p>
-{/each}
 
 <footer class="self-end">
 	<p class="text-center font-sans text-[10px] text-neutral-500">

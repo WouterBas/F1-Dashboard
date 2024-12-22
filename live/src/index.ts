@@ -16,7 +16,13 @@ emitter.on("update", (data) => {
     delete Object.assign(newObject, data.R, {
       ["Position"]: data.R["Position.z"],
     })["Position.z"];
-    state = newObject;
+
+    state = merge(newObject, {
+      ExtrapolatedClock: {
+        ...data.R.ExtrapolatedClock,
+        serverTime: new Date(),
+      },
+    });
   }
   if (data.M) {
     data.M.forEach((m: any) => {
@@ -32,6 +38,13 @@ emitter.on("update", (data) => {
 
         path = "Position";
         dataUpdate = jsonData[jsonData.length - 1];
+      }
+
+      if (path === "ExtrapolatedClock") {
+        dataUpdate = {
+          ...dataUpdate,
+          serverTime: new Date(),
+        };
       }
 
       broadcastMessage([path, dataUpdate]);

@@ -3,4 +3,5 @@ export type ExtrapolatedClock = {
 	Remaining: string;
 	Utc: string;
 	_kf: true;
+	serverTime: Date;
 };

@@ -18,6 +18,7 @@ export type SSE = {
 	TrackStatus: TrackStatus;
 	ExtrapolatedClock: ExtrapolatedClock;
 	Position: Position;
+	clock: string;
 };
 
 export type CircuitInfo = {

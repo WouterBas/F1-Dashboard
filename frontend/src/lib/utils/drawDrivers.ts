@@ -1,5 +1,6 @@
-import type { Entries } from '$lib/types/position';
 import type { DriverList } from '$lib/types/driver';
+import type { Tween } from 'svelte/motion';
+
 type CanvasStats = {
 	calcWidth: number;
 	calcHeight: number;
@@ -9,10 +10,9 @@ type CanvasStats = {
 };
 
 export function drawDrivers(
-	i: number,
 	canvas: HTMLCanvasElement,
 	canvasStats: CanvasStats,
-	driverPositions: Entries,
+	driverPositions: Map<string, Tween<{ X: number; Y: number; Z: number }>>,
 	driverList: DriverList,
 	width: number,
 	dpr: number,
@@ -34,63 +34,49 @@ export function drawDrivers(
 		y: width / 2
 	};
 
-	ctx.beginPath();
+	if (driverPositions.size === 0) return;
 
-	ctx.arc(20, 50, 5 * Math.abs(Math.cos(i)), 0, 2 * Math.PI);
+	// draw driver positions
+	driverPositions.forEach((value, key) => {
+		const { X, Y } = value.current;
+		if (X === 0 && Y === 0) return;
 
-	ctx.fillStyle = '#fff';
-	ctx.fill();
-
-	if (!driverPositions) return;
-	const positions = Object.keys(driverPositions).map((key) => {
-		const dx = driverPositions[key].X - center.x;
-		const dy = driverPositions[key].Y - center.y;
+		// rotate points by angle degrees around center
+		const dx = X - center.x;
+		const dy = Y - center.y;
 		const angleRad = (angle * Math.PI) / 180;
-		const nx = center.x + Math.cos(angleRad) * dx - Math.sin(angleRad) * dy;
-		const ny = center.y + Math.sin(angleRad) * dx + Math.cos(angleRad) * dy;
-		return {
-			X: nx,
-			Y: ny,
-			abbreviation: driverList[key]?.Tla || 'SC',
-			teamColor: driverList[key]?.TeamColour || 'fbbf24',
-			offTrack: driverPositions[key].X && driverPositions[key].Y ? false : true
-		};
-	});
+		let nx = center.x + Math.cos(angleRad) * dx - Math.sin(angleRad) * dy;
+		let ny = center.y + Math.sin(angleRad) * dx + Math.cos(angleRad) * dy;
 
-	// scale driver positions
-	positions.forEach((driver) => {
-		driver.X = (driver.X + Math.abs(canvasStats.minX)) / canvasStats.scale + width / 20;
-		driver.Y = (driver.Y + Math.abs(canvasStats.minY)) / canvasStats.scale + width / 20 - 8;
-	});
+		const abbreviation = driverList[key]?.Tla || 'SC';
+		const teamColor = driverList[key]?.TeamColour || 'fbbf24';
 
-	// flip points vertically
-	positions.forEach((driver) => {
-		driver.Y = canvasStats.calcHeight - driver.Y;
-	});
+		// scale driver positions
+		nx = (nx + Math.abs(canvasStats.minX)) / canvasStats.scale + width / 20;
+		ny = (ny + Math.abs(canvasStats.minY)) / canvasStats.scale + width / 20 - 8;
 
-	positions.forEach(({ abbreviation, teamColor, X, Y, offTrack }) => {
-		if (offTrack) return;
+		// flip points vertically
+		ny = canvasStats.calcHeight - ny;
 
+		// draw dot
 		ctx.beginPath();
-
-		ctx.arc(X, Y, 4 * deviceWidth, 0, 2 * Math.PI, false);
+		ctx.arc(nx, ny, 4 * deviceWidth, 0, 2 * Math.PI, false);
 		ctx.fillStyle = teamColor ? '#' + teamColor : 'white';
-
 		ctx.fill();
 
+		// draw abbreviation
 		ctx.beginPath();
 		ctx.roundRect(
-			X - 6 * deviceWidth,
-			Y - 4 * deviceWidth,
+			nx - 6 * deviceWidth,
+			ny - 4 * deviceWidth,
 			16 * deviceWidth,
 			-8 * deviceWidth,
 			deviceWidth
 		);
 		ctx.fillStyle = 'rgba(50, 50, 50, 0.85)';
 		ctx.fill();
-
 		ctx.font = `${8 * deviceWidth}px monospace`;
 		ctx.fillStyle = 'white';
-		ctx.fillText(abbreviation ? abbreviation : '', X - 5 * deviceWidth, Y - 5 * deviceWidth);
+		ctx.fillText(abbreviation ? abbreviation : '', nx - 5 * deviceWidth, ny - 5 * deviceWidth);
 	});
 }
