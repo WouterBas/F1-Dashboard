@@ -1,11 +1,11 @@
 import client from "../shared/dbConnection";
 import { Schedule, ScheduleApi } from "../types";
-const years = ["2024"];
+const years = ["2025"];
 
 async function seeder() {
   await client.connect();
 
-  const response = await fetch(`https://ergast.com/api/f1/${years[0]}.json`);
+  const response = await fetch(`https://api.jolpi.ca/ergast/f1/${years[0]}/`);
   const data: any = await response.json();
 
   const schedules: ScheduleApi[] = data.MRData.RaceTable.Races;

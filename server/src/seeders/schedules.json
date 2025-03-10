@@ -1228,5 +1228,629 @@
         "date": "2024-12-08"
       }
     ]
+  },
+  {
+    "name": "Australian Grand Prix",
+    "year": "2025",
+    "date": "2025-03-16",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-03-14"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-03-14"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-03-15"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-03-15"
+      },
+      {
+        "type": "Race",
+        "date": "2025-03-16"
+      }
+    ]
+  },
+  {
+    "name": "Chinese Grand Prix",
+    "year": "2025",
+    "date": "2025-03-23",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-03-21"
+      },
+      {
+        "type": "Sprint",
+        "date": "2025-03-22"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-03-22"
+      },
+      {
+        "type": "Race",
+        "date": "2025-03-23"
+      }
+    ]
+  },
+  {
+    "name": "Japanese Grand Prix",
+    "year": "2025",
+    "date": "2025-04-06",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-04-04"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-04-04"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-04-05"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-04-05"
+      },
+      {
+        "type": "Race",
+        "date": "2025-04-06"
+      }
+    ]
+  },
+  {
+    "name": "Bahrain Grand Prix",
+    "year": "2025",
+    "date": "2025-04-13",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-04-11"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-04-11"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-04-12"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-04-12"
+      },
+      {
+        "type": "Race",
+        "date": "2025-04-13"
+      }
+    ]
+  },
+  {
+    "name": "Saudi Arabian Grand Prix",
+    "year": "2025",
+    "date": "2025-04-20",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-04-18"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-04-18"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-04-19"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-04-19"
+      },
+      {
+        "type": "Race",
+        "date": "2025-04-20"
+      }
+    ]
+  },
+  {
+    "name": "Miami Grand Prix",
+    "year": "2025",
+    "date": "2025-05-04",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-05-02"
+      },
+      {
+        "type": "Sprint",
+        "date": "2025-05-03"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-05-03"
+      },
+      {
+        "type": "Race",
+        "date": "2025-05-04"
+      }
+    ]
+  },
+  {
+    "name": "Emilia Romagna Grand Prix",
+    "year": "2025",
+    "date": "2025-05-18",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-05-16"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-05-16"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-05-17"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-05-17"
+      },
+      {
+        "type": "Race",
+        "date": "2025-05-18"
+      }
+    ]
+  },
+  {
+    "name": "Monaco Grand Prix",
+    "year": "2025",
+    "date": "2025-05-25",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-05-23"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-05-23"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-05-24"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-05-24"
+      },
+      {
+        "type": "Race",
+        "date": "2025-05-25"
+      }
+    ]
+  },
+  {
+    "name": "Spanish Grand Prix",
+    "year": "2025",
+    "date": "2025-06-01",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-05-30"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-05-30"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-05-31"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-05-31"
+      },
+      {
+        "type": "Race",
+        "date": "2025-06-01"
+      }
+    ]
+  },
+  {
+    "name": "Canadian Grand Prix",
+    "year": "2025",
+    "date": "2025-06-15",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-06-13"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-06-13"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-06-14"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-06-14"
+      },
+      {
+        "type": "Race",
+        "date": "2025-06-15"
+      }
+    ]
+  },
+  {
+    "name": "Austrian Grand Prix",
+    "year": "2025",
+    "date": "2025-06-29",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-06-27"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-06-27"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-06-28"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-06-28"
+      },
+      {
+        "type": "Race",
+        "date": "2025-06-29"
+      }
+    ]
+  },
+  {
+    "name": "British Grand Prix",
+    "year": "2025",
+    "date": "2025-07-06",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-07-04"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-07-04"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-07-05"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-07-05"
+      },
+      {
+        "type": "Race",
+        "date": "2025-07-06"
+      }
+    ]
+  },
+  {
+    "name": "Belgian Grand Prix",
+    "year": "2025",
+    "date": "2025-07-27",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-07-25"
+      },
+      {
+        "type": "Sprint",
+        "date": "2025-07-26"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-07-26"
+      },
+      {
+        "type": "Race",
+        "date": "2025-07-27"
+      }
+    ]
+  },
+  {
+    "name": "Hungarian Grand Prix",
+    "year": "2025",
+    "date": "2025-08-03",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-08-01"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-08-01"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-08-02"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-08-02"
+      },
+      {
+        "type": "Race",
+        "date": "2025-08-03"
+      }
+    ]
+  },
+  {
+    "name": "Dutch Grand Prix",
+    "year": "2025",
+    "date": "2025-08-31",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-08-29"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-08-29"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-08-30"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-08-30"
+      },
+      {
+        "type": "Race",
+        "date": "2025-08-31"
+      }
+    ]
+  },
+  {
+    "name": "Italian Grand Prix",
+    "year": "2025",
+    "date": "2025-09-07",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-09-05"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-09-05"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-09-06"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-09-06"
+      },
+      {
+        "type": "Race",
+        "date": "2025-09-07"
+      }
+    ]
+  },
+  {
+    "name": "Azerbaijan Grand Prix",
+    "year": "2025",
+    "date": "2025-09-21",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-09-19"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-09-19"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-09-20"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-09-20"
+      },
+      {
+        "type": "Race",
+        "date": "2025-09-21"
+      }
+    ]
+  },
+  {
+    "name": "Singapore Grand Prix",
+    "year": "2025",
+    "date": "2025-10-05",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-10-03"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-10-03"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-10-04"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-10-04"
+      },
+      {
+        "type": "Race",
+        "date": "2025-10-05"
+      }
+    ]
+  },
+  {
+    "name": "United States Grand Prix",
+    "year": "2025",
+    "date": "2025-10-19",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-10-17"
+      },
+      {
+        "type": "Sprint",
+        "date": "2025-10-18"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-10-18"
+      },
+      {
+        "type": "Race",
+        "date": "2025-10-19"
+      }
+    ]
+  },
+  {
+    "name": "Mexico City Grand Prix",
+    "year": "2025",
+    "date": "2025-10-26",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-10-24"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-10-24"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-10-25"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-10-25"
+      },
+      {
+        "type": "Race",
+        "date": "2025-10-26"
+      }
+    ]
+  },
+  {
+    "name": "São Paulo Grand Prix",
+    "year": "2025",
+    "date": "2025-11-09",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-11-07"
+      },
+      {
+        "type": "Sprint",
+        "date": "2025-11-08"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-11-08"
+      },
+      {
+        "type": "Race",
+        "date": "2025-11-09"
+      }
+    ]
+  },
+  {
+    "name": "Las Vegas Grand Prix",
+    "year": "2025",
+    "date": "2025-11-22",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-11-21"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-11-21"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-11-22"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-11-22"
+      },
+      {
+        "type": "Race",
+        "date": "2025-11-22"
+      }
+    ]
+  },
+  {
+    "name": "Qatar Grand Prix",
+    "year": "2025",
+    "date": "2025-11-30",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-11-28"
+      },
+      {
+        "type": "Sprint",
+        "date": "2025-11-29"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-11-29"
+      },
+      {
+        "type": "Race",
+        "date": "2025-11-30"
+      }
+    ]
+  },
+  {
+    "name": "Abu Dhabi Grand Prix",
+    "year": "2025",
+    "date": "2025-12-07",
+    "sessions": [
+      {
+        "type": "Practice_1",
+        "date": "2025-12-05"
+      },
+      {
+        "type": "Practice_2",
+        "date": "2025-12-05"
+      },
+      {
+        "type": "Practice_3",
+        "date": "2025-12-06"
+      },
+      {
+        "type": "Qualifying",
+        "date": "2025-12-06"
+      },
+      {
+        "type": "Race",
+        "date": "2025-12-07"
+      }
+    ]
   }
 ]
