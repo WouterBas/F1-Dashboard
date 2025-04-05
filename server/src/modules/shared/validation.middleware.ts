@@ -2,7 +2,7 @@ import { createMiddleware } from "hono/factory";
 import { object, number, date } from "yup";
 
 const positionSchema = object().shape({
-  key: number().min(1).max(9999).required(),
+  key: number().min(1).required(),
   minute: number().min(0).required(),
   startTime: date().required(),
 });

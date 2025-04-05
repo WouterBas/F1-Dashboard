@@ -7,7 +7,7 @@ const pointsSchema = object().shape({
 });
 
 const circuitShema = object().shape({
-  sessionKey: number().min(1).max(9999).required(),
+  sessionKey: number().min(1).required(),
   driverKey: number().min(1).max(99).required(),
   startTime: date().required(),
   duration: number().min(60000).max(180000).required(),

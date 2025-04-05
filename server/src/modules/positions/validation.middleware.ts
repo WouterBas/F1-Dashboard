@@ -2,7 +2,7 @@ import { createMiddleware } from "hono/factory";
 import { object, number, date } from "yup";
 
 const positionOneDriverSchema = object().shape({
-  key: number().min(1).max(9999).required(),
+  key: number().min(1).required(),
   driverNumber: number().min(1).max(99).required(),
   starttime: date().required(),
   duration: number().min(1000).max(180000).required(),
